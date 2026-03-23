@@ -85,7 +85,6 @@
   .hero {
     background: linear-gradient(135deg, var(--bg-mid) 0%, var(--bg-dark) 50%, #0a0818 100%);
     padding: 3.5rem 2rem 3rem;
-    text-align: center;
     border-bottom: 1px solid var(--border);
     position: relative; overflow: hidden;
   }
@@ -101,9 +100,77 @@
     background: radial-gradient(circle, rgba(60,40,120,0.4) 0%, transparent 70%);
     pointer-events: none;
   }
+  .hero-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 2.5rem;
+  }
+  .hero-text { flex: 1; }
   .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.6rem; }
   .hero h1 span { color: var(--accent); text-shadow: 0 0 30px rgba(0,224,96,0.4); }
-  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 540px; margin: 0 auto; line-height: 1.6; }
+  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 480px; line-height: 1.6; }
+
+  /* ── Individual CTA ── */
+  .hero-cta {
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(0,224,96,0.2);
+    border-radius: 18px;
+    padding: 1.6rem 1.8rem;
+    text-align: center;
+    width: 240px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .hero-cta:hover {
+    border-color: rgba(0,224,96,0.45);
+    box-shadow: 0 0 28px rgba(0,224,96,0.1);
+  }
+  .hero-cta-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .hero-cta h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--text); }
+  .hero-cta p  { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.1rem; }
+  .btn-cta-direct {
+    width: 100%; background: transparent;
+    border: 1.5px solid var(--accent); color: var(--accent);
+    padding: 10px 16px; border-radius: 10px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 700; transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-cta-direct:hover {
+    background: var(--accent); color: #04140a;
+    box-shadow: 0 0 18px var(--accent-glow);
+  }
+  @media(max-width:700px) {
+    .hero-inner { flex-direction: column; }
+    .hero-cta { width: 100%; }
+    .hero p { max-width: 100%; }
+  }
+
+  /* ──────── DIRECT INQUIRY MODAL ──────── */
+  .di-modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    z-index: 500; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    backdrop-filter: blur(10px);
+  }
+  .di-modal-bg.open { opacity: 1; pointer-events: all; }
+  .di-modal {
+    background: var(--bg-mid); border: 1px solid rgba(0,224,96,0.2);
+    border-radius: 20px; padding: 2rem; width: min(520px, 94vw);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(0,224,96,0.06);
+    transform: scale(0.92) translateY(24px);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    max-height: 90vh; overflow-y: auto;
+  }
+  .di-modal-bg.open .di-modal { transform: scale(1) translateY(0); }
+  .di-modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+  .di-modal-head h3 { font-size: 1.15rem; font-weight: 800; }
+  .di-modal-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.5; }
+  .di-divider {
+    height: 1px; background: var(--border); margin: 1.2rem 0;
+  }
 
   /* ──────── FILTER BAR ──────── */
   .filter-section {
@@ -529,8 +596,18 @@
 
 <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
 <div class="hero">
-  <h1>Techniklösungen in <span>jedem Bereich</span></h1>
-  <p>Professionelle Technik für Privatevents bis Großveranstaltungen — wähle dein Equipment und sende uns eine unverbindliche Anfrage.</p>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Techniklösungen in <span>jedem Bereich</span></h1>
+      <p>Professionelle Technik für Privatevents bis Großveranstaltungen — wähle dein Equipment und sende uns eine unverbindliche Anfrage.</p>
+    </div>
+    <div class="hero-cta">
+      <div class="hero-cta-icon">✉️</div>
+      <h3>Individuelle Anfrage</h3>
+      <p>Kein passendes Produkt dabei? Beschreibe einfach dein Event — wir finden die richtige Lösung.</p>
+      <button class="btn-cta-direct" onclick="openDirectModal()">Jetzt anfragen →</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════ FILTER ═══════════════════════════ -->
@@ -622,6 +699,35 @@
       </div>
       <button class="btn-send" type="submit" id="sendBtn">
         <span>📩</span> Anfrage senden
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ DIRECT INQUIRY MODAL ═══════════════════════════ -->
+<div class="di-modal-bg" id="diModalBg">
+  <div class="di-modal">
+    <div class="di-modal-head">
+      <h3>✉️ Individuelle Anfrage</h3>
+      <button class="cart-close" onclick="closeDirectModal()">✕</button>
+    </div>
+    <p class="di-modal-sub">Kein passendes Produkt dabei oder du weißt noch nicht genau was du brauchst? Beschreib uns einfach dein Event — wir melden uns mit einem maßgeschneiderten Angebot.</p>
+    <div class="di-divider"></div>
+    <form id="directForm" onsubmit="sendDirectRequest(event)">
+      <div class="form-grid">
+        <input class="form-input" type="text"  name="name"     placeholder="Name *"           required>
+        <input class="form-input" type="text"  name="firma"    placeholder="Firma / Organisation">
+        <input class="form-input" type="email" name="email"    placeholder="E-Mail *"          required>
+        <input class="form-input" type="tel"   name="telefon"  placeholder="Telefon">
+        <input class="form-input" type="date"  name="datum"    placeholder="Eventdatum">
+        <input class="form-input" type="text"  name="ort"      placeholder="Veranstaltungsort">
+        <input class="form-input" type="text"  name="personen" placeholder="Erwartete Gästezahl">
+        <input class="form-input" type="text"  name="budget"   placeholder="Budget (ca.)">
+        <textarea class="form-input full" name="beschreibung" placeholder="Beschreibe dein Event & was du benötigst *" rows="4" required></textarea>
+        <input type="hidden" name="_subject" value="Neue individuelle Anfrage – STIB">
+      </div>
+      <button class="btn-send" type="submit" id="diSendBtn">
+        <span>📩</span> Anfrage absenden
       </button>
     </form>
   </div>
@@ -1247,11 +1353,45 @@ function showToast(msg, type) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
 }
 
+// ═══════════════ DIRECT INQUIRY MODAL ═══════════════
+function openDirectModal() {
+  document.getElementById('diModalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDirectModal() {
+  document.getElementById('diModalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+async function sendDirectRequest(e) {
+  e.preventDefault();
+  const btn = document.getElementById('diSendBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> Wird gesendet…';
+  const data = new FormData(e.target);
+  try {
+    const res = await fetch(FORMSPREE, {
+      method: 'POST', body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      showToast('✅ Anfrage gesendet! Wir melden uns bald.', 'success');
+      e.target.reset();
+      closeDirectModal();
+    } else { throw new Error(); }
+  } catch {
+    showToast('❌ Senden fehlgeschlagen. Bitte erneut versuchen.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>📩</span> Anfrage absenden';
+  }
+}
+
 // ═══════════════ KEYBOARD ═══════════════
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeCart();
     closeAdminModal();
+    closeDirectModal();
   }
 });
 
