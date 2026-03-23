@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STIB – Techniklösungen in jedem Bereich</title>
+<style>
+  :root {
+    --bg-deep:    #0d0d1a;
+    --bg-dark:    #1A1A2E;
+    --bg-mid:     #16213E;
+    --card:       #0F3460;
+    --card-hover: #163d72;
+    --accent:     #E94560;
+    --accent2:    #c73652;
+    --text:       #f0f0f0;
+    --text-muted: #8892a4;
+    --border:     rgba(255,255,255,0.07);
+    --radius:     14px;
+    --shadow:     0 8px 32px rgba(0,0,0,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ──────── SCROLLBAR ──────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--card); border-radius: 3px; }
+
+  /* ──────── HEADER ──────── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,13,26,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .logo-icon {
+    width: 40px; height: 40px; background: var(--accent);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 900; color: white; letter-spacing: -1px;
+  }
+  .logo-text { line-height: 1.2; }
+  .logo-text strong { font-size: 1.1rem; color: white; display: block; }
+  .logo-text span { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .btn-admin {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; font-size: 0.82rem; transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-admin:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-admin.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .cart-btn {
+    position: relative; background: var(--card); border: none;
+    color: white; padding: 9px 16px; border-radius: 10px;
+    cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cart-btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .cart-count {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--accent); color: white; border-radius: 50%;
+    width: 20px; height: 20px; font-size: 0.7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    display: none;
+  }
+
+  /* ──────── HERO BANNER ──────── */
+  .hero {
+    background: linear-gradient(135deg, var(--bg-mid) 0%, var(--bg-dark) 50%, #12103a 100%);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width:320px; height:320px; border-radius:50%;
+    background: radial-gradient(circle, rgba(233,69,96,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-60px; left:-60px;
+    width:260px; height:260px; border-radius:50%;
+    background: radial-gradient(circle, rgba(15,52,96,0.5) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 0.6rem; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 540px; margin: 0 auto; line-height: 1.6; }
+
+  /* ──────── FILTER BAR ──────── */
+  .filter-section {
+    position: sticky; top: 68px; z-index: 90;
+    background: rgba(13,13,26,0.97);
+    backdrop-filter: blur(12px);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-wrap {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    max-width: 1400px; margin: 0 auto;
+  }
+  .filter-btn {
+    background: var(--bg-mid); border: 1px solid var(--border);
+    color: var(--text-muted); padding: 7px 16px; border-radius: 20px;
+    cursor: pointer; font-size: 0.82rem; font-weight: 500;
+    transition: all 0.2s; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: white; }
+  .filter-btn.active {
+    background: var(--accent); border-color: var(--accent);
+    color: white; font-weight: 600;
+  }
+  .search-wrap { margin-left: auto; }
+  .search-input {
+    background: var(--bg-mid); border: 1px solid var(--border);
+    color: var(--text); padding: 7px 14px; border-radius: 20px;
+    font-size: 0.82rem; outline: none; width: 200px;
+    transition: all 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); width: 240px; }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* ──────── PRODUCT GRID ──────── */
+  .main {
+    max-width: 1400px; margin: 0 auto;
+    padding: 2rem;
+  }
+  .section-header {
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px;
+  }
+  .section-header h2 { font-size: 1.25rem; font-weight: 700; }
+  .section-header .count {
+    background: var(--card); color: var(--text-muted);
+    padding: 3px 10px; border-radius: 20px; font-size: 0.78rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  /* ──────── PRODUCT CARD ──────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.25s;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: rgba(233,69,96,0.25);
+  }
+  .card-img {
+    height: 150px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.2rem;
+    position: relative; overflow: hidden;
+  }
+  .card-badge {
+    position: absolute; top: 10px; left: 10px;
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em;
+    backdrop-filter: blur(4px);
+  }
+  .card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .card-name { font-size: 0.95rem; font-weight: 700; line-height: 1.35; }
+  .card-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+  .card-einsatz {
+    background: rgba(255,255,255,0.06); border-radius: 6px;
+    padding: 5px 8px; font-size: 0.72rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .card-prices {
+    display: none; /* admin only */
+    gap: 8px; padding-top: 6px; border-top: 1px solid var(--border);
+  }
+  .card-prices.visible { display: flex; }
+  .price-pill {
+    flex: 1; background: rgba(0,0,0,0.25); border-radius: 8px;
+    padding: 5px 8px; text-align: center;
+  }
+  .price-pill label { font-size: 0.63rem; color: var(--text-muted); display: block; margin-bottom: 2px; }
+  .price-pill span { font-size: 0.82rem; font-weight: 700; color: #4ade80; }
+  .card-anbieter {
+    display: none; /* admin only */
+    font-size: 0.68rem; color: var(--text-muted);
+    border-top: 1px solid var(--border); padding-top: 6px;
+    align-items: flex-start; gap: 5px;
+  }
+  .card-anbieter.visible { display: flex; }
+
+  /* Quantity + Add button */
+  .card-footer {
+    padding: 0.75rem 1rem; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(0,0,0,0.15);
+  }
+  .qty-wrap {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 4px;
+  }
+  .qty-btn {
+    background: none; border: none; color: var(--text);
+    width: 26px; height: 26px; border-radius: 6px; cursor: pointer;
+    font-size: 1rem; font-weight: 700; transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-btn:hover { background: var(--accent); }
+  .qty-val {
+    min-width: 24px; text-align: center;
+    font-size: 0.88rem; font-weight: 700;
+  }
+  .btn-add {
+    flex: 1; background: var(--accent); border: none; color: white;
+    padding: 8px; border-radius: 8px; cursor: pointer;
+    font-size: 0.82rem; font-weight: 600; transition: all 0.2s;
+  }
+  .btn-add:hover { background: var(--accent2); transform: scale(1.02); }
+  .btn-add.in-cart { background: #1a5c3a; }
+
+  /* ──────── CART OVERLAY ──────── */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(3px);
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  /* ──────── CART SIDEBAR ──────── */
+  .cart {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(480px, 100vw);
+    background: var(--bg-mid);
+    border-left: 1px solid var(--border);
+    z-index: 300;
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+  }
+  .cart.open { transform: translateX(0); }
+  .cart-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .cart-header h3 { font-size: 1.1rem; font-weight: 700; }
+  .cart-close {
+    background: rgba(255,255,255,0.06); border: none; color: var(--text);
+    width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .cart-close:hover { background: var(--accent); }
+  .cart-items {
+    flex: 1; overflow-y: auto; padding: 1rem 1.5rem;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cart-empty {
+    text-align: center; padding: 3rem 1rem;
+    color: var(--text-muted); font-size: 0.9rem;
+  }
+  .cart-empty .empty-icon { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
+  .cart-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ci-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .ci-info { flex: 1; min-width: 0; }
+  .ci-name { font-size: 0.83rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ci-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+  .ci-price { font-size: 0.75rem; color: #4ade80; font-weight: 600; margin-top: 2px; display: none; }
+  .ci-price.visible { display: block; }
+  .ci-qty {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.06); border-radius: 7px; padding: 3px;
+  }
+  .ci-qty-btn {
+    background: none; border: none; color: var(--text);
+    width: 24px; height: 24px; border-radius: 5px; cursor: pointer;
+    font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .ci-qty-btn:hover { background: var(--accent); }
+  .ci-qty-val { min-width: 20px; text-align: center; font-size: 0.82rem; font-weight: 700; }
+  .ci-remove {
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; font-size: 0.85rem; padding: 4px;
+    border-radius: 5px; transition: color 0.15s;
+  }
+  .ci-remove:hover { color: var(--accent); }
+
+  /* Cart total (admin) */
+  .cart-total {
+    display: none; /* admin only */
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+  .cart-total.visible { display: block; }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: center; }
+  .cart-total-row span:first-child { font-size: 0.82rem; color: var(--text-muted); }
+  .cart-total-row .total-val { font-size: 1rem; font-weight: 800; color: #4ade80; }
+  .cart-anbieter {
+    display: none; /* admin only */
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+  .cart-anbieter.visible { display: block; }
+  .cart-anbieter h4 { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .anbieter-list { font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; }
+
+  /* ──────── KI CHECK BANNER ──────── */
+  .ki-banner {
+    margin: 0 1.5rem 0.75rem;
+    background: linear-gradient(135deg, rgba(234,179,8,0.12), rgba(251,146,60,0.08));
+    border: 1px solid rgba(234,179,8,0.25);
+    border-radius: 10px; padding: 0.9rem 1rem;
+    flex-shrink: 0;
+  }
+  .ki-banner-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .ki-banner-head span { font-size: 0.8rem; font-weight: 700; color: #fbbf24; }
+  .ki-banner p { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; }
+  .ki-coming { display: flex; align-items: center; gap: 8px; }
+  .ki-pill {
+    background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3);
+    color: #fbbf24; padding: 2px 10px; border-radius: 20px;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+  }
+
+  /* ──────── REQUEST FORM ──────── */
+  .cart-form {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .cart-form h4 {
+    font-size: 0.8rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-input {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--text); padding: 9px 12px; border-radius: 8px;
+    font-size: 0.8rem; outline: none; width: 100%;
+    transition: border-color 0.2s; font-family: inherit;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--text-muted); }
+  .btn-send {
+    width: 100%; margin-top: 10px;
+    background: var(--accent); border: none; color: white;
+    padding: 12px; border-radius: 10px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 700; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-send:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-send:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; }
+
+  /* ──────── ADMIN MODAL ──────── */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    z-index: 500; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    backdrop-filter: blur(8px);
+  }
+  .modal-bg.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg-mid); border: 1px solid var(--border);
+    border-radius: 18px; padding: 2rem; width: min(380px, 90vw);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .modal-bg.open .modal { transform: scale(1) translateY(0); }
+  .modal h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .modal p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .modal-input {
+    width: 100%; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border); color: var(--text);
+    padding: 11px 14px; border-radius: 10px; font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s; margin-bottom: 10px;
+  }
+  .modal-input:focus { border-color: var(--accent); }
+  .modal-error {
+    color: var(--accent); font-size: 0.78rem; margin-bottom: 10px;
+    display: none; min-height: 18px;
+  }
+  .modal-btns { display: flex; gap: 8px; }
+  .modal-cancel {
+    flex: 1; background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); padding: 10px; border-radius: 10px;
+    cursor: pointer; font-size: 0.88rem; transition: all 0.2s;
+  }
+  .modal-cancel:hover { border-color: var(--text-muted); color: var(--text); }
+  .modal-ok {
+    flex: 1; background: var(--accent); border: none; color: white;
+    padding: 10px; border-radius: 10px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 700; transition: background 0.2s;
+  }
+  .modal-ok:hover { background: var(--accent2); }
+
+  /* ──────── SUCCESS / ERROR TOAST ──────── */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 24px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.88rem; font-weight: 600;
+    box-shadow: var(--shadow); z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: rgba(74,222,128,0.4); }
+  .toast.error   { border-color: rgba(233,69,96,0.4); }
+
+  /* ──────── NO RESULTS ──────── */
+  .no-results {
+    text-align: center; padding: 4rem 1rem; color: var(--text-muted);
+  }
+  .no-results span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+  /* ──────── FOOTER ──────── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.78rem;
+    margin-top: 3rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ──────── CATEGORY COLORS ──────── */
+  .cat-audio  { background: rgba(59,130,246,0.18); }
+  .cat-licht  { background: rgba(245,158,11,0.18); }
+  .cat-video  { background: rgba(139,92,246,0.18); }
+  .cat-buehne { background: rgba(16,185,129,0.18); }
+  .cat-moebel { background: rgba(236,72,153,0.18); }
+  .cat-strom  { background: rgba(249,115,22,0.18); }
+
+  .badge-audio  { background: rgba(59,130,246,0.25);  color: #93c5fd; }
+  .badge-licht  { background: rgba(245,158,11,0.25);  color: #fde68a; }
+  .badge-video  { background: rgba(139,92,246,0.25);  color: #c4b5fd; }
+  .badge-buehne { background: rgba(16,185,129,0.25);  color: #6ee7b7; }
+  .badge-moebel { background: rgba(236,72,153,0.25);  color: #f9a8d4; }
+  .badge-strom  { background: rgba(249,115,22,0.25);  color: #fed7aa; }
+
+  /* ──────── RESPONSIVE ──────── */
+  @media(max-width:600px) {
+    header { padding: 0 1rem; }
+    .logo-text span { display: none; }
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .filter-section { padding: 0.75rem 1rem; }
+    .search-wrap { display: none; }
+    .main { padding: 1rem; }
+    .grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header>
+  <a class="logo" href="#">
+    <div class="logo-icon">ST</div>
+    <div class="logo-text">
+      <strong>STIB</strong>
+      <span>Techniklösungen in jedem Bereich</span>
+    </div>
+  </a>
+  <div class="header-right">
+    <button class="btn-admin" id="adminBtn" onclick="openAdminModal()">
+      <span>🔐</span> <span id="adminLabel">Admin</span>
+    </button>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Warenkorb
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<div class="hero">
+  <h1>Techniklösungen in <span>jedem Bereich</span></h1>
+  <p>Professionelle Technik für Privatevents bis Großveranstaltungen — wähle dein Equipment und sende uns eine unverbindliche Anfrage.</p>
+</div>
+
+<!-- ═══════════════════════════ FILTER ═══════════════════════════ -->
+<div class="filter-section">
+  <div class="filter-wrap">
+    <button class="filter-btn active" data-cat="all" onclick="filterCat('all', this)">✦ Alle</button>
+    <button class="filter-btn" data-cat="audio"  onclick="filterCat('audio',  this)">🔊 Ton & Audio</button>
+    <button class="filter-btn" data-cat="licht"  onclick="filterCat('licht',  this)">💡 Licht</button>
+    <button class="filter-btn" data-cat="video"  onclick="filterCat('video',  this)">📺 Video & LED</button>
+    <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">🏗️ Bühne & Rigging</button>
+    <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">🪑 Möbel & Ausstattung</button>
+    <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">⚡ Strom & FX</button>
+    <div class="search-wrap">
+      <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ MAIN GRID ═══════════════════════════ -->
+<div class="main">
+  <div class="section-header">
+    <h2 id="sectionTitle">Alle Artikel</h2>
+    <span class="count" id="sectionCount"></span>
+  </div>
+  <div class="grid" id="productGrid"></div>
+  <div class="no-results" id="noResults" style="display:none;">
+    <span>🔍</span>
+    <p>Keine Artikel gefunden.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  © 2025 STIB – Techniklösungen in jedem Bereich &nbsp;·&nbsp;
+  Alle Preise auf Anfrage &nbsp;·&nbsp;
+  <a href="mailto:info@bennifirma.de">info@bennifirma.de</a>
+</footer>
+
+<!-- ═══════════════════════════ OVERLAY ═══════════════════════════ -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- ═══════════════════════════ CART SIDEBAR ═══════════════════════════ -->
+<div class="cart" id="cartSidebar">
+  <div class="cart-header">
+    <h3>🛒 Warenkorb</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="empty-icon">🎪</span>
+      Noch keine Artikel ausgewählt.<br>Füge Equipment aus dem Katalog hinzu.
+    </div>
+  </div>
+
+  <!-- KI CHECK — COMING SOON -->
+  <div class="ki-banner" id="kiBanner" style="display:none;">
+    <div class="ki-banner-head">
+      <span>🤖 KI-Kompatibilitäts-Check</span>
+      <span class="ki-pill">COMING SOON</span>
+    </div>
+    <p>Bald prüft unsere KI automatisch deine Auswahl auf Vollständigkeit & Kompatibilität — fehlende Kabel, Adapter oder Inkompatibilitäten werden direkt angezeigt.</p>
+  </div>
+
+  <!-- ADMIN: Total & Anbieter -->
+  <div class="cart-total" id="cartTotal">
+    <div class="cart-total-row">
+      <span>Geschätzte Kosten (Tagespreis von)</span>
+      <span class="total-val" id="totalVal">0 €</span>
+    </div>
+  </div>
+  <div class="cart-anbieter" id="cartAnbieter">
+    <h4>📍 Anbieter / Bezugsquellen</h4>
+    <div class="anbieter-list" id="anbieterList">—</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="cart-form">
+    <h4>📋 Anfrage senden</h4>
+    <form id="requestForm" onsubmit="sendRequest(event)">
+      <div class="form-grid">
+        <input class="form-input" type="text"  name="name"      placeholder="Name *"      required>
+        <input class="form-input" type="text"  name="firma"     placeholder="Firma">
+        <input class="form-input" type="email" name="email"     placeholder="E-Mail *"    required>
+        <input class="form-input" type="tel"   name="telefon"   placeholder="Telefon">
+        <input class="form-input" type="date"  name="datum"     placeholder="Eventdatum">
+        <input class="form-input" type="text"  name="ort"       placeholder="Veranstaltungsort">
+        <textarea class="form-input full" name="nachricht" placeholder="Nachricht / Besondere Anforderungen..." rows="3"></textarea>
+        <input type="hidden" name="warenkorb" id="cartPayload">
+      </div>
+      <button class="btn-send" type="submit" id="sendBtn">
+        <span>📩</span> Anfrage senden
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ ADMIN MODAL ═══════════════════════════ -->
+<div class="modal-bg" id="adminModal">
+  <div class="modal">
+    <h3>🔐 Admin-Login</h3>
+    <p>Passwort eingeben, um Preise & Anbieter-Infos zu sehen.</p>
+    <input class="modal-input" type="password" id="pwInput"
+           placeholder="Passwort" onkeydown="if(event.key==='Enter')checkPw()">
+    <div class="modal-error" id="pwError">Falsches Passwort. Bitte erneut versuchen.</div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeAdminModal()">Abbrechen</button>
+      <button class="modal-ok" onclick="checkPw()">Einloggen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TOAST ═══════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════ SCRIPT ═══════════════════════════ -->
+<script>
+// ═══════════════ PRODUCT DATA ═══════════════
+const PRODUCTS = [
+  // ── TON & AUDIO ──
+  {id:"a01", cat:"audio", name:"d&b Y8 Line Array Element",        hersteller:"d&b audiotechnik", desc:"High-End Beschallung, Line Array",          einsatz:"Konzerte, Festivals, Großevents",   preis_tag:"250–400",  preis_we:"600–900",    anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"a02", cat:"audio", name:"d&b Y12 Line Array Element",       hersteller:"d&b audiotechnik", desc:"Größeres Line Array",                         einsatz:"Großevents ab 500 Pers.",           preis_tag:"350–500",  preis_we:"800–1.200",  anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"a03", cat:"audio", name:"d&b B22 Sub Bass",                 hersteller:"d&b audiotechnik", desc:"Subwoofer für tiefe Frequenzen",              einsatz:"Konzerte, Clubs, Festivals",        preis_tag:"120–200",  preis_we:"280–450",    anbieter:"N&M Berlin"},
+  {id:"a04", cat:"audio", name:"L-Acoustics ARCS Wide",            hersteller:"L-Acoustics",      desc:"Curvilinear Array Speaker",                   einsatz:"Mittelgroße Venues",                preis_tag:"200–350",  preis_we:"500–800",    anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"a05", cat:"audio", name:"QSC K12.2 Aktivbox",               hersteller:"QSC",              desc:"12\" Aktivlautsprecher 2000W",                 einsatz:"Privatevents, Firmenfeiern",        preis_tag:"45–70",    preis_we:"100–160",    anbieter:"Müller Musik, dry-hire.com"},
+  {id:"a06", cat:"audio", name:"Electro-Voice ZLX-15P",            hersteller:"EV",               desc:"15\" Aktivbox portable",                      einsatz:"Privatevents bis 200 Pers.",        preis_tag:"30–50",    preis_we:"70–110",     anbieter:"Müller Musik"},
+  {id:"a07", cat:"audio", name:"HK Audio L SUB 2500A Subwoofer",   hersteller:"HK Audio",         desc:"Aktiv-Subwoofer 2500W",                       einsatz:"Parties, Firmenfeiern",             preis_tag:"60–90",    preis_we:"140–200",    anbieter:"Müller Musik, dry-hire.com"},
+  {id:"a08", cat:"audio", name:"RCF NX 985-A",                     hersteller:"RCF",              desc:"Aktivmonitor 15\" 1400W",                     einsatz:"Kleine Events, Monitoring",         preis_tag:"40–65",    preis_we:"90–140",     anbieter:"dry-hire.com"},
+  {id:"a09", cat:"audio", name:"Yamaha DZR315 Aktivbox",           hersteller:"Yamaha",           desc:"3-Wege aktiv, 1650W",                         einsatz:"Mittelgroße Events",                preis_tag:"80–120",   preis_we:"180–280",    anbieter:"N&M Berlin"},
+  {id:"a10", cat:"audio", name:"Yamaha CL5 Digital Console",       hersteller:"Yamaha",           desc:"96-Kanal Digital-Pult",                       einsatz:"Großveranstaltungen, Konzerte",     preis_tag:"350–600",  preis_we:"800–1.400",  anbieter:"N&M Berlin, NicLen"},
+  {id:"a11", cat:"audio", name:"Yamaha CL3 Digital Console",       hersteller:"Yamaha",           desc:"64-Kanal Digital-Pult",                       einsatz:"Mittelgroße Events, Firmen",        preis_tag:"250–450",  preis_we:"600–1.000",  anbieter:"N&M Berlin"},
+  {id:"a12", cat:"audio", name:"Allen & Heath SQ-6",               hersteller:"Allen & Heath",    desc:"48-Kanal Digital, kompakt",                   einsatz:"Firmenfeiern, Privatevents",        preis_tag:"150–250",  preis_we:"350–600",    anbieter:"dry-hire.com, Müller Musik"},
+  {id:"a13", cat:"audio", name:"Behringer X32",                    hersteller:"Behringer",        desc:"32-Kanal Digital-Pult",                       einsatz:"Kleine bis mittlere Events",        preis_tag:"80–130",   preis_we:"180–290",    anbieter:"Müller Musik, dry-hire.com"},
+  {id:"a14", cat:"audio", name:"DiGiCo SD10",                      hersteller:"DiGiCo",           desc:"Top-End Broadcast Pult",                      einsatz:"Großkonzerte, TV-Events",           preis_tag:"600–900",  preis_we:"1.400–2.000",anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"a15", cat:"audio", name:"Shure SM58 Vocal Mic",             hersteller:"Shure",            desc:"Klassisches Gesangsmikrofon",                  einsatz:"Alle Eventgrößen",                  preis_tag:"8–15",     preis_we:"18–32",      anbieter:"Müller Musik"},
+  {id:"a16", cat:"audio", name:"Shure SM57 Instrumenten-Mic",      hersteller:"Shure",            desc:"Instrument-Mikrofon",                          einsatz:"Konzerte, Bands",                   preis_tag:"8–12",     preis_we:"18–26",      anbieter:"N&M Berlin, NicLen"},
+  {id:"a17", cat:"audio", name:"Sennheiser EW 500 G4 Funksystem",  hersteller:"Sennheiser",       desc:"Handsender + Empfänger UHF",                  einsatz:"Reden, Shows, Events",              preis_tag:"45–80",    preis_we:"100–180",    anbieter:"N&M Berlin"},
+  {id:"a18", cat:"audio", name:"Shure QLXD Drahtlossystem",        hersteller:"Shure",            desc:"UHF Digital Funk, niedrige Latenz",            einsatz:"Konferenzen, Firmenevents",         preis_tag:"60–100",   preis_we:"140–220",    anbieter:"NicLen"},
+  {id:"a19", cat:"audio", name:"DPA 4066 Headset Mic",             hersteller:"DPA",              desc:"Headset-Mikrofon (Flesh/Beige)",               einsatz:"Moderatoren, Speaker",              preis_tag:"25–40",    preis_we:"55–90",      anbieter:"dry-hire.com, Müller Musik"},
+  {id:"a20", cat:"audio", name:"Sennheiser MKH 50 Kondensator",    hersteller:"Sennheiser",       desc:"Studio-Kondensator für Sprache",               einsatz:"Sprache, Pressekonferenzen",        preis_tag:"30–55",    preis_we:"65–120",     anbieter:"NicLen"},
+  {id:"a21", cat:"audio", name:"Sennheiser EW IEM G4 In-Ear",      hersteller:"Sennheiser",       desc:"In-Ear Monitoring System",                    einsatz:"Konzerte, Bands",                   preis_tag:"55–90",    preis_we:"120–200",    anbieter:"N&M Berlin"},
+  {id:"a22", cat:"audio", name:"Shure PSM 1000 IEM",               hersteller:"Shure",            desc:"Professional In-Ear Monitoring",              einsatz:"Top-Acts, große Bühnen",            preis_tag:"90–150",   preis_we:"200–350",    anbieter:"N&M Berlin"},
+  {id:"a23", cat:"audio", name:"Stagebox / Multicore 30m",         hersteller:"div.",             desc:"32-Kanal Snake, 30m",                         einsatz:"Alle mittelgroßen Events",          preis_tag:"30–60",    preis_we:"65–130",     anbieter:"Müller Musik, dry-hire.com"},
+  {id:"a24", cat:"audio", name:"DI-Box aktiv (Radial J48)",        hersteller:"Radial",           desc:"Aktive DI-Box",                               einsatz:"Instrumente, Keys, Gitarren",       preis_tag:"8–15",     preis_we:"18–32",      anbieter:"NicLen"},
+  {id:"a25", cat:"audio", name:"Lake LM 44 Audio Prozessor",       hersteller:"Lab.gruppen",      desc:"Lautsprecherprozessor / Systemoptimierung",   einsatz:"Profi-Beschallungssysteme",         preis_tag:"80–130",   preis_we:"180–280",    anbieter:"dry-hire.com"},
+
+  // ── LICHT ──
+  {id:"l01", cat:"licht", name:"Robe BMFL Spot",                   hersteller:"Robe",             desc:"Moving Head Spot, High-End",                  einsatz:"Konzerte, Shows, Festivals",        preis_tag:"120–200",  preis_we:"270–450",    anbieter:"NicLen, N&M Berlin"},
+  {id:"l02", cat:"licht", name:"Robe MegaPointe",                  hersteller:"Robe",             desc:"Beam/Spot Hybrid Moving Head",                einsatz:"Clubs, Konzerte, Festivals",        preis_tag:"80–140",   preis_we:"180–310",    anbieter:"NicLen"},
+  {id:"l03", cat:"licht", name:"Clay Paky Sharpy",                 hersteller:"Clay Paky",        desc:"Beam Moving Head Showeffekt",                 einsatz:"Festivals, Showeffekte",            preis_tag:"70–110",   preis_we:"150–240",    anbieter:"NicLen"},
+  {id:"l04", cat:"licht", name:"Cameo OPUS X Profile",             hersteller:"Cameo",            desc:"LED Profile 37.000 lm",                       einsatz:"Theater, Corporate, Messe",         preis_tag:"90–150",   preis_we:"200–340",    anbieter:"NicLen, N&M Berlin"},
+  {id:"l05", cat:"licht", name:"Martin MAC Viper Profile",         hersteller:"Martin",           desc:"Moving Head Profile",                         einsatz:"Große Shows, Konzerte",             preis_tag:"130–220",  preis_we:"290–500",    anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"l06", cat:"licht", name:"Ayrton Rivale Profile",            hersteller:"Ayrton",           desc:"LED Profile 580W, High-End",                  einsatz:"High-End Shows",                    preis_tag:"180–280",  preis_we:"400–620",    anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"l07", cat:"licht", name:"Robe LEDBeam 350",                 hersteller:"Robe",             desc:"LED Moving Wash",                             einsatz:"Alle Eventgrößen",                  preis_tag:"50–90",    preis_we:"110–200",    anbieter:"NicLen"},
+  {id:"l08", cat:"licht", name:"Martin MAC Quantum Wash",          hersteller:"Martin",           desc:"LED Wash 950W",                               einsatz:"Mittelgroße bis große Events",      preis_tag:"80–130",   preis_we:"175–285",    anbieter:"N&M Berlin"},
+  {id:"l09", cat:"licht", name:"GLP impression X4 L",             hersteller:"GLP",              desc:"Wash/Strobe/FX Kombination",                  einsatz:"Festivals, Theater",                preis_tag:"90–150",   preis_we:"200–340",    anbieter:"NicLen, N&M Berlin"},
+  {id:"l10", cat:"licht", name:"Cameo EVOS W7",                    hersteller:"Cameo",            desc:"LED Wash IP-geschützt",                       einsatz:"Indoor & Outdoor",                  preis_tag:"60–100",   preis_we:"130–220",    anbieter:"NicLen"},
+  {id:"l11", cat:"licht", name:"Cameo ZENIT W600",                 hersteller:"Cameo",            desc:"LED Outdoor Wash IP65",                       einsatz:"Fassaden, Außenbereich",            preis_tag:"30–55",    preis_we:"65–120",     anbieter:"NicLen, N&M Berlin"},
+  {id:"l12", cat:"licht", name:"Cameo F4T Fresnel",                hersteller:"Cameo",            desc:"LED Fresnel Scheinwerfer",                    einsatz:"Theater, Film, Events",             preis_tag:"25–45",    preis_we:"55–100",     anbieter:"NicLen"},
+  {id:"l13", cat:"licht", name:"Astera Titan Tube",                hersteller:"Astera",           desc:"LED RGB Tube (wireless, kabellos)",            einsatz:"Deko, Shows, Privatevents",         preis_tag:"18–30",    preis_we:"40–65",      anbieter:"NicLen, N&M Berlin"},
+  {id:"l14", cat:"licht", name:"Astera AX5 TriColor",              hersteller:"Astera",           desc:"LED PAR (wireless)",                          einsatz:"Privatevents, Firmenfeiern",        preis_tag:"12–22",    preis_we:"26–48",      anbieter:"NicLen"},
+  {id:"l15", cat:"licht", name:"Portman P1 Retro Lamp",            hersteller:"Portman",          desc:"Deko LED Vintage Scheinwerfer",               einsatz:"Galas, Privatevents, Messen",       preis_tag:"15–25",    preis_we:"33–55",      anbieter:"NicLen, N&M Berlin"},
+  {id:"l16", cat:"licht", name:"GLP JDC1 Hybrid",                  hersteller:"GLP",              desc:"Strobe / Wash Hybrid",                        einsatz:"Konzerte, Shows",                   preis_tag:"55–90",    preis_we:"120–200",    anbieter:"NicLen"},
+  {id:"l17", cat:"licht", name:"grandMA 3 full size",              hersteller:"MA Lighting",      desc:"Top-DMX Pult, aktuellste Generation",         einsatz:"Großshows, Festivals",              preis_tag:"350–600",  preis_we:"800–1.400",  anbieter:"NicLen"},
+  {id:"l18", cat:"licht", name:"grandMA 2 full size",              hersteller:"MA Lighting",      desc:"DMX Pult 4096 Kanäle",                        einsatz:"Konzerte, Messen, Corporate",       preis_tag:"250–450",  preis_we:"550–1.000",  anbieter:"N&M Berlin"},
+  {id:"l19", cat:"licht", name:"Avolites Tiger Touch II",           hersteller:"Avolites",         desc:"DMX Pult, kompakt & leistungsstark",          einsatz:"Mittelgroße Events",                preis_tag:"120–200",  preis_we:"270–440",    anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"l20", cat:"licht", name:"ChamSys MagicQ Stadium",           hersteller:"ChamSys",          desc:"DMX Konsole für Theater & Events",            einsatz:"Theater, Events",                   preis_tag:"150–250",  preis_we:"340–550",    anbieter:"N&M Berlin"},
+  {id:"l21", cat:"licht", name:"Robe BMFL FollowSpot LT",          hersteller:"Robe",             desc:"LED Followspot",                              einsatz:"Konzerte, Galas, Shows",            preis_tag:"150–250",  preis_we:"340–560",    anbieter:"NicLen, dry-hire.com"},
+  {id:"l22", cat:"licht", name:"Martin Atomic 3000 LED",           hersteller:"Martin",           desc:"LED Strobe",                                  einsatz:"Clubs, Konzerte, Festivals",        preis_tag:"40–70",    preis_we:"88–155",     anbieter:"NicLen"},
+  {id:"l23", cat:"licht", name:"Hazer / Nebelmaschine",            hersteller:"div.",             desc:"Hazmaschine für Lichteffekte",                einsatz:"Alle Events für Lichteffekte",      preis_tag:"25–45",    preis_we:"55–100",     anbieter:"NicLen, dry-hire.com"},
+  {id:"l24", cat:"licht", name:"Confetti Kanone (CO2)",            hersteller:"div.",             desc:"FX Confetti-Kanone",                          einsatz:"Galas, Konzerte, Shows",            preis_tag:"60–120",   preis_we:"140–265",    anbieter:"NicLen, dry-hire.com"},
+
+  // ── VIDEO & LED ──
+  {id:"v01", cat:"video", name:"LED Wall Indoor 2,9mm Pitch",      hersteller:"ROE/Absen",        desc:"Hohe Auflösung, 500×500mm Tiles",             einsatz:"Messen, Konferenzen, Shows",        preis_tag:"200–400/m²",preis_we:"450–900/m²", anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"v02", cat:"video", name:"LED Wall Outdoor 3,9mm Pitch",     hersteller:"ROE/Absen",        desc:"IP65 Outdoor, wasserdicht",                   einsatz:"Festivals, Außenevents",            preis_tag:"150–280/m²",preis_we:"340–620/m²", anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"v03", cat:"video", name:"LED Wall 5,9mm Pitch (Budget)",    hersteller:"div.",             desc:"Kostengünstige Indoor-Option",                einsatz:"Privatevents, kleine Shows",        preis_tag:"80–150/m²", preis_we:"180–330/m²", anbieter:"dry-hire.com"},
+  {id:"v04", cat:"video", name:"LED Anhänger (Trailer Screen)",    hersteller:"G+B",              desc:"Mobiles Outdoor-Display",                     einsatz:"Stadtfeste, Open-Air",              preis_tag:"800–1.500", preis_we:"1.800–3.500",anbieter:"Gahrens+Battermann, LiveTec"},
+  {id:"v05", cat:"video", name:"Monitor 65\" UHD Touch",           hersteller:"Samsung/LG",       desc:"4K Touchdisplay 65 Zoll",                     einsatz:"Konferenzen, Präsentationen",       preis_tag:"80–150",   preis_we:"180–340",    anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"v06", cat:"video", name:"Monitor 98\" UHD",                 hersteller:"Samsung",          desc:"Großes 4K Display, 98 Zoll",                  einsatz:"Messen, Empfang",                   preis_tag:"200–350",  preis_we:"450–800",    anbieter:"N&M Berlin"},
+  {id:"v07", cat:"video", name:"Christie Boxer 30.000 Lumen",      hersteller:"Christie",         desc:"Großbildprojektor 4K",                        einsatz:"Konzerte, Messen, Großshows",       preis_tag:"800–1.400",preis_we:"1.800–3.200",anbieter:"N&M Berlin, LiveTec Berlin"},
+  {id:"v08", cat:"video", name:"Barco G62-W12 12.000 lm",          hersteller:"Barco",            desc:"Laser Projektor WUXGA",                       einsatz:"Konferenzen, Messen",               preis_tag:"350–600",  preis_we:"800–1.350",  anbieter:"N&M Berlin"},
+  {id:"v09", cat:"video", name:"Panasonic PT-RZ21K 20.000 lm",    hersteller:"Panasonic",        desc:"Laser Projektor WUXGA",                       einsatz:"Große Events, Kinos",               preis_tag:"500–800",  preis_we:"1.100–1.800",anbieter:"N&M Berlin"},
+  {id:"v10", cat:"video", name:"Optoma ZU850 8.500 lm",            hersteller:"Optoma",           desc:"Laser Projektor für Events",                  einsatz:"Mittelgroße Events",                preis_tag:"150–280",  preis_we:"340–620",    anbieter:"dry-hire.com"},
+  {id:"v11", cat:"video", name:"Fast-Fold Screen 3×2m",            hersteller:"div.",             desc:"Klapprahmen mit Leinwand",                    einsatz:"Kleine Events, Firmenfeiern",       preis_tag:"40–70",    preis_we:"90–155",     anbieter:"dry-hire.com"},
+  {id:"v12", cat:"video", name:"Fast-Fold Screen 5×3m",            hersteller:"div.",             desc:"Größere Leinwand",                            einsatz:"Konferenzen, Mittelgroße Events",   preis_tag:"80–130",   preis_we:"180–285",    anbieter:"N&M Berlin, dry-hire.com"},
+  {id:"v13", cat:"video", name:"Rolloleinwand 3×2m elektrisch",    hersteller:"div.",             desc:"Elektrisch motorisiert",                      einsatz:"Präsentationen, Firmenfeiern",      preis_tag:"30–55",    preis_we:"65–120",     anbieter:"N&M Berlin"},
+  {id:"v14", cat:"video", name:"Rear Projection Screen 4×3m",      hersteller:"div.",             desc:"Rückprojektion",                              einsatz:"Messen, Galas",                     preis_tag:"120–200",  preis_we:"270–440",    anbieter:"dry-hire.com"},
+  {id:"v15", cat:"video", name:"disguise 4x4pro Medienserver",     hersteller:"disguise",         desc:"High-End Medienserver",                       einsatz:"Festivals, Shows, Mapping",         preis_tag:"450–800",  preis_we:"1.000–1.800",anbieter:"NicLen, N&M Berlin"},
+  {id:"v16", cat:"video", name:"Green Hippo Hippotizer V4+",       hersteller:"Green Hippo",      desc:"Medienserver",                                einsatz:"Shows, Messen",                     preis_tag:"300–550",  preis_we:"670–1.200",  anbieter:"Gahrens+Battermann, N&M Berlin"},
+  {id:"v17", cat:"video", name:"Resolume Avenue 7",                 hersteller:"Resolume",         desc:"VJ & Medienserver Software (Notebook)",       einsatz:"Clubs, Shows",                      preis_tag:"60–120",   preis_we:"135–265",    anbieter:"Gahrens+Battermann"},
+  {id:"v18", cat:"video", name:"Sony PXW-Z150 4K Camcorder",       hersteller:"Sony",             desc:"4K Broadcast Kamera",                         einsatz:"Livestream, Konferenzen",           preis_tag:"90–160",   preis_we:"200–360",    anbieter:"dry-hire.com"},
+  {id:"v19", cat:"video", name:"PTZ Kamera (Fernsteuerung)",        hersteller:"Sony/Panasonic",   desc:"Fernsteuerbare Kamera",                       einsatz:"Hybridevents, Streaming",           preis_tag:"60–110",   preis_we:"135–240",    anbieter:"NicLen"},
+  {id:"v20", cat:"video", name:"Roland V-8HD Video Switcher",       hersteller:"Roland",           desc:"8-Kanal HDMI Switcher",                       einsatz:"Konferenzen, Talks",                preis_tag:"80–140",   preis_we:"175–310",    anbieter:"dry-hire.com"},
+  {id:"v21", cat:"video", name:"Decimator DMON-16S Multiview",      hersteller:"Decimator",        desc:"16-Kanal Multi-Viewer",                       einsatz:"Broadcast, Regie",                  preis_tag:"55–90",    preis_we:"120–200",    anbieter:"Gahrens+Battermann, N&M Berlin"},
+  {id:"v22", cat:"video", name:"HDMI-Matrix / Signalverteilung",    hersteller:"Kramer/Extron",    desc:"4K Signalverteilung",                         einsatz:"Messen, Konferenzen",               preis_tag:"20–60",    preis_we:"45–130",     anbieter:"Gahrens+Battermann"},
+
+  // ── BÜHNE & RIGGING ──
+  {id:"b01", cat:"buehne", name:"Bühnenpodest 2×1m (20cm)",         hersteller:"Aluminium",        desc:"Modular, stapelbar, 20cm hoch",               einsatz:"Privatevents, kleine Bühnen",       preis_tag:"15–25",    preis_we:"33–55",      anbieter:"dry-hire.com"},
+  {id:"b02", cat:"buehne", name:"Bühnenpodest 2×1m (40/60cm)",      hersteller:"Aluminium",        desc:"Modularbühne, verschiedene Höhen",            einsatz:"Firmenfeiern, Konzerte",            preis_tag:"20–35",    preis_we:"44–78",      anbieter:"dry-hire.com"},
+  {id:"b03", cat:"buehne", name:"Bühnenpaket 6×4m komplett",        hersteller:"Aluminium",        desc:"Inkl. Treppen, Brüstung",                     einsatz:"Kleine bis mittlere Events",        preis_tag:"300–500",  preis_we:"670–1.100",  anbieter:"dry-hire.com, LiveTec"},
+  {id:"b04", cat:"buehne", name:"Bühnenpaket 8×6m komplett",        hersteller:"Aluminium",        desc:"Inkl. Treppen, Seitenwände",                  einsatz:"Konzerte, Festivals",               preis_tag:"500–900",  preis_we:"1.100–2.000",anbieter:"LiveTec Berlin, N&M Berlin"},
+  {id:"b05", cat:"buehne", name:"Truss Layer 290/400 (3m)",         hersteller:"Litec/Global",     desc:"Fachwerkträger für Rigging",                  einsatz:"Aufhängung Licht/Sound",            preis_tag:"18–30",    preis_we:"40–65",      anbieter:"NicLen, dry-hire.com"},
+  {id:"b06", cat:"buehne", name:"Truss Layer 290/400 (2m)",         hersteller:"Litec/Global",     desc:"Kürzeres Truss-Segment",                      einsatz:"Rigging, Indoor",                   preis_tag:"12–22",    preis_we:"26–48",      anbieter:"NicLen"},
+  {id:"b07", cat:"buehne", name:"Traversenturm H4m komplett",       hersteller:"Aluminium",        desc:"4m Traversenturm inkl. Base",                 einsatz:"Kleine Shows, Privatevents",        preis_tag:"60–100",   preis_we:"130–220",    anbieter:"dry-hire.com"},
+  {id:"b08", cat:"buehne", name:"Kettenzug 1t (CM Lodestar)",       hersteller:"CM/Stagemaker",    desc:"Elektrischer Kettenzug 1000kg",               einsatz:"Profi-Rigging für alle Events",     preis_tag:"55–90",    preis_we:"120–200",    anbieter:"NicLen, N&M Berlin"},
+  {id:"b09", cat:"buehne", name:"Kettenzug 500kg",                  hersteller:"div.",             desc:"Elektrischer Kettenzug 500kg",                einsatz:"Kleine bis mittlere Aufhängungen",  preis_tag:"35–60",    preis_we:"78–132",     anbieter:"NicLen"},
+  {id:"b10", cat:"buehne", name:"Schäkel / Haken-Set",              hersteller:"div.",             desc:"Rigging-Kleinteile",                          einsatz:"Rigging allgemein",                 preis_tag:"5–15",     preis_we:"11–33",      anbieter:"dry-hire.com"},
+  {id:"b11", cat:"buehne", name:"Stahl-Drahtseil 6mm (10m)",        hersteller:"div.",             desc:"Sicherungsseil",                              einsatz:"Rigging, Traversensicherung",       preis_tag:"5–10",     preis_we:"11–22",      anbieter:"dry-hire.com"},
+  {id:"b12", cat:"buehne", name:"Prolyte-Dachsystem 8×6m",          hersteller:"Prolyte",          desc:"Wetterfestes Traversendach",                  einsatz:"Stadtfeste, Outdoor-Konzerte",      preis_tag:"700–1.200",preis_we:"1.600–2.700",anbieter:"LiveTec Berlin, dry-hire.com"},
+  {id:"b13", cat:"buehne", name:"Ground Support Tower (H6m)",       hersteller:"Aluminium",        desc:"Freistehender Tower für Truss",               einsatz:"Outdoor ohne Rigging-Punkte",       preis_tag:"120–200",  preis_we:"270–440",    anbieter:"dry-hire.com"},
+  {id:"b14", cat:"buehne", name:"Rednerpult / Podium",              hersteller:"Holz/Acryl",       desc:"Professionelles Redner-Podium",               einsatz:"Konferenzen, Galas, Awards",        preis_tag:"20–40",    preis_we:"44–88",      anbieter:"dry-hire.com"},
+  {id:"b15", cat:"buehne", name:"Treppe für Bühne (2-stufig)",      hersteller:"Aluminium",        desc:"Modulare Aufgangstreppe",                     einsatz:"Zu Bühnenpodesten",                 preis_tag:"10–20",    preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"b16", cat:"buehne", name:"Brüstung / Geländer (2m)",         hersteller:"Aluminium",        desc:"Sicherheitsgeländer",                         einsatz:"Bühnen, Absicherung",               preis_tag:"8–15",     preis_we:"18–33",      anbieter:"dry-hire.com"},
+
+  // ── MÖBEL & AUSSTATTUNG ──
+  {id:"m01", cat:"moebel", name:"Bankettstuhl (Chiavari)",           hersteller:"Holz/Gold",        desc:"Eleganter Stapelstuhl",                       einsatz:"Galas, Hochzeiten, Awards",         preis_tag:"3–6",      preis_we:"7–13",       anbieter:"Five Star Conference Berlin"},
+  {id:"m02", cat:"moebel", name:"Konferenzstuhl gepolstert",         hersteller:"Stoff/Leder",      desc:"Komfortabler Tagungsstuhl",                   einsatz:"Konferenzen, Meetings",             preis_tag:"4–8",      preis_we:"9–18",       anbieter:"Five Star Conference Berlin"},
+  {id:"m03", cat:"moebel", name:"Barhocker (Edelstahl)",             hersteller:"Edelstahl",        desc:"Eleganter Barhocker",                         einsatz:"Empfänge, Parties, Networking",     preis_tag:"5–10",     preis_we:"11–22",      anbieter:"Five Star Conference Berlin"},
+  {id:"m04", cat:"moebel", name:"Klappstuhl Stahl",                  hersteller:"Stahl",            desc:"Günstiger Stapelstuhl",                       einsatz:"Volksfeste, Privatevents",          preis_tag:"1–2",      preis_we:"2,50–4,50",  anbieter:"dry-hire.com"},
+  {id:"m05", cat:"moebel", name:"Lounge-Sessel (Chesterfield)",      hersteller:"Kunstleder",       desc:"Dekorativer Lounge-Sessel",                   einsatz:"VIP-Bereiche, Galas",               preis_tag:"25–50",    preis_we:"55–110",     anbieter:"Five Star Conference Berlin"},
+  {id:"m06", cat:"moebel", name:"Sofa 2-Sitzer Lounge",             hersteller:"Stoff",            desc:"Lounge-Sofa",                                 einsatz:"VIP, Networking, Privatevents",     preis_tag:"40–80",    preis_we:"88–175",     anbieter:"Five Star Conference Berlin"},
+  {id:"m07", cat:"moebel", name:"Biertischgarnitur (2m)",           hersteller:"Holz",             desc:"Bank + Tisch Set (2m)",                       einsatz:"Volksfeste, Privatevents",          preis_tag:"8–15",     preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"m08", cat:"moebel", name:"Stehtisch Ø 80cm",                 hersteller:"Stahl/Holz",       desc:"Hoher Stehtisch",                             einsatz:"Empfänge, Networking",              preis_tag:"8–15",     preis_we:"18–33",      anbieter:"Five Star Conference Berlin, dry-hire.com"},
+  {id:"m09", cat:"moebel", name:"Klapptisch 180×70cm",              hersteller:"Kunststoff",       desc:"Leichter Klapptisch",                         einsatz:"Caterer, Buffets, Messen",          preis_tag:"4–8",      preis_we:"9–18",       anbieter:"dry-hire.com"},
+  {id:"m10", cat:"moebel", name:"Bankettisch rund Ø 150cm",         hersteller:"Holz",             desc:"Runder Esstisch (8–10 Pers.)",                einsatz:"Galadinner, Hochzeiten",            preis_tag:"15–28",    preis_we:"33–62",      anbieter:"dry-hire.com"},
+  {id:"m11", cat:"moebel", name:"Konferenztisch 300×120cm",         hersteller:"Holz/Chrom",       desc:"Großer Besprechungstisch",                    einsatz:"Meetings, Firmenevents",            preis_tag:"30–60",    preis_we:"65–130",     anbieter:"N&M Berlin"},
+  {id:"m12", cat:"moebel", name:"Pagodenzelt 5×5m",                 hersteller:"PVC weiß",         desc:"Frei stehendes Pagodenzelt",                  einsatz:"Privatevents, kleine Feste",        preis_tag:"150–280",  preis_we:"340–620",    anbieter:"dry-hire.com"},
+  {id:"m13", cat:"moebel", name:"Zeltaufbau 10×10m",                hersteller:"PVC weiß",         desc:"Mittelgroßes Eventzelt",                      einsatz:"Firmenfeiern, Sommerfeste",         preis_tag:"400–700",  preis_we:"900–1.600",  anbieter:"dry-hire.com"},
+  {id:"m14", cat:"moebel", name:"Zeltsystem 20×30m",                hersteller:"PVC weiß",         desc:"Großzelt inkl. Boden",                        einsatz:"Festivals, Großevents",             preis_tag:"2.000–4.500",preis_we:"4.500–9.000",anbieter:"LiveTec Berlin, dry-hire.com"},
+  {id:"m15", cat:"moebel", name:"Cocktailbar Modul (LED)",          hersteller:"Acryl/LED",        desc:"Beleuchtete Bar",                             einsatz:"Parties, Networking",               preis_tag:"50–100",   preis_we:"110–220",    anbieter:"Five Star Conference Berlin"},
+  {id:"m16", cat:"moebel", name:"Husse / Stuhlüberzug weiß",        hersteller:"Stoff",            desc:"Für Bankettstuhl",                            einsatz:"Hochzeiten, Galas",                 preis_tag:"1–2",      preis_we:"2–4",        anbieter:"Five Star Conference Berlin"},
+  {id:"m17", cat:"moebel", name:"Tischdecke weiß (180cm)",          hersteller:"Damast",           desc:"Elegante Tischdecke",                         einsatz:"Alle Abendveranstaltungen",         preis_tag:"2–4",      preis_we:"4,50–9",     anbieter:"Five Star Conference Berlin"},
+  {id:"m18", cat:"moebel", name:"Tischläufer / Tischwäsche",        hersteller:"div.",             desc:"Dekorationstextilien",                        einsatz:"Galas, Hochzeiten",                 preis_tag:"1–3",      preis_we:"2–6",        anbieter:"Five Star Conference Berlin"},
+
+  // ── STROM, KONFERENZ & FX ──
+  {id:"s01", cat:"strom", name:"Stromgenerator 20 kVA",             hersteller:"Dieselaggregat",   desc:"Stromerzeuger, schallisoliert",               einsatz:"Outdoor ohne Stromanschluss",       preis_tag:"150–300",  preis_we:"340–660",    anbieter:"dry-hire.com, LiveTec Berlin"},
+  {id:"s02", cat:"strom", name:"Stromgenerator 60 kVA",             hersteller:"Dieselaggregat",   desc:"Größerer Generator",                          einsatz:"Festivals, Großveranstaltungen",    preis_tag:"350–650",  preis_we:"800–1.450",  anbieter:"LiveTec Berlin"},
+  {id:"s03", cat:"strom", name:"Verteiler 63A 5-polig",             hersteller:"Elektro",          desc:"CEE Strom-Verteiler",                         einsatz:"Strom auf Events verteilen",        preis_tag:"20–40",    preis_we:"44–88",      anbieter:"dry-hire.com"},
+  {id:"s04", cat:"strom", name:"CEE Kabel 32A (25m)",               hersteller:"Gummi",            desc:"32A Starkstrom-Verlängerung",                 einsatz:"Strom auf Events",                  preis_tag:"8–15",     preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"s05", cat:"strom", name:"Schukokabel 10m (H07RN-F)",         hersteller:"Gummi",            desc:"Outdoor-Verlängerungskabel",                  einsatz:"Alle Events",                       preis_tag:"3–6",      preis_we:"7–13",       anbieter:"dry-hire.com"},
+  {id:"s06", cat:"strom", name:"USV / Batterie Backup",             hersteller:"APC/Eaton",        desc:"Unterbrechungsfreie Stromversorgung",          einsatz:"Konferenzen, IT-kritische Events",  preis_tag:"50–100",   preis_we:"110–220",    anbieter:"dry-hire.com"},
+  {id:"s07", cat:"strom", name:"Konferenzanlage 20 Plätze",         hersteller:"Bosch/Vissonic",   desc:"Delegiertenanlage komplett",                  einsatz:"HV, Konferenzen",                   preis_tag:"200–400",  preis_we:"450–900",    anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"s08", cat:"strom", name:"Konferenzanlage 50 Plätze",         hersteller:"Bosch",            desc:"Größere Delegiertenanlage",                   einsatz:"Hauptversammlungen, Kongresse",     preis_tag:"450–800",  preis_we:"1.000–1.800",anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"s09", cat:"strom", name:"Dolmetscheranlage 4-Kanal",         hersteller:"div.",             desc:"Simultandolmetscher-Set",                     einsatz:"Internationale Konferenzen",        preis_tag:"150–300",  preis_we:"340–660",    anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"s10", cat:"strom", name:"Empfänger Dolmetscher (1 Stk)",     hersteller:"Beyerdynamic",     desc:"Empfänger + Kopfhörer",                       einsatz:"Je Teilnehmer",                     preis_tag:"3–6",      preis_we:"7–13",       anbieter:"N&M Berlin, Gahrens+Battermann"},
+  {id:"s11", cat:"strom", name:"Podiumsmikrofon (Gooseneck)",       hersteller:"Sennheiser/AKG",   desc:"Standmikrofon fürs Podium",                   einsatz:"Konferenzen, Diskussionen",         preis_tag:"10–18",    preis_we:"22–40",      anbieter:"Müller Musik"},
+  {id:"s12", cat:"strom", name:"Laptop für Präsentationen",         hersteller:"Lenovo/Dell",      desc:"Business-Laptop mit HDMI",                    einsatz:"Konferenzen, Präsentationen",       preis_tag:"30–55",    preis_we:"65–120",     anbieter:"Five Star Conference, Gahrens+Battermann"},
+  {id:"s13", cat:"strom", name:"WLAN Access Point (High Density)",  hersteller:"Cisco/Ubiquiti",   desc:"Professioneller AP für Events",               einsatz:"Events mit vielen Geräten",         preis_tag:"25–50",    preis_we:"55–110",     anbieter:"Gahrens+Battermann, N&M Berlin"},
+  {id:"s14", cat:"strom", name:"Netzwerk-Switch 24-Port",           hersteller:"Cisco",            desc:"Managed Switch",                              einsatz:"Event-IT Infrastruktur",            preis_tag:"15–30",    preis_we:"33–65",      anbieter:"Gahrens+Battermann"},
+  {id:"s15", cat:"strom", name:"Beamer-Adapter-Kit",                hersteller:"div.",             desc:"HDMI/DP/USB-C Adapter Set",                   einsatz:"Konferenzen, Präsentationen",       preis_tag:"5–10",     preis_we:"11–22",      anbieter:"dry-hire.com"},
+  {id:"s16", cat:"strom", name:"Mojo Barriere (1,5m Segment)",      hersteller:"Stahl",            desc:"Crowd-Barrier für Konzerte",                  einsatz:"Konzerte, Festivals",               preis_tag:"8–15",     preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"s17", cat:"strom", name:"Absperrgitter (Metall, 2m)",        hersteller:"Stahl",            desc:"Zaunfeld",                                    einsatz:"Privatevents, Stadtfeste",          preis_tag:"5–10",     preis_we:"11–22",      anbieter:"dry-hire.com"},
+  {id:"s18", cat:"strom", name:"Absperrband-Set",                   hersteller:"Kunststoff",       desc:"Pfosten + Absperrband",                       einsatz:"VIP-Bereiche, Eingang",             preis_tag:"3–6",      preis_we:"7–13",       anbieter:"dry-hire.com"},
+  {id:"s19", cat:"strom", name:"CO2-Jet / Flugzeugeffekt",          hersteller:"FX",               desc:"CO2-Fontäne / Shooting",                      einsatz:"Konzerte, Galas",                   preis_tag:"120–250",  preis_we:"270–550",    anbieter:"dry-hire.com"},
+  {id:"s20", cat:"strom", name:"Sparkular (Funkenregen kalt)",      hersteller:"Sparkular",        desc:"Kalter Funken-Effekt",                        einsatz:"Shows, Konzerte, Galas",            preis_tag:"80–180",   preis_we:"180–400",    anbieter:"dry-hire.com"},
+  {id:"s21", cat:"strom", name:"Konfetti Shooter (elektrisch)",     hersteller:"div.",             desc:"Konfetti-Kanone",                             einsatz:"Shows, Sportevents",                preis_tag:"30–70",    preis_we:"65–155",     anbieter:"dry-hire.com"},
+  {id:"s22", cat:"strom", name:"Nebel-/Smokejet (CO2)",             hersteller:"div.",             desc:"Boden-Nebel Effekt",                          einsatz:"Shows, Konzerte",                   preis_tag:"40–90",    preis_we:"88–200",     anbieter:"dry-hire.com"},
+];
+
+// ═══════════════ CATEGORY CONFIG ═══════════════
+const CAT = {
+  audio:  { label:"Ton & Audio",         icon:"🔊", cls:"audio"  },
+  licht:  { label:"Licht",               icon:"💡", cls:"licht"  },
+  video:  { label:"Video & LED",         icon:"📺", cls:"video"  },
+  buehne: { label:"Bühne & Rigging",     icon:"🏗️", cls:"buehne" },
+  moebel: { label:"Möbel & Ausstattung", icon:"🪑", cls:"moebel" },
+  strom:  { label:"Strom & FX",          icon:"⚡", cls:"strom"  },
+};
+
+// ═══════════════ STATE ═══════════════
+let cart = {};        // { id: quantity }
+let isAdmin = false;
+let currentCat = 'all';
+let searchQuery = '';
+const ADMIN_PW = 'benni2025';
+const FORMSPREE = 'https://formspree.io/f/xyknryvg';
+
+// ═══════════════ RENDER GRID ═══════════════
+function renderGrid() {
+  const grid = document.getElementById('productGrid');
+  const noRes = document.getElementById('noResults');
+  let filtered = PRODUCTS;
+
+  if (currentCat !== 'all') filtered = filtered.filter(p => p.cat === currentCat);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.desc.toLowerCase().includes(q) ||
+      p.einsatz.toLowerCase().includes(q) ||
+      p.hersteller.toLowerCase().includes(q)
+    );
+  }
+
+  document.getElementById('sectionCount').textContent = filtered.length + ' Artikel';
+  const cat = CAT[currentCat];
+  document.getElementById('sectionTitle').textContent =
+    cat ? cat.icon + ' ' + cat.label : 'Alle Artikel';
+
+  if (!filtered.length) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  grid.innerHTML = filtered.map(p => {
+    const c = CAT[p.cat];
+    const qty = cart[p.id] || 0;
+    const inCart = qty > 0;
+    return `
+    <div class="card" id="card-${p.id}">
+      <div class="card-img cat-${c.cls}">
+        <span class="card-badge badge-${c.cls}">${c.icon} ${c.label}</span>
+        <span style="font-size:3rem;">${c.icon}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${p.name}</div>
+        <div class="card-desc">${p.desc}<br><em style="color:#6b7a99;font-size:0.7rem;">${p.hersteller}</em></div>
+        <div class="card-einsatz">📍 ${p.einsatz}</div>
+        <div class="card-prices ${isAdmin?'visible':''}">
+          <div class="price-pill"><label>Tag</label><span>${p.preis_tag} €</span></div>
+          <div class="price-pill"><label>Wochenende</label><span>${p.preis_we} €</span></div>
+        </div>
+        <div class="card-anbieter ${isAdmin?'visible':''}">
+          <span style="margin-top:1px;">🏢</span>
+          <span>${p.anbieter}</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="qty-wrap">
+          <button class="qty-btn" onclick="changeQty('${p.id}',-1)">−</button>
+          <span class="qty-val" id="qty-${p.id}">${qty}</span>
+          <button class="qty-btn" onclick="changeQty('${p.id}',1)">+</button>
+        </div>
+        <button class="btn-add ${inCart?'in-cart':''}" id="addbtn-${p.id}" onclick="addToCart('${p.id}')">
+          ${inCart ? '✓ Im Warenkorb' : '+ Zum Warenkorb'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════ CART LOGIC ═══════════════
+function addToCart(id) {
+  if (!cart[id]) cart[id] = 1;
+  else cart[id]++;
+  updateCardUI(id);
+  updateCartUI();
+  if (!document.getElementById('cartSidebar').classList.contains('open')) {
+    openCart();
+  }
+}
+
+function changeQty(id, delta) {
+  cart[id] = Math.max(0, (cart[id] || 0) + delta);
+  if (cart[id] === 0) delete cart[id];
+  updateCardUI(id);
+  updateCartUI();
+}
+
+function updateCardUI(id) {
+  const qty = cart[id] || 0;
+  const qEl = document.getElementById('qty-' + id);
+  const bEl = document.getElementById('addbtn-' + id);
+  if (qEl) qEl.textContent = qty;
+  if (bEl) {
+    bEl.textContent = qty > 0 ? '✓ Im Warenkorb' : '+ Zum Warenkorb';
+    bEl.className = 'btn-add ' + (qty > 0 ? 'in-cart' : '');
+  }
+}
+
+function updateCartUI() {
+  const items = Object.entries(cart);
+  const totalCount = items.reduce((s,[,q]) => s+q, 0);
+
+  // Header counter
+  const cc = document.getElementById('cartCount');
+  cc.style.display = totalCount > 0 ? 'flex' : 'none';
+  cc.textContent = totalCount;
+
+  // Cart items list
+  const ci = document.getElementById('cartItems');
+  const kiBanner = document.getElementById('kiBanner');
+
+  if (!items.length) {
+    ci.innerHTML = `<div class="cart-empty"><span class="empty-icon">🎪</span>Noch keine Artikel ausgewählt.<br>Füge Equipment aus dem Katalog hinzu.</div>`;
+    kiBanner.style.display = 'none';
+    document.getElementById('cartTotal').classList.remove('visible');
+    document.getElementById('cartAnbieter').classList.remove('visible');
+    return;
+  }
+
+  kiBanner.style.display = 'block';
+
+  ci.innerHTML = items.map(([id, qty]) => {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p) return '';
+    const c = CAT[p.cat];
+    return `
+    <div class="cart-item">
+      <div class="ci-icon cat-${c.cls}">${c.icon}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-sub">${p.hersteller} · ${c.label}</div>
+        <div class="ci-price ${isAdmin?'visible':''}">ab ${p.preis_tag} € / Tag</div>
+      </div>
+      <div class="ci-qty">
+        <button class="ci-qty-btn" onclick="changeQty('${id}',-1)">−</button>
+        <span class="ci-qty-val">${qty}</span>
+        <button class="ci-qty-btn" onclick="changeQty('${id}',1)">+</button>
+      </div>
+      <button class="ci-remove" onclick="changeQty('${id}',-999)" title="Entfernen">✕</button>
+    </div>`;
+  }).join('');
+
+  // Admin: total & anbieter
+  if (isAdmin) {
+    document.getElementById('cartTotal').classList.add('visible');
+    document.getElementById('cartAnbieter').classList.add('visible');
+
+    // Anbieter sammeln
+    const anbieterSet = new Set();
+    items.forEach(([id]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if (p && p.anbieter) p.anbieter.split(',').forEach(a => anbieterSet.add(a.trim()));
+    });
+    document.getElementById('anbieterList').textContent = [...anbieterSet].join(', ');
+    document.getElementById('totalVal').textContent = '– auf Anfrage –';
+  } else {
+    document.getElementById('cartTotal').classList.remove('visible');
+    document.getElementById('cartAnbieter').classList.remove('visible');
+  }
+
+  // Update cart payload
+  const payload = items.map(([id,qty]) => {
+    const p = PRODUCTS.find(x=>x.id===id);
+    return `${qty}× ${p.name} (${p.hersteller})`;
+  }).join('\n');
+  document.getElementById('cartPayload').value = payload;
+}
+
+// ═══════════════ FILTER ═══════════════
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+function filterSearch(q) {
+  searchQuery = q;
+  renderGrid();
+}
+
+// ═══════════════ CART OPEN/CLOSE ═══════════════
+function openCart() {
+  document.getElementById('cartSidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function toggleCart() {
+  const open = document.getElementById('cartSidebar').classList.contains('open');
+  open ? closeCart() : openCart();
+}
+
+// ═══════════════ ADMIN MODAL ═══════════════
+function openAdminModal() {
+  if (isAdmin) {
+    logoutAdmin();
+    return;
+  }
+  document.getElementById('adminModal').classList.add('open');
+  document.getElementById('pwInput').focus();
+  document.getElementById('pwError').style.display = 'none';
+  document.getElementById('pwInput').value = '';
+}
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.remove('open');
+}
+function checkPw() {
+  const val = document.getElementById('pwInput').value;
+  if (val === ADMIN_PW) {
+    isAdmin = true;
+    closeAdminModal();
+    document.getElementById('adminBtn').classList.add('active');
+    document.getElementById('adminLabel').textContent = 'Admin aktiv';
+    renderGrid();
+    updateCartUI();
+    showToast('✅ Admin-Modus aktiviert — Preise & Anbieter sichtbar', 'success');
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+    document.getElementById('pwInput').select();
+  }
+}
+function logoutAdmin() {
+  isAdmin = false;
+  document.getElementById('adminBtn').classList.remove('active');
+  document.getElementById('adminLabel').textContent = 'Admin';
+  renderGrid();
+  updateCartUI();
+  showToast('🔒 Admin-Modus deaktiviert', '');
+}
+
+// ═══════════════ FORM SUBMIT ═══════════════
+async function sendRequest(e) {
+  e.preventDefault();
+  const items = Object.keys(cart);
+  if (!items.length) {
+    showToast('⚠️ Bitte füge zuerst Artikel zum Warenkorb hinzu.', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> Wird gesendet…';
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  // Build nice warenkorb string
+  const cartStr = Object.entries(cart).map(([id,qty]) => {
+    const p = PRODUCTS.find(x=>x.id===id);
+    return `${qty}× ${p.name}`;
+  }).join('\n');
+  data.set('warenkorb', cartStr);
+
+  try {
+    const res = await fetch(FORMSPREE, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      showToast('✅ Anfrage erfolgreich gesendet! Wir melden uns bald.', 'success');
+      form.reset();
+      cart = {};
+      renderGrid();
+      updateCartUI();
+      closeCart();
+    } else {
+      throw new Error('Fehler');
+    }
+  } catch {
+    showToast('❌ Senden fehlgeschlagen. Bitte erneut versuchen.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>📩</span> Anfrage senden';
+  }
+}
+
+// ═══════════════ TOAST ═══════════════
+let toastTimer;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ═══════════════ KEYBOARD ═══════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeCart();
+    closeAdminModal();
+  }
+});
+
+// ═══════════════ INIT ═══════════════
+renderGrid();
+updateCartUI();
+</script>
+</body>
+</html>
