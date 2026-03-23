@@ -982,9 +982,13 @@ function renderGrid() {
       </div>
       <div class="card-footer">
         <div class="qty-wrap">
-          <button class="qty-btn" onclick="changeQty('${p.id}',-1)">−</button>
+          <button class="qty-btn"
+            onmousedown="startHold('${p.id}',-1)" onmouseup="stopHold()" onmouseleave="stopHold()"
+            ontouchstart="startHold('${p.id}',-1);event.preventDefault()" ontouchend="stopHold()">−</button>
           <span class="qty-val" id="qty-${p.id}">${qty}</span>
-          <button class="qty-btn" onclick="changeQty('${p.id}',1)">+</button>
+          <button class="qty-btn"
+            onmousedown="startHold('${p.id}',1)" onmouseup="stopHold()" onmouseleave="stopHold()"
+            ontouchstart="startHold('${p.id}',1);event.preventDefault()" ontouchend="stopHold()">+</button>
         </div>
         <button class="btn-add ${inCart?'in-cart':''}" id="addbtn-${p.id}" onclick="addToCart('${p.id}')">
           ${inCart ? '✓ Im Warenkorb' : '+ Zum Warenkorb'}
@@ -1003,6 +1007,28 @@ function addToCart(id) {
   if (!document.getElementById('cartSidebar').classList.contains('open')) {
     openCart();
   }
+}
+
+// ═══════════════ HOLD TO ACCELERATE ═══════════════
+let _holdTimer = null;
+let _holdActive = false;
+
+function startHold(id, delta) {
+  _holdActive = true;
+  changeQty(id, delta);               // sofortige erste Änderung beim Klick
+
+  let delay = 380;                    // Startgeschwindigkeit nach erstem Hold
+  _holdTimer = setTimeout(function tick() {
+    if (!_holdActive) return;
+    changeQty(id, delta);
+    delay = Math.max(38, delay * 0.72);   // jede Runde ~28% schneller, min 38ms
+    _holdTimer = setTimeout(tick, delay);
+  }, 520);                            // 520ms warten bevor Auto-Repeat startet
+}
+
+function stopHold() {
+  _holdActive = false;
+  clearTimeout(_holdTimer);
 }
 
 function changeQty(id, delta) {
@@ -1059,9 +1085,13 @@ function updateCartUI() {
         <div class="ci-price ${isAdmin?'visible':''}">ab ${p.preis_tag} € / Tag</div>
       </div>
       <div class="ci-qty">
-        <button class="ci-qty-btn" onclick="changeQty('${id}',-1)">−</button>
+        <button class="ci-qty-btn"
+          onmousedown="startHold('${id}',-1)" onmouseup="stopHold()" onmouseleave="stopHold()"
+          ontouchstart="startHold('${id}',-1);event.preventDefault()" ontouchend="stopHold()">−</button>
         <span class="ci-qty-val">${qty}</span>
-        <button class="ci-qty-btn" onclick="changeQty('${id}',1)">+</button>
+        <button class="ci-qty-btn"
+          onmousedown="startHold('${id}',1)" onmouseup="stopHold()" onmouseleave="stopHold()"
+          ontouchstart="startHold('${id}',1);event.preventDefault()" ontouchend="stopHold()">+</button>
       </div>
       <button class="ci-remove" onclick="changeQty('${id}',-999)" title="Entfernen">✕</button>
     </div>`;
