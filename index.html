@@ -525,13 +525,13 @@
 <!-- ═══════════════════════════ FILTER ═══════════════════════════ -->
 <div class="filter-section">
   <div class="filter-wrap">
-    <button class="filter-btn active" data-cat="all" onclick="filterCat('all', this)">✦ Alle</button>
-    <button class="filter-btn" data-cat="audio"  onclick="filterCat('audio',  this)">🔊 Ton & Audio</button>
-    <button class="filter-btn" data-cat="licht"  onclick="filterCat('licht',  this)">💡 Licht</button>
-    <button class="filter-btn" data-cat="video"  onclick="filterCat('video',  this)">📺 Video & LED</button>
-    <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">🏗️ Bühne & Rigging</button>
-    <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">🪑 Möbel & Ausstattung</button>
-    <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">⚡ Strom & FX</button>
+    <button class="filter-btn active" data-cat="all" onclick="filterCat('all', this)">Alle</button>
+    <button class="filter-btn" data-cat="audio"  onclick="filterCat('audio',  this)">Ton & Audio</button>
+    <button class="filter-btn" data-cat="licht"  onclick="filterCat('licht',  this)">Licht</button>
+    <button class="filter-btn" data-cat="video"  onclick="filterCat('video',  this)">Video & LED</button>
+    <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">Bühne & Rigging</button>
+    <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">Möbel & Ausstattung</button>
+    <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">Strom & FX</button>
     <div class="search-wrap">
       <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
     </div>
@@ -952,7 +952,7 @@ function renderGrid() {
     return `
     <div class="card" id="card-${p.id}">
       <div class="card-img cat-${c.cls}">
-        <span class="card-badge badge-${c.cls}">${c.icon} ${c.label}</span>
+        <span class="card-badge badge-${c.cls}">${c.label}</span>
         ${getCatSVG(p.cat)}
       </div>
       <div class="card-body">
