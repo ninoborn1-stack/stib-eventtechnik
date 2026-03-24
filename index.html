@@ -552,6 +552,18 @@
   /* card-img SVG container */
   .card-img svg { width: 72px; height: 72px; filter: drop-shadow(0 0 12px rgba(0,184,90,0.35)); }
 
+  /* ──────── PRODUCT IMAGES ──────── */
+  .card-img.has-img svg { display: none; }
+  .card-img .prod-img {
+    max-width: 88%;
+    max-height: 116px;
+    object-fit: contain;
+    border-radius: 6px;
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,0.55));
+    transition: transform 0.3s ease;
+  }
+  .card:hover .card-img .prod-img { transform: scale(1.07); }
+
   /* ──────── RESPONSIVE ──────── */
   @media(max-width:600px) {
     header { padding: 0 1rem; }
@@ -895,6 +907,53 @@ const PRODUCTS = [
   {id:"s22", cat:"strom", name:"Nebel-/Smokejet (CO2)",             hersteller:"div.",             desc:"Boden-Nebel Effekt",                          einsatz:"Shows, Konzerte",                   preis_tag:"40–90",    preis_we:"88–200",     anbieter:"dry-hire.com"},
 ];
 
+// ═══════════════ PRODUCT IMAGES ═══════════════
+const PRODUCT_IMGS = {
+  // ── TON & AUDIO ──
+  "a01": "https://www.dbaudio.com/assets/products/_processed_/d/1/csm_dbaudio-y8-loudspeaker-front_ad69cf9ff2.png",
+  "a02": "https://www.dbaudio.com/assets/products/_processed_/b/8/csm_dbaudio-y12-loudspeaker-front_806db89819.png",
+  "a05": "https://www.qscaudio.com/fileadmin/images/hero/rebrand2024/spk/k2/K12_2_Hero_Angles_01_1250x615.png",
+  "a07": "https://hkaudio-production-dms.s3.eu-central-1.amazonaws.com/files/shares/groups/conversions/l-sub-group_detail.jpg",
+  "a08": "https://www.rcf.it/documents/20128/825487/000_NX-985-A-LEFT.png/99aa7d3e-28d7-f423-cc0c-ba8c1c267ee3?version=2.0&t=1707321316219&imagePreview=1",
+  "a09": "https://files.yamaha.com/7B7B39816F6647BEAB9D6BB5704FCB25_12073_f9a74d427d6f771a6ac29f2af3cb92b8.jpg?impolicy=resize&imwid=735&imhei=735",
+  "a10": "https://usa.yamaha.com/files/FA594699D32949AFBDFC2243FFFFDC9D_12073_b916bf2e3b43cc793e4bd37ac21a11cd.jpg",
+  "a11": "https://files.yamaha.com/573AA58F172E4174BE9EDF3A950861E5_12073_5ca1dfc4c51acb0f499fc04ca17a3351.jpg",
+  "a12": "https://prosoundonline.com/wp-content/uploads/AllenHeath_SQ-6.jpg",
+  "a15": "https://assets.stickpng.com/images/580b57fbd9996e24bc43bfda.png",
+  "a17": "https://assets.sennheiser.com/assets/ew-500-Vocal-935-sennheiser-01.png/Zz05ZDhjYTE1YWU3YzMxMWYwOWYxNzJhMzQxNzliYzkxZA==",
+  "a20": "https://assets.sennheiser.com/assets/MKH_50_P_48_Product_shot_cutout.png.png/Zz05OGUyYTNmMmU3YWYxMWYwYjk1OWNlM2Q3NWM0MGYwNw==",
+  "a21": "https://assets.sennheiser.com/assets/ew-iem-g4-sennheiser-01.png/Zz1hNjk0ODE4Y2U3YzMxMWYwOGM4OTJhMzQxNzliYzkxZA==",
+  "a24": "https://www.radialeng.com/wp-content/uploads/2018/03/j48-feature-1.jpg",
+  // ── VIDEO & LED ──
+  "v05": "https://images.samsung.com/is/image/samsung/p6pim/us/qn65ls03fwfxza/gallery/us-the-frame-ls03fw-qn65ls03fwfxza-546242603?$PD_GALLERY_PNG$",
+  "v06": "https://images.samsung.com/is/image/samsung/p6pim/us/qn98q7faafxza/gallery/us-qled-q7f-543508-qn98q7faafxza-549168537?$PD_GALLERY_PNG$",
+  // ── LICHT ──
+  "l01": "https://stage-experts.com/cdn/shop/files/Lighting_robe-bmfl-spot_stage_experts-1.jpg?v=1724245724",
+  "l02": "https://hirewl.com/wp-content/uploads/2024/02/Robe_MegaPointe_Front-Right.jpg",
+  "l03": "https://www.claypaky.it/wp-content/uploads/2022/10/Claypaky_Sharpy.jpg",
+  "l04": "https://cdn-shop.adamhall.com/THUMBNAIL1/media/MARKEN/CAMEO/CLOXP/CLOXP_1.jpg",
+  "l05": "https://adn.harmanpro.com/product_attachments/product_attachments/4793_1728940678/macviperprofile_vert_medium.jpg",
+  "l06": "https://www.ayrton.eu/wp-content/uploads/2024/04/RivaleProfile-1.jpg",
+  "l07": "https://shop.solotech.com/cdn/shop/files/LEDBEAM-350.jpg?v=1685089051",
+  "l08": "https://adn.harmanpro.com/product_attachments/product_attachments/4816_1728124278/MACQuantumWash_large.jpg",
+  "l09": "https://glp.de/images/products/impressionX4L/X4-L_Header2.png",
+  "l10": "https://cdn-shop.adamhall.com/THUMBNAIL1/media/MARKEN/CAMEO/CLEW7/CLEW7_1.jpg",
+  "l11": "https://cdn-shop.adamhall.com/THUMBNAIL1/media/MARKEN/CAMEO/CLZW600/CLZW600_1.jpg",
+  "l12": "https://cdn-shop.adamhall.com/THUMBNAIL1/media/MARKEN/CAMEO/CLF4T/CLF4T_1.jpg",
+  "l13": "https://media.astera-led.com/wp-content/uploads/FP1_TitanTube_V2-1200x1200.png",
+  "l14": "https://media.astera-led.com/wp-content/uploads/AX5_TriplePAR_V1.png",
+  "l15": "https://portmanlights.com/wp-content/uploads/2022/03/P1_main.png",
+  "l16": "https://glp.de/images/products/jdc1/JDC1_Header-2.png",
+  "l17": "https://xom.malighting.com/xom-rest/assets/6640ad53-f734-4fef-b1b1-d5f23151100c/preview?mimeType=image%2Fpng&width=1170&height=700",
+  "l18": "https://xom.malighting.com/xom-rest/assets/9bb55f04-5b0b-4a62-a215-faa252f84921/preview?mimeType=image%2Fpng&width=1170&height=700",
+  "l19": "https://www.avolites.com/app/uploads/2018/11/avolites130525409570white_small.jpg",
+  "l20": "https://chamsyslighting.com/wp-content/uploads/2020/07/MQ500-FRONT.png",
+  "l21": "https://stage-experts.com/cdn/shop/files/ROBEBMFLFollowSpot1_-8_LTincl.camera.jpg?v=1728248191",
+  "l22": "https://adn.harmanpro.com/product_attachments/product_attachments/4860_1728940592/Atomic3000_0013_vert_medium.jpg",
+  "l23": "https://www.adj.com/cdn/shop/files/f6195bae82b50ece67264f1b82dd2604732c811d_ENT008__IMG__001__57fa512d1c92.jpg?v=1773209686",
+  "l24": "https://mokasfx.com/wp-content/uploads/2023/03/MK-CN05A.jpg",
+};
+
 // ═══════════════ CATEGORY CONFIG ═══════════════
 const CAT = {
   audio:  { label:"Ton & Audio",         icon:"🔊", cls:"audio"  },
@@ -1067,10 +1126,12 @@ function renderGrid() {
     const c = CAT[p.cat];
     const qty = cart[p.id] || 0;
     const inCart = qty > 0;
+    const imgUrl = PRODUCT_IMGS[p.id];
     return `
     <div class="card" id="card-${p.id}">
-      <div class="card-img cat-${c.cls}">
+      <div class="card-img cat-${c.cls}${imgUrl ? ' has-img' : ''}">
         <span class="card-badge badge-${c.cls}">${c.label}</span>
+        ${imgUrl ? `<img class="prod-img" src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.closest('.card-img').classList.remove('has-img');this.remove()">` : ''}
         ${getCatSVG(p.cat)}
       </div>
       <div class="card-body">
