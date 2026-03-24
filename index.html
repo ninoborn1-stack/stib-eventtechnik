@@ -536,26 +536,23 @@
 
   /* ──────── LANGUAGE TOGGLE ──────── */
   .lang-toggle {
-    position: fixed;
-    top: 80px;
-    right: 24px;
-    z-index: 99;
-    background: var(--card);
+    background: transparent;
     border: 1px solid var(--border);
     color: var(--text-muted);
-    padding: 6px 14px;
+    padding: 7px 13px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.06em;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     gap: 5px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    white-space: nowrap;
   }
   .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .lang-toggle .lang-label { display: inline; }
 
   /* ──────── CATEGORY COLORS ──────── */
   .cat-audio  { background: linear-gradient(145deg, rgba(0,184,90,0.10), rgba(31,26,53,0.6)); }
@@ -592,6 +589,8 @@
   @media(max-width:600px) {
     header { padding: 0 1rem; }
     .logo-text span { display: none; }
+    .lang-toggle { padding: 7px 9px; }
+    .lang-toggle .lang-label { display: none; }
     .hero { padding: 2rem 1rem 1.5rem; }
     .filter-section { padding: 0.75rem 1rem; }
     .search-wrap { display: none; }
@@ -635,15 +634,13 @@
     <button class="btn-admin" id="adminBtn" onclick="openAdminModal()">
       <span>🔐</span> <span id="adminLabel">Admin</span>
     </button>
+    <button class="lang-toggle" id="langToggle" onclick="toggleLang()">🌐 <span class="lang-label">EN</span></button>
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Warenkorb
       <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
 </header>
-
-<!-- ═══════════════════════════ LANG TOGGLE ═══════════════════════════ -->
-<button class="lang-toggle" id="langToggle" onclick="toggleLang()">🌐 EN</button>
 
 <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
 <div class="hero">
@@ -969,7 +966,7 @@ function applyLang() {
   cartBtnEl.appendChild(countSpan);
 
   // Lang toggle label
-  document.getElementById('langToggle').textContent = t.langNext;
+  document.querySelector('#langToggle .lang-label').textContent = currentLang === 'de' ? 'EN' : 'DE';
 
   // Hero
   document.querySelector('.hero h1').innerHTML = t.heroH1;
