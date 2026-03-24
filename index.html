@@ -548,6 +548,7 @@
   .badge-buehne { background: rgba(0,224,96,0.14); color: #00e060; }
   .badge-moebel { background: rgba(0,224,96,0.12); color: #00e060; }
   .badge-strom  { background: rgba(0,224,96,0.16); color: #00e060; }
+  .badge-kabel  { background: rgba(0,224,96,0.13); color: #00e060; }
 
   /* card-img SVG container */
   .card-img svg { width: 72px; height: 72px; filter: drop-shadow(0 0 12px rgba(0,184,90,0.35)); }
@@ -632,6 +633,7 @@
     <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">Bühne & Rigging</button>
     <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">Möbel & Ausstattung</button>
     <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">Strom & FX</button>
+    <button class="filter-btn" data-cat="kabel"  onclick="filterCat('kabel',  this)">🔌 Kabel</button>
     <div class="search-wrap">
       <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
     </div>
@@ -905,6 +907,42 @@ const PRODUCTS = [
   {id:"s20", cat:"strom", name:"Sparkular (Funkenregen kalt)",      hersteller:"Sparkular",        desc:"Kalter Funken-Effekt",                        einsatz:"Shows, Konzerte, Galas",            preis_tag:"80–180",   preis_we:"180–400",    anbieter:"dry-hire.com"},
   {id:"s21", cat:"strom", name:"Konfetti Shooter (elektrisch)",     hersteller:"div.",             desc:"Konfetti-Kanone",                             einsatz:"Shows, Sportevents",                preis_tag:"30–70",    preis_we:"65–155",     anbieter:"dry-hire.com"},
   {id:"s22", cat:"strom", name:"Nebel-/Smokejet (CO2)",             hersteller:"div.",             desc:"Boden-Nebel Effekt",                          einsatz:"Shows, Konzerte",                   preis_tag:"40–90",    preis_we:"88–200",     anbieter:"dry-hire.com"},
+
+  // ── KABEL & VERBINDUNGEN ──
+  // XLR
+  {id:"k01", cat:"kabel", name:"XLR Kabel 1,5m (Patch)",            hersteller:"pro snake / the sssnake", desc:"Patch-Verbindung kurz, XLR m/f",           einsatz:"Racks, Pult-Stageboxen, Patch",      preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Müller Musik"},
+  {id:"k02", cat:"kabel", name:"XLR Kabel 5m",                       hersteller:"pro snake / Cordial",     desc:"Standard Mikrofonkabel 5m",                einsatz:"Bühne, Mikrofone, DI-Boxen",          preis_tag:"2–4",      preis_we:"5–9",        anbieter:"Müller Musik, dry-hire.com"},
+  {id:"k03", cat:"kabel", name:"XLR Kabel 10m",                      hersteller:"pro snake / Cordial",     desc:"Standard Mikrofonkabel 10m",               einsatz:"Bühne, alle Veranstaltungsgrößen",    preis_tag:"3–5",      preis_we:"7–11",       anbieter:"Müller Musik, dry-hire.com"},
+  {id:"k04", cat:"kabel", name:"XLR Kabel 20m",                      hersteller:"pro snake / Cordial",     desc:"Langes Mikrofonkabel 20m",                 einsatz:"Große Bühnen, weite Distanzen",        preis_tag:"4–8",      preis_we:"9–18",       anbieter:"dry-hire.com, NicLen"},
+  {id:"k05", cat:"kabel", name:"XLR Kabeltrommel 50m",               hersteller:"the sssnake",             desc:"50m Trommel, XLR m/f",                     einsatz:"Festivals, große Aufbauten",          preis_tag:"15–25",    preis_we:"33–55",      anbieter:"dry-hire.com, NicLen"},
+  // Speakon
+  {id:"k06", cat:"kabel", name:"Speakon NL4 Kabel 3m",               hersteller:"DAP / AudioTeknik Neutrik", desc:"Lautsprecherkabel NL4, 3m",              einsatz:"PA-Systeme, kurze Distanz",           preis_tag:"3–5",      preis_we:"7–11",       anbieter:"Müller Musik, dry-hire.com"},
+  {id:"k07", cat:"kabel", name:"Speakon NL4 Kabel 10m",              hersteller:"DAP / AudioTeknik Neutrik", desc:"Lautsprecherkabel NL4, 10m",             einsatz:"Bühne, PA-Aufbau",                    preis_tag:"5–8",      preis_we:"11–18",      anbieter:"Müller Musik, dry-hire.com"},
+  {id:"k08", cat:"kabel", name:"Speakon NL4 Kabel 20m",              hersteller:"DAP / AudioTeknik Neutrik", desc:"Lautsprecherkabel NL4, 20m",             einsatz:"Große Aufbauten, weite PA-Distanzen", preis_tag:"8–14",     preis_we:"18–31",      anbieter:"dry-hire.com"},
+  {id:"k09", cat:"kabel", name:"Speakon NL4 Kabel 50m",              hersteller:"DAP Neutrik Heavy Duty",  desc:"Speakon NL4, 50m Länge",                   einsatz:"Festivals, sehr große Distanzen",     preis_tag:"20–35",    preis_we:"44–77",      anbieter:"dry-hire.com"},
+  // Klinke/AUX
+  {id:"k10", cat:"kabel", name:"Klinke 6,3mm Mono 3m (TS)",          hersteller:"Adam Hall / the sssnake", desc:"6,3mm Mono (TS), 3m",                      einsatz:"Instrumente, Keyboard, Gitarre",       preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Müller Musik"},
+  {id:"k11", cat:"kabel", name:"Klinke 6,3mm Stereo TRS 3m",         hersteller:"Adam Hall",               desc:"6,3mm Stereo (TRS), 3m",                   einsatz:"Stereosignale, Insert-Send/Return",   preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Müller Musik"},
+  {id:"k12", cat:"kabel", name:"Klinke 6,3mm auf XLR 5m",            hersteller:"Adam Hall",               desc:"Adapterkabel Klinke→XLR, 5m",              einsatz:"Adapter für Bühnenboxen, Pult",       preis_tag:"2–4",      preis_we:"5–9",        anbieter:"Müller Musik, dry-hire.com"},
+  {id:"k13", cat:"kabel", name:"Mini-Klinke 3,5mm AUX 1m",           hersteller:"the sssnake / Adam Hall", desc:"3,5mm Klinke (AUX), 1m",                   einsatz:"Laptop, Handy, Consumer-Geräte",      preis_tag:"2",        preis_we:"4–5",        anbieter:"Müller Musik"},
+  {id:"k14", cat:"kabel", name:"Mini-Klinke 3,5mm auf 2×6,3mm 5m",   hersteller:"Adam Hall",               desc:"Y-Adapter: 3,5mm Stereo→2×6,3mm",          einsatz:"Laptop/Tablet an Mischpult",          preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Müller Musik"},
+  // HDMI/Video
+  {id:"k15", cat:"kabel", name:"HDMI Kabel 3m",                      hersteller:"Kramer / div.",           desc:"HDMI 2.0, bis 4K@60Hz, 3m",                einsatz:"Laptop, Beamer, Displays",            preis_tag:"3–5",      preis_we:"7–11",       anbieter:"Gahrens+Battermann, dry-hire.com"},
+  {id:"k16", cat:"kabel", name:"HDMI Kabel 5m",                      hersteller:"Kramer / div.",           desc:"HDMI 2.0, 5m",                              einsatz:"Konferenzen, Präsentationen",         preis_tag:"4–6",      preis_we:"9–13",       anbieter:"Gahrens+Battermann, dry-hire.com"},
+  {id:"k17", cat:"kabel", name:"HDMI Kabel 10m",                     hersteller:"Kramer / div.",           desc:"HDMI 2.0, hochwertig, 10m",                 einsatz:"Große Distanzen, Messen",             preis_tag:"5–9",      preis_we:"11–20",      anbieter:"Gahrens+Battermann"},
+  {id:"k18", cat:"kabel", name:"USB-C auf HDMI 4K Adapter",          hersteller:"div. / Thomann",          desc:"USB-C→HDMI, 4K-fähig",                      einsatz:"Aktuelle Laptops, MacBooks, Surface", preis_tag:"3–5",      preis_we:"7–11",       anbieter:"dry-hire.com"},
+  // Powercon
+  {id:"k19", cat:"kabel", name:"Powercon TRUE1 Kabel 5m",            hersteller:"Neutrik True1 / pro snake", desc:"Powercon TRUE1, 5m",                     einsatz:"Beleuchtung, Ton-Racks, Outdoor",     preis_tag:"5–8",      preis_we:"11–18",      anbieter:"dry-hire.com"},
+  {id:"k20", cat:"kabel", name:"Powercon TRUE1 Kabel 10m",           hersteller:"Neutrik True1 / pro snake", desc:"Powercon TRUE1, 10m",                    einsatz:"Outdoor-Technik, Bühnenbeleuchtung",  preis_tag:"7–12",     preis_we:"15–27",      anbieter:"dry-hire.com"},
+  {id:"k21", cat:"kabel", name:"Socapex-Kabel 10m (6-fach)",         hersteller:"Socapex / pro snake",     desc:"6-Kanal Strom-Multicore, 10m",              einsatz:"Profi-Bühnenbeleuchtung, Racks",      preis_tag:"10–18",    preis_we:"22–40",      anbieter:"dry-hire.com, NicLen"},
+  // DMX
+  {id:"k22", cat:"kabel", name:"DMX Kabel 3-pol 5m",                 hersteller:"Adam Hall / the sssnake", desc:"DMX 3-polig, 5m",                           einsatz:"Lichtsteuerung, Moving Heads, LED",   preis_tag:"2–4",      preis_we:"5–9",        anbieter:"NicLen, dry-hire.com"},
+  {id:"k23", cat:"kabel", name:"DMX Kabel 3-pol 10m",                hersteller:"Adam Hall / the sssnake", desc:"DMX 3-polig, 10m",                          einsatz:"Licht-Rigs, größere Distanzen",       preis_tag:"3–5",      preis_we:"7–11",       anbieter:"NicLen, dry-hire.com"},
+  {id:"k24", cat:"kabel", name:"DMX Kabel 5-pol 10m",                hersteller:"Adam Hall / div.",        desc:"DMX 5-polig, 10m",                          einsatz:"Professionelle Lichtsteuerung",       preis_tag:"3–6",      preis_we:"7–13",       anbieter:"NicLen, dry-hire.com"},
+  // Ethernet
+  {id:"k25", cat:"kabel", name:"Cat6 Netzwerkkabel 5m",              hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 5m",                       einsatz:"AV-Netzwerk, Dante Audio-over-IP",    preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Gahrens+Battermann, dry-hire.com"},
+  {id:"k26", cat:"kabel", name:"Cat6 Netzwerkkabel 10m",             hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 10m",                      einsatz:"AV-Netzwerk, Event-IT Infrastruktur", preis_tag:"3–4",      preis_we:"7–9",        anbieter:"Gahrens+Battermann, dry-hire.com"},
+  {id:"k27", cat:"kabel", name:"Cat6 Netzwerkkabel 20m",             hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 20m",                      einsatz:"Große Räume, Messen, Konferenzen",    preis_tag:"4–7",      preis_we:"9–15",       anbieter:"Gahrens+Battermann, dry-hire.com"},
 ];
 
 // ═══════════════ PRODUCT IMAGES ═══════════════
@@ -962,6 +1000,7 @@ const CAT = {
   buehne: { label:"Bühne & Rigging",     icon:"🏗️", cls:"buehne" },
   moebel: { label:"Möbel & Ausstattung", icon:"🪑", cls:"moebel" },
   strom:  { label:"Strom & FX",          icon:"⚡", cls:"strom"  },
+  kabel:  { label:"Kabel & Verbindungen", icon:"🔌", cls:"kabel"  },
 };
 
 // ═══════════════ STATE ═══════════════
@@ -1087,6 +1126,44 @@ function getCatSVG(cat) {
       <circle cx="40" cy="40" r="30" fill="none" stroke="${G}" stroke-width="1" opacity="0">
         <animate attributeName="opacity" values="0;0.15;0" dur="1.1s" repeatCount="indefinite"/>
         <animate attributeName="r"       values="20;38;20" dur="1.1s" repeatCount="indefinite"/>
+      </circle>
+    </svg>`,
+  };
+    kabel: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left XLR connector -->
+      <circle cx="11" cy="40" r="9"   fill="none" stroke="${G}" stroke-width="2.5"/>
+      <circle cx="11" cy="40" r="4"   fill="${G}" opacity="0.12"/>
+      <circle cx="11" cy="37" r="1.6" fill="${G}" opacity="0.9"/>
+      <circle cx="8"  cy="43" r="1.6" fill="${G}" opacity="0.9"/>
+      <circle cx="14" cy="43" r="1.6" fill="${G}" opacity="0.9"/>
+      <!-- connector collar -->
+      <line x1="20" y1="40" x2="23" y2="40" stroke="${G}" stroke-width="3" stroke-linecap="round"/>
+      <!-- Cable wave path -->
+      <path d="M23,40 C31,40 33,24 44,24 C55,24 47,56 57,56 C60,56 62,48 57,40"
+            fill="none" stroke="${G}" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Signal pulse traveling along cable -->
+      <circle r="3.2" fill="${G}" opacity="0.95">
+        <animateMotion dur="2.2s" repeatCount="indefinite" keyTimes="0;1" calcMode="linear"
+          path="M23,40 C31,40 33,24 44,24 C55,24 47,56 57,56 C60,56 62,48 57,40"/>
+        <animate attributeName="opacity" values="0.95;0.2;0.95" dur="2.2s" repeatCount="indefinite"/>
+        <animate attributeName="r"       values="3.2;2;3.2"    dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+      <!-- connector collar right -->
+      <line x1="57" y1="40" x2="60" y2="40" stroke="${G}" stroke-width="3" stroke-linecap="round"/>
+      <!-- Right connector -->
+      <circle cx="69" cy="40" r="9"   fill="none" stroke="${G}" stroke-width="2.5"/>
+      <circle cx="69" cy="40" r="4"   fill="${G}" opacity="0.12"/>
+      <circle cx="69" cy="37" r="1.6" fill="${G}" opacity="0.9"/>
+      <circle cx="66" cy="43" r="1.6" fill="${G}" opacity="0.9"/>
+      <circle cx="72" cy="43" r="1.6" fill="${G}" opacity="0.9"/>
+      <!-- Glow rings (offset timing so left glows then right) -->
+      <circle cx="11" cy="40" r="9" fill="none" stroke="${G}" stroke-width="1.2" opacity="0">
+        <animate attributeName="opacity" values="0;0.45;0" dur="2.2s" repeatCount="indefinite"/>
+        <animate attributeName="r"       values="9;15;9"   dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="69" cy="40" r="9" fill="none" stroke="${G}" stroke-width="1.2" opacity="0">
+        <animate attributeName="opacity" values="0;0.45;0" dur="2.2s" repeatCount="indefinite" begin="1.1s"/>
+        <animate attributeName="r"       values="9;15;9"   dur="2.2s" repeatCount="indefinite" begin="1.1s"/>
       </circle>
     </svg>`,
   };
