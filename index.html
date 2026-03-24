@@ -534,6 +534,29 @@
   }
   footer a { color: var(--accent); text-decoration: none; }
 
+  /* ──────── LANGUAGE TOGGLE ──────── */
+  .lang-toggle {
+    position: fixed;
+    top: 80px;
+    right: 24px;
+    z-index: 99;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
   /* ──────── CATEGORY COLORS ──────── */
   .cat-audio  { background: linear-gradient(145deg, rgba(0,184,90,0.10), rgba(31,26,53,0.6)); }
   .cat-licht  { background: linear-gradient(145deg, rgba(0,184,90,0.08), rgba(40,28,60,0.6)); }
@@ -618,6 +641,9 @@
     </button>
   </div>
 </header>
+
+<!-- ═══════════════════════════ LANG TOGGLE ═══════════════════════════ -->
+<button class="lang-toggle" id="langToggle" onclick="toggleLang()">🌐 EN</button>
 
 <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
 <div class="hero">
@@ -779,6 +805,250 @@
 
 <!-- ═══════════════════════════ SCRIPT ═══════════════════════════ -->
 <script>
+// ═══════════════ TRANSLATIONS ═══════════════
+let currentLang = 'de';
+const T = {
+  de: {
+    logoSub:        "Techniklösungen in jedem Bereich",
+    cartBtn:        "Warenkorb",
+    heroH1:         "Techniklösungen in <span>jedem Bereich</span>",
+    heroP:          "Professionelle Technik für Privatevents bis Großveranstaltungen — wähle dein Equipment und sende uns eine unverbindliche Anfrage.",
+    heroCTAh3:      "Individuelle Anfrage",
+    heroCTAp:       "Kein passendes Produkt dabei? Beschreibe einfach dein Event — wir finden die richtige Lösung.",
+    heroCTAbtn:     "Jetzt anfragen →",
+    filterAll:      "Alle",
+    filterAudio:    "Ton & Audio",
+    filterLicht:    "Licht",
+    filterVideo:    "Video & LED",
+    filterBuehne:   "Bühne & Rigging",
+    filterMoebel:   "Möbel & Ausstattung",
+    filterStrom:    "Strom & FX",
+    filterKabel:    "🔌 Kabel",
+    searchPh:       "🔍 Suchen...",
+    sectionAll:     "Alle Artikel",
+    artikelCount:   "Artikel",
+    noResults:      "Keine Artikel gefunden.",
+    addToCart:      "+ Zum Warenkorb",
+    inCart:         "✓ Im Warenkorb",
+    cartTitle:      "🛒 Warenkorb",
+    cartEmptyLine1: "Noch keine Artikel ausgewählt.",
+    cartEmptyLine2: "Füge Equipment aus dem Katalog hinzu.",
+    totalLabel:     "Geschätzte Kosten (Tagespreis von)",
+    totalVal:       "– auf Anfrage –",
+    anbieterTitle:  "📍 Anbieter / Bezugsquellen",
+    formTitle:      "📋 Anfrage senden",
+    pName:          "Name *",
+    pFirma:         "Firma",
+    pEmail:         "E-Mail *",
+    pTelefon:       "Telefon",
+    pDatum:         "Eventdatum",
+    pOrt:           "Veranstaltungsort",
+    pNachricht:     "Nachricht / Besondere Anforderungen...",
+    sendBtn:        "📩 Anfrage senden",
+    sending:        "⏳ Wird gesendet…",
+    diTitle:        "✉️ Individuelle Anfrage",
+    diSub:          "Kein passendes Produkt dabei oder du weißt noch nicht genau was du brauchst? Beschreib uns einfach dein Event — wir melden uns mit einem maßgeschneiderten Angebot.",
+    pPersonen:      "Erwartete Gästezahl",
+    pBudget:        "Budget (ca.)",
+    pBeschreibung:  "Beschreibe dein Event & was du benötigst *",
+    diSendBtn:      "📩 Anfrage absenden",
+    adminTitle:     "🔐 Admin-Login",
+    adminDesc:      "Passwort eingeben, um Preise & Anbieter-Infos zu sehen.",
+    adminPwPh:      "Passwort",
+    adminCancel:    "Abbrechen",
+    adminLogin:     "Einloggen",
+    adminError:     "Falsches Passwort. Bitte erneut versuchen.",
+    kiTitle:        "🤖 KI-Kompatibilitäts-Check",
+    kiText:         "Bald prüft unsere KI automatisch deine Auswahl auf Vollständigkeit & Kompatibilität — fehlende Kabel, Adapter oder Inkompatibilitäten werden direkt angezeigt.",
+    footer:         "© 2025 STIB – Techniklösungen in jedem Bereich &nbsp;·&nbsp; Alle Preise auf Anfrage &nbsp;·&nbsp;",
+    toastNoCart:    "⚠️ Bitte füge zuerst Artikel zum Warenkorb hinzu.",
+    toastSent:      "✅ Anfrage erfolgreich gesendet! Wir melden uns bald.",
+    toastError:     "❌ Senden fehlgeschlagen. Bitte erneut versuchen.",
+    priceDay:       "Tag",
+    priceWE:        "Wochenende",
+    priceFrom:      "ab",
+    pricePerDay:    "/ Tag",
+    langNext:       "🌐 EN",
+    catLabels: {
+      audio:  "Ton & Audio",
+      licht:  "Licht",
+      video:  "Video & LED",
+      buehne: "Bühne & Rigging",
+      moebel: "Möbel & Ausstattung",
+      strom:  "Strom & FX",
+      kabel:  "Kabel & Verbindungen",
+    },
+  },
+  en: {
+    logoSub:        "Technical Solutions in Every Field",
+    cartBtn:        "Cart",
+    heroH1:         "Technical Solutions in <span>Every Field</span>",
+    heroP:          "Professional equipment for private events to large-scale productions — browse our catalog and send us a no-obligation inquiry.",
+    heroCTAh3:      "Custom Quote",
+    heroCTAp:       "Can't find what you need? Describe your event — we'll find the right solution.",
+    heroCTAbtn:     "Get a Quote →",
+    filterAll:      "All",
+    filterAudio:    "Sound & Audio",
+    filterLicht:    "Lighting",
+    filterVideo:    "Video & LED",
+    filterBuehne:   "Stage & Rigging",
+    filterMoebel:   "Furniture & Décor",
+    filterStrom:    "Power & FX",
+    filterKabel:    "🔌 Cables",
+    searchPh:       "🔍 Search...",
+    sectionAll:     "All Items",
+    artikelCount:   "items",
+    noResults:      "No items found.",
+    addToCart:      "+ Add to Cart",
+    inCart:         "✓ In Cart",
+    cartTitle:      "🛒 Cart",
+    cartEmptyLine1: "No items selected yet.",
+    cartEmptyLine2: "Browse the catalog to add equipment.",
+    totalLabel:     "Estimated cost (day rate from)",
+    totalVal:       "– on request –",
+    anbieterTitle:  "📍 Suppliers / Sources",
+    formTitle:      "📋 Send Request",
+    pName:          "Name *",
+    pFirma:         "Company",
+    pEmail:         "E-Mail *",
+    pTelefon:       "Phone",
+    pDatum:         "Event Date",
+    pOrt:           "Venue",
+    pNachricht:     "Message / Special Requirements...",
+    sendBtn:        "📩 Send Request",
+    sending:        "⏳ Sending…",
+    diTitle:        "✉️ Custom Quote",
+    diSub:          "Can't find the right product or not sure what you need? Tell us about your event — we'll get back to you with a tailored offer.",
+    pPersonen:      "Expected guest count",
+    pBudget:        "Budget (approx.)",
+    pBeschreibung:  "Describe your event & what you need *",
+    diSendBtn:      "📩 Send Request",
+    adminTitle:     "🔐 Admin Login",
+    adminDesc:      "Enter password to view prices & supplier info.",
+    adminPwPh:      "Password",
+    adminCancel:    "Cancel",
+    adminLogin:     "Log in",
+    adminError:     "Incorrect password. Please try again.",
+    kiTitle:        "🤖 AI Compatibility Check",
+    kiText:         "Soon our AI will automatically check your selection for completeness & compatibility — missing cables, adapters or incompatibilities will be shown directly.",
+    footer:         "© 2025 STIB – Technical Solutions in Every Field &nbsp;·&nbsp; All prices on request &nbsp;·&nbsp;",
+    toastNoCart:    "⚠️ Please add items to your cart first.",
+    toastSent:      "✅ Request sent successfully! We'll be in touch soon.",
+    toastError:     "❌ Sending failed. Please try again.",
+    priceDay:       "Day",
+    priceWE:        "Weekend",
+    priceFrom:      "from",
+    pricePerDay:    "/ day",
+    langNext:       "🌐 DE",
+    catLabels: {
+      audio:  "Sound & Audio",
+      licht:  "Lighting",
+      video:  "Video & LED",
+      buehne: "Stage & Rigging",
+      moebel: "Furniture & Décor",
+      strom:  "Power & FX",
+      kabel:  "Cables & Connections",
+    },
+  },
+};
+
+function toggleLang() {
+  currentLang = currentLang === 'de' ? 'en' : 'de';
+  applyLang();
+}
+
+function applyLang() {
+  const t = T[currentLang];
+  document.documentElement.lang = currentLang;
+
+  // Header
+  document.querySelector('.logo-text span').textContent = t.logoSub;
+  const cartBtnEl = document.querySelector('.cart-btn');
+  const countSpan = document.getElementById('cartCount');
+  cartBtnEl.innerHTML = `🛒 ${t.cartBtn} `;
+  cartBtnEl.appendChild(countSpan);
+
+  // Lang toggle label
+  document.getElementById('langToggle').textContent = t.langNext;
+
+  // Hero
+  document.querySelector('.hero h1').innerHTML = t.heroH1;
+  document.querySelector('.hero-text p').textContent = t.heroP;
+  document.querySelector('.hero-cta h3').textContent = t.heroCTAh3;
+  document.querySelector('.hero-cta > p').textContent = t.heroCTAp;
+  document.querySelector('.btn-cta-direct').textContent = t.heroCTAbtn;
+
+  // Filter buttons
+  document.querySelector('[data-cat="all"]').textContent    = t.filterAll;
+  document.querySelector('[data-cat="audio"]').textContent  = t.filterAudio;
+  document.querySelector('[data-cat="licht"]').textContent  = t.filterLicht;
+  document.querySelector('[data-cat="video"]').textContent  = t.filterVideo;
+  document.querySelector('[data-cat="buehne"]').textContent = t.filterBuehne;
+  document.querySelector('[data-cat="moebel"]').textContent = t.filterMoebel;
+  document.querySelector('[data-cat="strom"]').textContent  = t.filterStrom;
+  document.querySelector('[data-cat="kabel"]').textContent  = t.filterKabel;
+  document.querySelector('.search-input').placeholder = t.searchPh;
+
+  // No results
+  document.querySelector('.no-results p').textContent = t.noResults;
+
+  // Cart sidebar
+  document.querySelector('.cart-header h3').textContent = t.cartTitle;
+  document.querySelector('.ki-banner-head span:first-child').textContent = t.kiTitle;
+  document.querySelector('.ki-banner p').textContent = t.kiText;
+  const totalRowLabel = document.querySelector('.cart-total-row span:first-child');
+  if (totalRowLabel) totalRowLabel.textContent = t.totalLabel;
+  document.querySelector('.cart-anbieter h4').textContent = t.anbieterTitle;
+  document.querySelector('.cart-form h4').textContent = t.formTitle;
+
+  // Cart form placeholders
+  const rf = document.getElementById('requestForm');
+  if (rf) {
+    rf.querySelector('[name="name"]').placeholder     = t.pName;
+    rf.querySelector('[name="firma"]').placeholder    = t.pFirma;
+    rf.querySelector('[name="email"]').placeholder    = t.pEmail;
+    rf.querySelector('[name="telefon"]').placeholder  = t.pTelefon;
+    rf.querySelector('[name="datum"]').placeholder    = t.pDatum;
+    rf.querySelector('[name="ort"]').placeholder      = t.pOrt;
+    rf.querySelector('[name="nachricht"]').placeholder= t.pNachricht;
+  }
+  document.getElementById('sendBtn').innerHTML = t.sendBtn;
+
+  // Direct modal
+  document.querySelector('.di-modal-head h3').textContent = t.diTitle;
+  document.querySelector('.di-modal-sub').textContent     = t.diSub;
+  const df = document.getElementById('directForm');
+  if (df) {
+    df.querySelector('[name="personen"]').placeholder   = t.pPersonen;
+    df.querySelector('[name="budget"]').placeholder     = t.pBudget;
+    df.querySelector('[name="beschreibung"]').placeholder = t.pBeschreibung;
+    df.querySelector('[name="name"]').placeholder       = t.pName;
+    df.querySelector('[name="firma"]').placeholder      = t.pFirma;
+    df.querySelector('[name="email"]').placeholder      = t.pEmail;
+    df.querySelector('[name="telefon"]').placeholder    = t.pTelefon;
+    df.querySelector('[name="datum"]').placeholder      = t.pDatum;
+    df.querySelector('[name="ort"]').placeholder        = t.pOrt;
+  }
+  document.getElementById('diSendBtn').innerHTML = t.diSendBtn;
+
+  // Admin modal
+  document.querySelector('#adminModal h3').textContent       = t.adminTitle;
+  document.querySelector('#adminModal p').textContent        = t.adminDesc;
+  document.getElementById('pwInput').placeholder             = t.adminPwPh;
+  document.getElementById('pwError').textContent             = t.adminError;
+  document.querySelector('.modal-cancel').textContent        = t.adminCancel;
+  document.querySelector('.modal-ok').textContent            = t.adminLogin;
+
+  // Footer
+  const footer = document.querySelector('footer');
+  const footerLink = footer.querySelector('a');
+  footer.innerHTML = t.footer + ' ' + footerLink.outerHTML;
+
+  // Re-render grid & cart to update dynamic strings
+  renderGrid();
+  updateCartUI();
+}
+
 // ═══════════════ PRODUCT DATA ═══════════════
 const PRODUCTS = [
   // ── TON & AUDIO ──
@@ -1291,10 +1561,11 @@ function renderGrid() {
     );
   }
 
-  document.getElementById('sectionCount').textContent = filtered.length + ' Artikel';
+  const t = T[currentLang];
+  document.getElementById('sectionCount').textContent = filtered.length + ' ' + t.artikelCount;
   const cat = CAT[currentCat];
   document.getElementById('sectionTitle').textContent =
-    cat ? cat.icon + ' ' + cat.label : 'Alle Artikel';
+    cat ? cat.icon + ' ' + t.catLabels[currentCat] : t.sectionAll;
 
   if (!filtered.length) {
     grid.innerHTML = '';
@@ -1311,7 +1582,7 @@ function renderGrid() {
     return `
     <div class="card" id="card-${p.id}">
       <div class="card-img cat-${c.cls}${imgUrl ? ' has-img' : ''}">
-        <span class="card-badge badge-${c.cls}">${c.label}</span>
+        <span class="card-badge badge-${c.cls}">${T[currentLang].catLabels[p.cat]}</span>
         ${imgUrl ? `<img class="prod-img" src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.closest('.card-img').classList.remove('has-img');this.remove()">` : ''}
         ${getCatSVG(p.cat)}
       </div>
@@ -1320,8 +1591,8 @@ function renderGrid() {
         <div class="card-desc">${p.desc}<br><em style="color:#6b7a99;font-size:0.7rem;">${p.hersteller}</em></div>
         <div class="card-einsatz">📍 ${p.einsatz}</div>
         <div class="card-prices ${isAdmin?'visible':''}">
-          <div class="price-pill"><label>Tag</label><span>${p.preis_tag} €</span></div>
-          <div class="price-pill"><label>Wochenende</label><span>${p.preis_we} €</span></div>
+          <div class="price-pill"><label>${T[currentLang].priceDay}</label><span>${p.preis_tag} €</span></div>
+          <div class="price-pill"><label>${T[currentLang].priceWE}</label><span>${p.preis_we} €</span></div>
         </div>
         <div class="card-anbieter ${isAdmin?'visible':''}">
           <span style="margin-top:1px;">🏢</span>
@@ -1339,7 +1610,7 @@ function renderGrid() {
             ontouchstart="startHold('${p.id}',1);event.preventDefault()" ontouchend="stopHold()">+</button>
         </div>
         <button class="btn-add ${inCart?'in-cart':''}" id="addbtn-${p.id}" onclick="addToCart('${p.id}')">
-          ${inCart ? '✓ Im Warenkorb' : '+ Zum Warenkorb'}
+          ${inCart ? T[currentLang].inCart : T[currentLang].addToCart}
         </button>
       </div>
     </div>`;
@@ -1392,7 +1663,7 @@ function updateCardUI(id) {
   const bEl = document.getElementById('addbtn-' + id);
   if (qEl) qEl.textContent = qty;
   if (bEl) {
-    bEl.textContent = qty > 0 ? '✓ Im Warenkorb' : '+ Zum Warenkorb';
+    bEl.textContent = qty > 0 ? T[currentLang].inCart : T[currentLang].addToCart;
     bEl.className = 'btn-add ' + (qty > 0 ? 'in-cart' : '');
   }
 }
@@ -1411,7 +1682,7 @@ function updateCartUI() {
   const kiBanner = document.getElementById('kiBanner');
 
   if (!items.length) {
-    ci.innerHTML = `<div class="cart-empty"><span class="empty-icon">🎪</span>Noch keine Artikel ausgewählt.<br>Füge Equipment aus dem Katalog hinzu.</div>`;
+    ci.innerHTML = `<div class="cart-empty"><span class="empty-icon">🎪</span>${T[currentLang].cartEmptyLine1}<br>${T[currentLang].cartEmptyLine2}</div>`;
     kiBanner.style.display = 'none';
     document.getElementById('cartTotal').classList.remove('visible');
     document.getElementById('cartAnbieter').classList.remove('visible');
@@ -1430,7 +1701,7 @@ function updateCartUI() {
       <div class="ci-info">
         <div class="ci-name">${p.name}</div>
         <div class="ci-sub">${p.hersteller} · ${c.label}</div>
-        <div class="ci-price ${isAdmin?'visible':''}">ab ${p.preis_tag} € / Tag</div>
+        <div class="ci-price ${isAdmin?'visible':''}">${T[currentLang].priceFrom} ${p.preis_tag} € ${T[currentLang].pricePerDay}</div>
       </div>
       <div class="ci-qty">
         <button class="ci-qty-btn"
@@ -1457,7 +1728,7 @@ function updateCartUI() {
       if (p && p.anbieter) p.anbieter.split(',').forEach(a => anbieterSet.add(a.trim()));
     });
     document.getElementById('anbieterList').textContent = [...anbieterSet].join(', ');
-    document.getElementById('totalVal').textContent = '– auf Anfrage –';
+    document.getElementById('totalVal').textContent = T[currentLang].totalVal;
   } else {
     document.getElementById('cartTotal').classList.remove('visible');
     document.getElementById('cartAnbieter').classList.remove('visible');
@@ -1543,13 +1814,13 @@ async function sendRequest(e) {
   e.preventDefault();
   const items = Object.keys(cart);
   if (!items.length) {
-    showToast('⚠️ Bitte füge zuerst Artikel zum Warenkorb hinzu.', 'error');
+    showToast(T[currentLang].toastNoCart, 'error');
     return;
   }
 
   const btn = document.getElementById('sendBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span>⏳</span> Wird gesendet…';
+  btn.innerHTML = T[currentLang].sending;
 
   const form = e.target;
   const data = new FormData(form);
@@ -1568,7 +1839,7 @@ async function sendRequest(e) {
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      showToast('✅ Anfrage erfolgreich gesendet! Wir melden uns bald.', 'success');
+      showToast(T[currentLang].toastSent, 'success');
       form.reset();
       cart = {};
       renderGrid();
@@ -1578,10 +1849,10 @@ async function sendRequest(e) {
       throw new Error('Fehler');
     }
   } catch {
-    showToast('❌ Senden fehlgeschlagen. Bitte erneut versuchen.', 'error');
+    showToast(T[currentLang].toastError, 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>📩</span> Anfrage senden';
+    btn.innerHTML = T[currentLang].sendBtn;
   }
 }
 
@@ -1608,7 +1879,7 @@ async function sendDirectRequest(e) {
   e.preventDefault();
   const btn = document.getElementById('diSendBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span>⏳</span> Wird gesendet…';
+  btn.innerHTML = T[currentLang].sending;
   const data = new FormData(e.target);
   try {
     const res = await fetch(FORMSPREE, {
@@ -1616,15 +1887,15 @@ async function sendDirectRequest(e) {
       headers: { 'Accept': 'application/json' }
     });
     if (res.ok) {
-      showToast('✅ Anfrage gesendet! Wir melden uns bald.', 'success');
+      showToast(T[currentLang].toastSent, 'success');
       e.target.reset();
       closeDirectModal();
     } else { throw new Error(); }
   } catch {
-    showToast('❌ Senden fehlgeschlagen. Bitte erneut versuchen.', 'error');
+    showToast(T[currentLang].toastError, 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>📩</span> Anfrage absenden';
+    btn.innerHTML = T[currentLang].diSendBtn;
   }
 }
 
