@@ -568,7 +568,9 @@
   .badge-buehne { background: rgba(0,224,96,0.14); color: #00e060; }
   .badge-moebel { background: rgba(0,224,96,0.12); color: #00e060; }
   .badge-strom  { background: rgba(0,224,96,0.16); color: #00e060; }
-  .badge-kabel  { background: rgba(0,224,96,0.13); color: #00e060; }
+  .badge-kabel    { background: rgba(0,224,96,0.13);  color: #00e060; }
+  .badge-catering { background: rgba(255,160,50,0.15); color: #ffa032; }
+  .badge-messe    { background: rgba(100,160,255,0.15); color: #64a0ff; }
 
   /* card-img SVG container */
   .card-img svg { width: 72px; height: 72px; filter: drop-shadow(0 0 12px rgba(0,184,90,0.35)); }
@@ -668,7 +670,9 @@
     <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">Bühne & Rigging</button>
     <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">Möbel & Ausstattung</button>
     <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">Strom & FX</button>
-    <button class="filter-btn" data-cat="kabel"  onclick="filterCat('kabel',  this)">🔌 Kabel</button>
+    <button class="filter-btn" data-cat="kabel"    onclick="filterCat('kabel',    this)">🔌 Kabel</button>
+    <button class="filter-btn" data-cat="catering" onclick="filterCat('catering', this)">🍽️ Catering</button>
+    <button class="filter-btn" data-cat="messe"    onclick="filterCat('messe',    this)">🏪 Messe & Logistik</button>
     <div class="search-wrap">
       <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
     </div>
@@ -1222,6 +1226,96 @@ const PRODUCTS = [
   {id:"k25", cat:"kabel", name:"Cat6 Netzwerkkabel 5m",              hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 5m",                       einsatz:"AV-Netzwerk, Dante Audio-over-IP",    preis_tag:"2–3",      preis_we:"4–7",        anbieter:"Gahrens+Battermann, dry-hire.com"},
   {id:"k26", cat:"kabel", name:"Cat6 Netzwerkkabel 10m",             hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 10m",                      einsatz:"AV-Netzwerk, Event-IT Infrastruktur", preis_tag:"3–4",      preis_we:"7–9",        anbieter:"Gahrens+Battermann, dry-hire.com"},
   {id:"k27", cat:"kabel", name:"Cat6 Netzwerkkabel 20m",             hersteller:"Cordial / div.",          desc:"Cat6 Patchkabel, 20m",                      einsatz:"Große Räume, Messen, Konferenzen",    preis_tag:"4–7",      preis_we:"9–15",       anbieter:"Gahrens+Battermann, dry-hire.com"},
+
+  // ── CATERING & GASTRONOMIE ──────────────────────────────────────────────────
+  // Geschirr & Porzellan
+  {id:"c01", cat:"catering", name:"Flachteller 27cm (Porzellan)",       hersteller:"Profimiet/WMF",      desc:"Weißes Gastro-Porzellan",                    einsatz:"Galadinner, alle Essenevents",       preis_tag:"0.20–0.35", preis_we:"0.20–0.35",  anbieter:"Profimiet Berlin, rent4event.com"},
+  {id:"c02", cat:"catering", name:"Suppenteller tief 24cm",             hersteller:"Profimiet/WMF",      desc:"Tiefer Suppenteller",                        einsatz:"Galadinner, Buffet",                 preis_tag:"0.20–0.35", preis_we:"0.20–0.35",  anbieter:"Profimiet Berlin"},
+  {id:"c03", cat:"catering", name:"Dessertteller 20cm",                 hersteller:"Profimiet",          desc:"Kuchenteller / Dessertteller",               einsatz:"Kaffee, Dessert-Buffet",             preis_tag:"0.15–0.25", preis_we:"0.15–0.25",  anbieter:"Profimiet Berlin"},
+  {id:"c04", cat:"catering", name:"Kaffeetasse + Untertasse",           hersteller:"Profimiet",          desc:"Kaffeetasse Set",                            einsatz:"Kaffee-Events, Konferenzen",         preis_tag:"0.25–0.40", preis_we:"0.25–0.40",  anbieter:"Profimiet Berlin"},
+  {id:"c05", cat:"catering", name:"Schüssel 26cm",                      hersteller:"Profimiet",          desc:"Salatschüssel / Beilagenschüssel",           einsatz:"Buffets, Galadinner",                preis_tag:"0.25–0.40", preis_we:"0.25–0.40",  anbieter:"Profimiet Berlin"},
+  {id:"c06", cat:"catering", name:"Platzteller / Erlebnisteller",       hersteller:"Profimiet",          desc:"Dekorativer Platzteller 33cm",               einsatz:"Gala, Fine Dining, Hochzeiten",      preis_tag:"0.40–0.70", preis_we:"0.40–0.70",  anbieter:"Profimiet Berlin"},
+  {id:"c07", cat:"catering", name:"GN-Behälter 1/1 (65mm)",            hersteller:"Gastro-Norm",        desc:"Standard-Gastrobehälter 1/1",                einsatz:"Catering, Warmhalten",               preis_tag:"1–2",       preis_we:"1–2",        anbieter:"Profimiet Berlin, dry-hire.com"},
+  {id:"c08", cat:"catering", name:"Serviertablett 40×60cm",             hersteller:"Gastro",             desc:"Rundes oder ovales Tablett",                 einsatz:"Service, Buffet",                    preis_tag:"1–2",       preis_we:"1–2",        anbieter:"Profimiet Berlin"},
+  // Gläser
+  {id:"c09", cat:"catering", name:"Weinglas 250ml (universal)",         hersteller:"Spiegelau/Schott",   desc:"Universelles Weinglas",                      einsatz:"Alle Dinner-Events",                 preis_tag:"0.15–0.25", preis_we:"0.15–0.25",  anbieter:"Profimiet Berlin, rent4event.com"},
+  {id:"c10", cat:"catering", name:"Sektflöte / Champagnerglas",         hersteller:"Spiegelau",          desc:"Sektflöte 200ml",                            einsatz:"Sektempfang, Hochzeit, Gala",        preis_tag:"0.15–0.25", preis_we:"0.15–0.25",  anbieter:"Profimiet Berlin"},
+  {id:"c11", cat:"catering", name:"Bierglas / Weizenglas 0,5L",         hersteller:"Gastro",             desc:"Bierglas 0,5L Weizen/Pils",                  einsatz:"Feste, Volksfeste, Stadtfeste",      preis_tag:"0.10–0.20", preis_we:"0.10–0.20",  anbieter:"Profimiet Berlin"},
+  {id:"c12", cat:"catering", name:"Longdrinkglas 250ml",                hersteller:"Gastro",             desc:"Longdrinkglas",                              einsatz:"Parties, Bars, Buffet",              preis_tag:"0.10–0.20", preis_we:"0.10–0.20",  anbieter:"Profimiet Berlin"},
+  {id:"c13", cat:"catering", name:"Cocktailglas Martini",               hersteller:"Gastro",             desc:"Martini-Glas für Cocktails",                 einsatz:"Cocktail-Partys, VIP-Events",        preis_tag:"0.15–0.25", preis_we:"0.15–0.25",  anbieter:"Profimiet Berlin"},
+  {id:"c14", cat:"catering", name:"Karaffe 1L Glas",                    hersteller:"Gastro",             desc:"Wasserkaraffe / Weinkaraffe",                einsatz:"Galadinner, Catering",               preis_tag:"0.30–0.50", preis_we:"0.30–0.50",  anbieter:"Profimiet Berlin"},
+  {id:"c15", cat:"catering", name:"Schnapsglas 2/4cl",                  hersteller:"Gastro",             desc:"Shot-Glas",                                  einsatz:"Bars, Parties",                      preis_tag:"0.10–0.15", preis_we:"0.10–0.15",  anbieter:"Profimiet Berlin"},
+  // Besteck
+  {id:"c16", cat:"catering", name:"Speisemesser (Gastro)",              hersteller:"WMF/Profimiet",      desc:"Gastro-Speisemesser",                        einsatz:"Galadinner, Buffet, Catering",       preis_tag:"0.15–0.25", preis_we:"0.15–0.25",  anbieter:"Profimiet Berlin"},
+  {id:"c17", cat:"catering", name:"Essgabel (Gastro)",                  hersteller:"WMF/Profimiet",      desc:"Gastro-Essgabel",                            einsatz:"Galadinner, Buffet",                 preis_tag:"0.10–0.20", preis_we:"0.10–0.20",  anbieter:"Profimiet Berlin"},
+  {id:"c18", cat:"catering", name:"Dessertlöffel / Teelöffel",          hersteller:"WMF/Profimiet",      desc:"Dessertlöffel / Teelöffel",                  einsatz:"Dessert-Buffet, Kaffee",             preis_tag:"0.10–0.20", preis_we:"0.10–0.20",  anbieter:"Profimiet Berlin"},
+  {id:"c19", cat:"catering", name:"Suppenlöffel groß",                  hersteller:"WMF/Profimiet",      desc:"Suppenlöffel groß",                          einsatz:"Galadinner, Menüservice",            preis_tag:"0.10–0.20", preis_we:"0.10–0.20",  anbieter:"Profimiet Berlin"},
+  {id:"c20", cat:"catering", name:"Fischbesteck-Set",                   hersteller:"WMF",                desc:"Fischmesser + Fischgabel Set",               einsatz:"Fine Dining, Gala",                  preis_tag:"0.20–0.35", preis_we:"0.20–0.35",  anbieter:"Profimiet Berlin"},
+  // Küchen & Catering-Equipment
+  {id:"c21", cat:"catering", name:"Chafing Dish (Warmhaltebecken)",     hersteller:"Gastro",             desc:"Rechaud-Warmhalter 1/1 GN",                  einsatz:"Buffet, Catering, Galadinner",       preis_tag:"5–10",      preis_we:"11–22",      anbieter:"Profimiet Berlin, rent4event.com"},
+  {id:"c22", cat:"catering", name:"Induktionsplatte 3,5kW",             hersteller:"Gastro",             desc:"Mobiles Induktionskochfeld",                 einsatz:"Catering vor Ort",                   preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+  {id:"c23", cat:"catering", name:"Gaskocher 2-flammig",                hersteller:"Gastro",             desc:"2-Flammen Gaskocher",                        einsatz:"Catering, Outdoorkochen",            preis_tag:"15–28",     preis_we:"33–62",      anbieter:"dry-hire.com"},
+  {id:"c24", cat:"catering", name:"Grillplatte Tischgrill elektr.",     hersteller:"Gastro",             desc:"Elektrische Grillplatte 50cm",               einsatz:"Catering, Aktionsstände",            preis_tag:"15–28",     preis_we:"33–62",      anbieter:"Profimiet Berlin"},
+  {id:"c25", cat:"catering", name:"Fritteuse 10L Gastro",               hersteller:"Gastro",             desc:"Gastro-Fritteuse 10 Liter",                  einsatz:"Catering, Foodstände",               preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+  {id:"c26", cat:"catering", name:"Kombidämpfer 6-Blech (Rational)",   hersteller:"Rational",           desc:"Gastro-Kombidämpfer 6 Bleche",               einsatz:"Catering Großküche",                 preis_tag:"80–150",    preis_we:"175–335",    anbieter:"Profimiet Berlin"},
+  {id:"c27", cat:"catering", name:"Eismaschine (Würfeleis) 30kg/h",     hersteller:"Gastro",             desc:"Profi-Eismaschine",                          einsatz:"Bar, Catering, Parties",             preis_tag:"30–60",     preis_we:"65–130",     anbieter:"Profimiet Berlin"},
+  {id:"c28", cat:"catering", name:"Kühlanhänger 3–7t",                  hersteller:"Gastro-Kühlz.",      desc:"Kühltrailer für Lebensmittel",               einsatz:"Große Events, Festivals, Catering",  preis_tag:"150–300",   preis_we:"340–660",    anbieter:"Profimiet Berlin, dry-hire.com"},
+  {id:"c29", cat:"catering", name:"Kühlschrank mobil 200L",             hersteller:"Gastro",             desc:"Mobiler Kühlschrank",                        einsatz:"Bar, Catering",                      preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+  {id:"c30", cat:"catering", name:"Hauben-Spülmaschine Gastro",         hersteller:"Winterhalter",       desc:"Glasspülmaschine / Haubengerät",             einsatz:"Catering, Stadtfeste, Galadinner",   preis_tag:"50–100",    preis_we:"110–220",    anbieter:"Profimiet Berlin"},
+  {id:"c31", cat:"catering", name:"Kaffeemaschine Siebträger",          hersteller:"La Marzocco",        desc:"Profi Siebträger-Espressomaschine",          einsatz:"VIP-Events, Kaffeestände",           preis_tag:"80–150",    preis_we:"175–335",    anbieter:"Profimiet Berlin"},
+  {id:"c32", cat:"catering", name:"Kaffee-Großbrühanlage 10L",          hersteller:"Gastro",             desc:"Drip-Kaffeemaschine Gastronomie",            einsatz:"Konferenzen, Firmenevents",          preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+  {id:"c33", cat:"catering", name:"Popcornmaschine",                    hersteller:"div.",               desc:"Klassische Popcornmaschine",                 einsatz:"Kinder-Events, Märkte, Kinos",       preis_tag:"20–40",     preis_we:"44–88",      anbieter:"dry-hire.com"},
+  {id:"c34", cat:"catering", name:"Zuckerwattemaschine",                hersteller:"div.",               desc:"Zuckerwatte-Gerät",                          einsatz:"Kinder-Events, Feste, Märkte",       preis_tag:"20–40",     preis_we:"44–88",      anbieter:"dry-hire.com"},
+  {id:"c35", cat:"catering", name:"Waffelautomat",                      hersteller:"div.",               desc:"Belgische Waffeln auf Events",               einsatz:"Festivals, Märkte, Kinderpartys",    preis_tag:"15–30",     preis_we:"33–65",      anbieter:"dry-hire.com"},
+  // Bar-Equipment
+  {id:"c36", cat:"catering", name:"Bierzapfanlage (1 Hahn)",            hersteller:"Gastro",             desc:"Mobiles Zapfsystem 1-Hahn",                  einsatz:"Parties, Stadtfeste, Volksfeste",    preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+  {id:"c37", cat:"catering", name:"Bierzapfanlage (4 Hähne + Kühler)",  hersteller:"Gastro",             desc:"Durchlaufkühler + 4 Zapfhähne",              einsatz:"Festivals, Großevents",              preis_tag:"80–150",    preis_we:"175–335",    anbieter:"Profimiet Berlin"},
+  {id:"c38", cat:"catering", name:"Fass-Kühler / Bierfass-Kühler",      hersteller:"Gastro",             desc:"Kühlung für Getränkefass",                   einsatz:"Outdoor-Events, Parties",            preis_tag:"20–35",     preis_we:"44–78",      anbieter:"Profimiet Berlin"},
+  {id:"c39", cat:"catering", name:"Getränkedispenser (Saftspender)",    hersteller:"div.",               desc:"Selbstbedienungs-Getränkespender",           einsatz:"Konferenzen, Buffets",               preis_tag:"15–28",     preis_we:"33–62",      anbieter:"dry-hire.com"},
+  {id:"c40", cat:"catering", name:"Eisbehälter / Eiswanne 60L",         hersteller:"Gastro",             desc:"Kühlwanne für Flaschen",                     einsatz:"Bars, Empfänge, Parties",            preis_tag:"5–10",      preis_we:"11–22",      anbieter:"Profimiet Berlin"},
+  {id:"c41", cat:"catering", name:"Cocktailshaker & Bar-Set",           hersteller:"div.",               desc:"Profi-Barkeeper-Equipment",                  einsatz:"Cocktail-Events, Hochzeiten, VIP",   preis_tag:"10–20",     preis_we:"22–44",      anbieter:"Profimiet Berlin"},
+  {id:"c42", cat:"catering", name:"Sektkühler Edelstahl",               hersteller:"Gastro",             desc:"Flaschenkühler für Sekt/Wein",               einsatz:"Galas, Hochzeiten, Empfänge",        preis_tag:"3–6",       preis_we:"7–13",       anbieter:"Profimiet Berlin"},
+  {id:"c43", cat:"catering", name:"Gläserkisten Kunststoff",            hersteller:"Gastro",             desc:"Stapelbare Gläser-Transportkisten",          einsatz:"Transport Gläser",                   preis_tag:"2–4",       preis_we:"4.5–9",      anbieter:"Profimiet Berlin"},
+  {id:"c44", cat:"catering", name:"Heizpilz Gas 12kW",                  hersteller:"Gastro",             desc:"Terrassenheizstrahler",                      einsatz:"Outdoor-Events, Terrassen",          preis_tag:"15–30",     preis_we:"33–65",      anbieter:"dry-hire.com"},
+  {id:"c45", cat:"catering", name:"Buffet-Warmhaltebrücke (elektr.)",   hersteller:"Gastro",             desc:"Elektrische Warmhaltebrücke",                einsatz:"Catering, Buffet",                   preis_tag:"20–40",     preis_we:"44–88",      anbieter:"Profimiet Berlin"},
+
+  // ── MESSE, BRANDING & LOGISTIK ──────────────────────────────────────────────
+  // Messestände & Präsentation
+  {id:"ms01", cat:"messe", name:"Systemstand Octanorm 3×3m",            hersteller:"Octanorm",           desc:"Modularer Messestand Standard",              einsatz:"Messen, Ausstellungen",              preis_tag:"200–400",   preis_we:"450–900",    anbieter:"dry-hire.com, N&M Berlin"},
+  {id:"ms02", cat:"messe", name:"Thekenmodul / Infocounter L-Form",     hersteller:"div.",               desc:"Empfangstheke / Promoter-Counter",           einsatz:"Messen, Aktionsstände",              preis_tag:"30–60",     preis_we:"65–130",     anbieter:"dry-hire.com"},
+  {id:"ms03", cat:"messe", name:"Prospektständer (Dreh, 4-seitig)",     hersteller:"div.",               desc:"Drehender Flyer-/Prospekthalter",            einsatz:"Messen, Events, Empfang",            preis_tag:"10–20",     preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"ms04", cat:"messe", name:"Whiteboard 180×120cm (mobil)",         hersteller:"div.",               desc:"Flipchart / Whiteboard auf Rollen",          einsatz:"Workshops, Konferenzen",             preis_tag:"8–15",      preis_we:"18–33",      anbieter:"Five Star Conference Berlin"},
+  {id:"ms05", cat:"messe", name:"Pinnwand 180×120cm",                   hersteller:"div.",               desc:"Korkpinnwand auf Stellfuß",                  einsatz:"Workshops, Messen, Ausstellungen",   preis_tag:"8–15",      preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"ms06", cat:"messe", name:"Flipchart mit Papierblock",            hersteller:"div.",               desc:"Flipchart-Ständer",                          einsatz:"Workshops, Meetings",                preis_tag:"6–12",      preis_we:"13–26",      anbieter:"Five Star Conference Berlin"},
+  {id:"ms07", cat:"messe", name:"Vitrine Glas abschließbar",            hersteller:"div.",               desc:"Ausstellungsvitrine",                        einsatz:"Messen, Ausstellungen, Produkte",    preis_tag:"30–60",     preis_we:"65–130",     anbieter:"dry-hire.com"},
+  {id:"ms08", cat:"messe", name:"Podest für Exponate (50×50cm)",        hersteller:"div.",               desc:"Ausstellungspodest weiß",                    einsatz:"Messen, Produktpräsentationen",      preis_tag:"10–20",     preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"ms09", cat:"messe", name:"Touchscreen 43\" (interaktiv)",        hersteller:"div.",               desc:"Interaktives Infoterminaldisplay",           einsatz:"Messen, Infopunkte, Events",         preis_tag:"60–120",    preis_we:"130–265",    anbieter:"G+B Berlin, N&M Berlin"},
+  {id:"ms10", cat:"messe", name:"iPad-Ständer Boden (Stele)",           hersteller:"div.",               desc:"Tablet-Standfuß",                            einsatz:"Messen, Events, Registrierung",      preis_tag:"10–20",     preis_we:"22–44",      anbieter:"G+B Berlin, dry-hire.com"},
+  {id:"ms11", cat:"messe", name:"Audio-Guide System (10er Set)",        hersteller:"Sennheiser",         desc:"Wireless Audio-Führungssystem",              einsatz:"Messen, Museen, Führungen",          preis_tag:"60–120",    preis_we:"130–265",    anbieter:"N&M Berlin, G+B Berlin"},
+  // Branding & Druck
+  {id:"ms12", cat:"messe", name:"Roll-Up Banner 85×200cm",              hersteller:"div.",               desc:"Standard Roll-Up",                           einsatz:"Messen, Events",                     preis_tag:"8–15",      preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"ms13", cat:"messe", name:"Roll-Up Banner XXL 150×200cm",         hersteller:"div.",               desc:"Großer Roll-Up",                             einsatz:"Messen, Bühnen",                     preis_tag:"15–28",     preis_we:"33–62",      anbieter:"dry-hire.com"},
+  {id:"ms14", cat:"messe", name:"Beachflag / Windflag (3m)",            hersteller:"div.",               desc:"Werbeflag außen",                            einsatz:"Outdoor-Events, Stadtfeste",         preis_tag:"8–15",      preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"ms15", cat:"messe", name:"Spannrahmen Textil-Banner (3m)",       hersteller:"div.",               desc:"SEG-Rahmen mit Stoffdruck",                  einsatz:"Messen, Fotowände",                  preis_tag:"20–40",     preis_we:"44–88",      anbieter:"dry-hire.com"},
+  {id:"ms16", cat:"messe", name:"Namensschilder + Lanyards (50er Set)", hersteller:"div.",               desc:"Ausweishalter-Set",                          einsatz:"Konferenzen, Messen",                preis_tag:"10–20",     preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"ms17", cat:"messe", name:"Eintrittsbänder Tyvek (500er Rolle)",  hersteller:"div.",               desc:"Einwegeintrittsbänder",                      einsatz:"Festivals, Clubs, Events",           preis_tag:"5–10",      preis_we:"Kauf",       anbieter:"dry-hire.com"},
+  {id:"ms18", cat:"messe", name:"Wristband RFID/NFC (100er Set)",       hersteller:"div.",               desc:"Mehrweg-Armbänder mit Chip",                 einsatz:"Festivals, größere Events",          preis_tag:"20–40",     preis_we:"44–88",      anbieter:"dry-hire.com"},
+  // Sicherheit & Crowd-Control
+  {id:"ms19", cat:"messe", name:"Bauzaun / Mannesmann-Gitter (2m)",     hersteller:"Stahl",              desc:"Standard-Bauzaunfeld",                       einsatz:"Absperrung, Aufbaubereich",          preis_tag:"3–6",       preis_we:"7–13",       anbieter:"dry-hire.com"},
+  {id:"ms20", cat:"messe", name:"Mojo Crowd Barrier (Vorderbügel)",     hersteller:"Stahl",              desc:"Konzerttaugliches Bühnengitter",             einsatz:"Konzerte, Festivals, Bühnenabsicherung", preis_tag:"8–15",  preis_we:"18–33",      anbieter:"dry-hire.com"},
+  {id:"ms21", cat:"messe", name:"Tensatoren Edelstahl (Pfosten)",       hersteller:"Edelstahl",          desc:"Premium Absperrpfosten Gurtband",            einsatz:"VIP, Empfang, Ticketing",            preis_tag:"5–10",      preis_we:"11–22",      anbieter:"dry-hire.com"},
+  {id:"ms22", cat:"messe", name:"Fluchtwegschilder (Notausgang)",       hersteller:"Kunststoff",         desc:"Beleuchtete Fluchtwegmarkierung",            einsatz:"Alle öffentlichen Events",           preis_tag:"3–6",       preis_we:"7–13",       anbieter:"dry-hire.com"},
+  {id:"ms23", cat:"messe", name:"Videoüberwachung CCTV 4-Kamera Set",  hersteller:"Hikvision",          desc:"4 Kameras + Aufzeichnung",                   einsatz:"Sicherheit, Einlass",                preis_tag:"50–100",    preis_we:"110–220",    anbieter:"dry-hire.com"},
+  // Infrastruktur & Logistik
+  {id:"ms24", cat:"messe", name:"Müllcontainer 1100L",                  hersteller:"Kunststoff",         desc:"Großer Müllbehälter",                        einsatz:"Festivals, Stadtfeste",              preis_tag:"10–20",     preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"ms25", cat:"messe", name:"Bodenschutzplatten (je m²)",           hersteller:"Kunststoff",         desc:"Temporärer Fahrweg-/Bodenschutz",            einsatz:"Outdoor-Events, Schwerlastverkehr",  preis_tag:"3–6/m²",    preis_we:"7–13/m²",    anbieter:"LiveTec Berlin, dry-hire.com"},
+  {id:"ms26", cat:"messe", name:"Gummimatten Antirutsch (je m²)",       hersteller:"Gummi",              desc:"Rutschfeste Bodenmatten",                    einsatz:"Eingangsbereiche, Bühnenrand",       preis_tag:"2–4/m²",    preis_we:"4–9/m²",     anbieter:"dry-hire.com"},
+  {id:"ms27", cat:"messe", name:"Sackkarren (Stahl)",                   hersteller:"Stahl",              desc:"Transportkarre",                             einsatz:"Auf-/Abbau Equipment",               preis_tag:"5–10",      preis_we:"11–22",      anbieter:"dry-hire.com"},
+  {id:"ms28", cat:"messe", name:"Flightcase 19\" Rack 6HE",             hersteller:"div.",               desc:"19\"-Rack-Flightcase mit Rollen",            einsatz:"Transport Equipment",                preis_tag:"10–20",     preis_we:"22–44",      anbieter:"dry-hire.com"},
+  {id:"ms29", cat:"messe", name:"Gaffa Tape (10er Set Rollen)",         hersteller:"tesa/div.",          desc:"Gewebeband für alle Events",                 einsatz:"Alle Events – Verbrauchsmaterial",   preis_tag:"10–15",     preis_we:"Kauf",       anbieter:"dry-hire.com"},
+  {id:"ms30", cat:"messe", name:"Toilettenwagen (WC-Anhänger 4 Kab.)", hersteller:"Sanitärlogistik",    desc:"Mobiles WC auf Anhänger",                    einsatz:"Outdoor-Events, Festivals",          preis_tag:"200–400",   preis_we:"450–900",    anbieter:"dry-hire.com"},
+  {id:"ms31", cat:"messe", name:"WC-Container VIP (2 Anlagen)",         hersteller:"Sanitärlogistik",    desc:"Hochwertiges VIP-Sanitärmodul",              einsatz:"VIP-Bereich, Premium-Events",        preis_tag:"350–700",   preis_we:"800–1600",   anbieter:"Auf Anfrage Berlin"},
+  {id:"ms32", cat:"messe", name:"Handwaschstation mobil",               hersteller:"Sanitärlogistik",    desc:"Mobile Waschstation mit Tank",               einsatz:"Outdoor-Events, Catering",           preis_tag:"30–60",     preis_we:"65–130",     anbieter:"dry-hire.com"},
 ];
 
 // ═══════════════ PRODUCT IMAGES ═══════════════
@@ -1371,7 +1465,9 @@ const CAT = {
   buehne: { label:"Bühne & Rigging",     icon:"🏗️", cls:"buehne" },
   moebel: { label:"Möbel & Ausstattung", icon:"🪑", cls:"moebel" },
   strom:  { label:"Strom & FX",          icon:"⚡", cls:"strom"  },
-  kabel:  { label:"Kabel & Verbindungen", icon:"🔌", cls:"kabel"  },
+  kabel:    { label:"Kabel & Verbindungen",   icon:"🔌", cls:"kabel"    },
+  catering: { label:"Catering & Gastronomie", icon:"🍽️", cls:"catering" },
+  messe:    { label:"Messe & Logistik",        icon:"🏪", cls:"messe"    },
 };
 
 // ═══════════════ STATE ═══════════════
@@ -1535,6 +1631,58 @@ function getCatSVG(cat) {
       <circle cx="69" cy="40" r="9" fill="none" stroke="${G}" stroke-width="1.2" opacity="0">
         <animate attributeName="opacity" values="0;0.45;0" dur="2.2s" repeatCount="indefinite" begin="1.1s"/>
         <animate attributeName="r"       values="9;15;9"   dur="2.2s" repeatCount="indefinite" begin="1.1s"/>
+      </circle>
+    </svg>`,
+    catering: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- Cloche dome -->
+      <path d="M14,46 Q14,22 40,22 Q66,22 66,46 Z" fill="none" stroke="${G}" stroke-width="2.5"/>
+      <!-- Plate base -->
+      <line x1="10" y1="46" x2="70" y2="46" stroke="${G}" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="40" cy="46" rx="24" ry="4" fill="none" stroke="${G}" stroke-width="1.5" opacity="0.5"/>
+      <!-- Handle -->
+      <circle cx="40" cy="22" r="4.5" fill="none" stroke="${G}" stroke-width="2.5"/>
+      <circle cx="40" cy="22" r="2" fill="${G}" opacity="0.8"/>
+      <!-- Steam wisps -->
+      <path d="M30,18 Q28,13 30,8" fill="none" stroke="${G}" stroke-width="1.8" stroke-linecap="round" opacity="0.7">
+        <animate attributeName="opacity" values="0.7;0;0.7" dur="2s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-4;0,0" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M40,17 Q38,11 40,6" fill="none" stroke="${G}" stroke-width="1.8" stroke-linecap="round" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-4;0,0" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M50,18 Q52,13 50,8" fill="none" stroke="${G}" stroke-width="1.8" stroke-linecap="round" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" begin="0.8s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-4;0,0" dur="2s" begin="0.8s" repeatCount="indefinite"/>
+      </path>
+      <!-- Glow lift animation on cloche -->
+      <path d="M14,46 Q14,22 40,22 Q66,22 66,46 Z" fill="${G}" opacity="0">
+        <animate attributeName="opacity" values="0;0.06;0" dur="3s" repeatCount="indefinite"/>
+      </path>
+    </svg>`,
+    messe: `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <!-- Roll-up banner pole -->
+      <line x1="24" y1="64" x2="56" y2="64" stroke="${G}" stroke-width="3" stroke-linecap="round"/>
+      <rect x="29" y="18" width="22" height="46" rx="2" fill="none" stroke="${G}" stroke-width="2.5"/>
+      <!-- Banner lines (content) -->
+      <line x1="33" y1="26" x2="47" y2="26" stroke="${G}" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
+      <line x1="33" y1="32" x2="47" y2="32" stroke="${G}" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
+      <line x1="33" y1="37" x2="42" y2="37" stroke="${G}" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
+      <!-- Logo box on banner -->
+      <rect x="33" y="42" width="14" height="10" rx="1.5" fill="${G}" opacity="0.18"/>
+      <!-- Animated scan line moving down banner -->
+      <rect x="29" y="18" width="22" height="3" rx="1" fill="${G}" opacity="0">
+        <animate attributeName="y" values="18;62;18" dur="2.8s" repeatCount="indefinite" calcMode="linear"/>
+        <animate attributeName="opacity" values="0;0.25;0" dur="2.8s" repeatCount="indefinite" calcMode="linear"/>
+      </rect>
+      <!-- Stars/sparkle left -->
+      <circle cx="18" cy="28" r="2.5" fill="${G}" opacity="0">
+        <animate attributeName="opacity" values="0;0.8;0" dur="2s" begin="0s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2.5;4;2.5" dur="2s" begin="0s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="62" cy="38" r="2" fill="${G}" opacity="0">
+        <animate attributeName="opacity" values="0;0.7;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="2;3.5;2" dur="2s" begin="1s" repeatCount="indefinite"/>
       </circle>
     </svg>`,
   };
