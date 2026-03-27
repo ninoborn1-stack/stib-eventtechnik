@@ -571,6 +571,18 @@
   .badge-kabel    { background: rgba(0,224,96,0.13);  color: #00e060; }
   .badge-catering { background: rgba(255,160,50,0.15); color: #ffa032; }
   .badge-messe    { background: rgba(100,160,255,0.15); color: #64a0ff; }
+.badge-transport { background: rgba(255,140,0,0.15); color: #ff8c00; border: 1px solid rgba(255,140,0,0.35); }
+.badge-kinder    { background: rgba(255,80,180,0.15); color: #ff50b4; border: 1px solid rgba(255,80,180,0.35); }
+.badge-sport     { background: rgba(80,200,255,0.15); color: #50c8ff; border: 1px solid rgba(80,200,255,0.35); }
+.badge-photobooth{ background: rgba(220,80,255,0.15); color: #dc50ff; border: 1px solid rgba(220,80,255,0.35); }
+.badge-hochzeit  { background: rgba(255,180,200,0.15); color: #ffb4c8; border: 1px solid rgba(255,180,200,0.35); }
+.badge-dekolicht { background: rgba(255,220,60,0.15); color: #ffdc3c; border: 1px solid rgba(255,220,60,0.35); }
+.badge-blumen    { background: rgba(80,200,80,0.15); color: #50c850; border: 1px solid rgba(80,200,80,0.35); }
+.badge-hygiene   { background: rgba(60,220,220,0.15); color: #3cdcdc; border: 1px solid rgba(60,220,220,0.35); }
+.badge-it        { background: rgba(80,130,255,0.15); color: #5082ff; border: 1px solid rgba(80,130,255,0.35); }
+.badge-werkzeug  { background: rgba(180,130,80,0.15); color: #b48250; border: 1px solid rgba(180,130,80,0.35); }
+.badge-verbrauch { background: rgba(160,160,160,0.15); color: #a0a0a0; border: 1px solid rgba(160,160,160,0.35); }
+.badge-gastro    { background: rgba(255,120,60,0.15); color: #ff783c; border: 1px solid rgba(255,120,60,0.35); }
   .neu-marker {
     display: inline-block;
     background: #00e060;
@@ -688,6 +700,18 @@
     <button class="filter-btn" data-cat="kabel"    onclick="filterCat('kabel',    this)">🔌 Kabel</button>
     <button class="filter-btn" data-cat="catering" onclick="filterCat('catering', this)">🍽️ Catering</button>
     <button class="filter-btn" data-cat="messe"    onclick="filterCat('messe',    this)">🏪 Messe & Logistik</button>
+    <button class="filter-btn" data-cat="transport" onclick="filterCat('transport', this)">🚛 Transport & Fahrzeuge</button>
+    <button class="filter-btn" data-cat="kinder" onclick="filterCat('kinder', this)">🎪 Kinderprogramm & Attraktionen</button>
+    <button class="filter-btn" data-cat="sport" onclick="filterCat('sport', this)">🎯 Sport & Entertainment</button>
+    <button class="filter-btn" data-cat="photobooth" onclick="filterCat('photobooth', this)">📸 Photobooth & Entertainment</button>
+    <button class="filter-btn" data-cat="hochzeit" onclick="filterCat('hochzeit', this)">💒 Hochzeit Spezial</button>
+    <button class="filter-btn" data-cat="dekolicht" onclick="filterCat('dekolicht', this)">🕯️ Dekoratives Licht & Ambiente</button>
+    <button class="filter-btn" data-cat="blumen" onclick="filterCat('blumen', this)">🌿 Blumen & Pflanzen</button>
+    <button class="filter-btn" data-cat="hygiene" onclick="filterCat('hygiene', this)">🚿 Hygiene & Sanitär</button>
+    <button class="filter-btn" data-cat="it" onclick="filterCat('it', this)">📡 IT & Kommunikation</button>
+    <button class="filter-btn" data-cat="werkzeug" onclick="filterCat('werkzeug', this)">🔧 Werkzeug & Reinigung</button>
+    <button class="filter-btn" data-cat="verbrauch" onclick="filterCat('verbrauch', this)">📦 Verbrauchsmaterial</button>
+    <button class="filter-btn" data-cat="gastro" onclick="filterCat('gastro', this)">🍽️ Gastronomie Spezial</button>
     <div class="search-wrap">
       <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
     </div>
@@ -840,6 +864,20 @@ const T = {
     filterMoebel:   "Möbel & Ausstattung",
     filterStrom:    "Strom & FX",
     filterKabel:    "🔌 Kabel",
+    filterCatering: "🍽️ Catering",
+    filterMesse:    "🏪 Messe & Logistik",
+    "filter-transport": "🚛 Transport & Fahrzeuge",
+    "filter-kinder":    "🎪 Kinderprogramm & Attraktionen",
+    "filter-sport":     "🎯 Sport & Entertainment",
+    "filter-photobooth":"📸 Photobooth & Entertainment",
+    "filter-hochzeit":  "💒 Hochzeit Spezial",
+    "filter-dekolicht": "🕯️ Dekoratives Licht & Ambiente",
+    "filter-blumen":    "🌿 Blumen & Pflanzen",
+    "filter-hygiene":   "🚿 Hygiene & Sanitär",
+    "filter-it":        "📡 IT & Kommunikation",
+    "filter-werkzeug":  "🔧 Werkzeug & Reinigung",
+    "filter-verbrauch": "📦 Verbrauchsmaterial",
+    "filter-gastro":    "🍽️ Gastronomie Spezial",
     searchPh:       "🔍 Suchen...",
     sectionAll:     "Alle Artikel",
     artikelCount:   "Artikel",
@@ -892,7 +930,21 @@ const T = {
       buehne: "Bühne & Rigging",
       moebel: "Möbel & Ausstattung",
       strom:  "Strom & FX",
-      kabel:  "Kabel & Verbindungen",
+      kabel:    "Kabel & Verbindungen",
+      catering: "Catering & Gastronomie",
+      messe:    "Messe & Logistik",
+      transport:  "Transport & Fahrzeuge",
+      kinder:     "Kinderprogramm & Attraktionen",
+      sport:      "Sport & Entertainment",
+      photobooth: "Photobooth & Entertainment",
+      hochzeit:   "Hochzeit Spezial",
+      dekolicht:  "Dekoratives Licht & Ambiente",
+      blumen:     "Blumen & Pflanzen",
+      hygiene:    "Hygiene & Sanitär",
+      it:         "IT & Kommunikation",
+      werkzeug:   "Werkzeug & Reinigung",
+      verbrauch:  "Verbrauchsmaterial",
+      gastro:     "Gastronomie Spezial",
     },
   },
   en: {
@@ -911,6 +963,20 @@ const T = {
     filterMoebel:   "Furniture & Décor",
     filterStrom:    "Power & FX",
     filterKabel:    "🔌 Cables",
+    filterCatering: "🍽️ Catering",
+    filterMesse:    "🏪 Trade Shows & Logistics",
+    "filter-transport": "🚛 Transport & Vehicles",
+    "filter-kinder":    "🎪 Kids & Attractions",
+    "filter-sport":     "🎯 Sports & Entertainment",
+    "filter-photobooth":"📸 Photobooth & Entertainment",
+    "filter-hochzeit":  "💒 Wedding Special",
+    "filter-dekolicht": "🕯️ Decorative Light & Ambience",
+    "filter-blumen":    "🌿 Flowers & Plants",
+    "filter-hygiene":   "🚿 Hygiene & Sanitation",
+    "filter-it":        "📡 IT & Communication",
+    "filter-werkzeug":  "🔧 Tools & Cleaning",
+    "filter-verbrauch": "📦 Consumables",
+    "filter-gastro":    "🍽️ Gastronomy Special",
     searchPh:       "🔍 Search...",
     sectionAll:     "All Items",
     artikelCount:   "items",
@@ -963,7 +1029,21 @@ const T = {
       buehne: "Stage & Rigging",
       moebel: "Furniture & Décor",
       strom:  "Power & FX",
-      kabel:  "Cables & Connections",
+      kabel:    "Cables & Connections",
+      catering: "Catering & Gastronomy",
+      messe:    "Trade Shows & Logistics",
+      transport:  "Transport & Vehicles",
+      kinder:     "Kids & Attractions",
+      sport:      "Sports & Entertainment",
+      photobooth: "Photobooth & Entertainment",
+      hochzeit:   "Wedding Special",
+      dekolicht:  "Decorative Light & Ambience",
+      blumen:     "Flowers & Plants",
+      hygiene:    "Hygiene & Sanitation",
+      it:         "IT & Communication",
+      werkzeug:   "Tools & Cleaning",
+      verbrauch:  "Consumables",
+      gastro:     "Gastronomy Special",
     },
   },
 };
@@ -1002,7 +1082,21 @@ function applyLang() {
   document.querySelector('[data-cat="buehne"]').textContent = t.filterBuehne;
   document.querySelector('[data-cat="moebel"]').textContent = t.filterMoebel;
   document.querySelector('[data-cat="strom"]').textContent  = t.filterStrom;
-  document.querySelector('[data-cat="kabel"]').textContent  = t.filterKabel;
+  document.querySelector('[data-cat="kabel"]').textContent    = t.filterKabel;
+  document.querySelector('[data-cat="catering"]').textContent = t.filterCatering;
+  document.querySelector('[data-cat="messe"]').textContent    = t.filterMesse;
+  document.querySelector('[data-cat="transport"]').textContent  = t["filter-transport"];
+  document.querySelector('[data-cat="kinder"]').textContent     = t["filter-kinder"];
+  document.querySelector('[data-cat="sport"]').textContent      = t["filter-sport"];
+  document.querySelector('[data-cat="photobooth"]').textContent = t["filter-photobooth"];
+  document.querySelector('[data-cat="hochzeit"]').textContent   = t["filter-hochzeit"];
+  document.querySelector('[data-cat="dekolicht"]').textContent  = t["filter-dekolicht"];
+  document.querySelector('[data-cat="blumen"]').textContent     = t["filter-blumen"];
+  document.querySelector('[data-cat="hygiene"]').textContent    = t["filter-hygiene"];
+  document.querySelector('[data-cat="it"]').textContent         = t["filter-it"];
+  document.querySelector('[data-cat="werkzeug"]').textContent   = t["filter-werkzeug"];
+  document.querySelector('[data-cat="verbrauch"]').textContent  = t["filter-verbrauch"];
+  document.querySelector('[data-cat="gastro"]').textContent     = t["filter-gastro"];
   document.querySelector('.search-input').placeholder = t.searchPh;
 
   // No results
@@ -1488,6 +1582,199 @@ const PRODUCTS = [
   {id:"s45", cat:"strom", name:"CO₂-Flasche (Effekte/Bar) 20kg", hersteller:"Gas",                desc:"Kohlendioxid für FX & Bar",                  einsatz:"Konzerte, Bars, Effektmaschinen",    preis_tag:"25–50",     preis_we:"55–110",     anbieter:"dry-hire.com"},
   {id:"s46", cat:"strom", name:"Propangasflasche 11kg",           hersteller:"Gas",                desc:"Propangas für Grills/Heizgeräte",            einsatz:"Catering, Heizpilze",                preis_tag:"8–15",      preis_we:"18–33",      anbieter:"dry-hire.com"},
   {id:"s47", cat:"strom", name:"Nebelfluid (5L Kanister)",        hersteller:"div.",               desc:"Hazer-/Nebelmaschinen-Flüssigkeit",          einsatz:"Alle Light-Shows",                   preis_tag:"8–15",      preis_we:"Kauf",       anbieter:"dry-hire.com"},
+  { id:"tr01", cat:"transport", name:"Transporter 3,5t (Sprinter)", hersteller:"Mercedes/Ford", desc:"Laderaum ca. 12m³, Führerschein B", einsatz:"Equipment-Transport, Auf-/Abbau", preis_tag:80, preis_we:180, bezug:"Hertz/Europcar Berlin", anbieter:"Hertz Berlin, Europcar Berlin" },
+  { id:"tr02", cat:"transport", name:"LKW 7,5t mit Plane", hersteller:"MAN/Iveco", desc:"7,5t Nutzlast, Plane+Spriegel", einsatz:"Große Equipment-Transporte", preis_tag:150, preis_we:340, bezug:"Hertz/Sixt Berlin", anbieter:"Hertz Berlin, Sixt Truck" },
+  { id:"tr03", cat:"transport", name:"LKW 12t Koffer", hersteller:"MAN/Daimler", desc:"12t Koffer, ideal für Messen", einsatz:"Messestände, Großequipment", preis_tag:200, preis_we:450, bezug:"auf Anfrage", anbieter:"Auf Anfrage Berlin" },
+  { id:"tr04", cat:"transport", name:"LKW 18t Sattelzug", hersteller:"div.", desc:"18t Sattelzug für Großproduktionen", einsatz:"Touring, Festivals", preis_tag:0, preis_we:0, bezug:"LiveTec / N&M", anbieter:"LiveTec Berlin, N&M Berlin" },
+  { id:"tr05", cat:"transport", name:"Pkw-Anhänger 750kg", hersteller:"div.", desc:"Kleiner Kastenanhänger", einsatz:"Kleintransport, Privat", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr06", cat:"transport", name:"Anhänger 3,5t Plane", hersteller:"div.", desc:"Großer Kofferanhänger", einsatz:"Mittelgroße Transporte", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr07", cat:"transport", name:"Scherenhubbühne 8m (elektr.)", hersteller:"Genie/JLG", desc:"Elektrische Arbeitsbühne 8m", einsatz:"Aufhängung, Aufbau Indoor", preis_tag:90, preis_we:200, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr08", cat:"transport", name:"Scherenhubbühne 12m (Diesel)", hersteller:"Genie/JLG", desc:"Diesel Arbeitsbühne 12m outdoor", einsatz:"Outdoor-Aufbau, Rigging", preis_tag:150, preis_we:340, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr09", cat:"transport", name:"Teleskoplader 4x4 (Manitou)", hersteller:"Manitou", desc:"Teleskopstapler 3,5t/17m", einsatz:"Bühnenbau, Materialhandling", preis_tag:250, preis_we:560, bezug:"dry-hire.com / LiveTec", anbieter:"dry-hire.com, LiveTec Berlin" },
+  { id:"tr10", cat:"transport", name:"Hubsteiger / Gelenkbühne 16m", hersteller:"Genie", desc:"Gelenkteleskopbühne 16m", einsatz:"Outdoor-Arbeiten, Rigging", preis_tag:200, preis_we:450, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr11", cat:"transport", name:"Rollgerüst fahrbar 4m", hersteller:"Layher", desc:"Aluminium-Fahrgerüst 4m", einsatz:"Innenaufbau, Hängepunkte", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr12", cat:"transport", name:"Gabelstapler 2,5t (Elektro)", hersteller:"Toyota/Still", desc:"Elektro-Gabelstapler", einsatz:"Lager, Auf-/Abbau", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"tr13", cat:"transport", name:"Kran-LKW 20t (Autokran)", hersteller:"Liebherr", desc:"Fahrbarer Autokran 20t", einsatz:"Bühnenbau Outdoor, Schwerlast", preis_tag:0, preis_we:0, bezug:"LiveTec", anbieter:"LiveTec Berlin" },
+  { id:"ki01", cat:"kinder", name:"Hüpfburg Standard 4x4m", hersteller:"div.", desc:"Klassische Hüpfburg für Kinder", einsatz:"Kindergeburtstage, Stadtfeste", preis_tag:80, preis_we:175, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"ki02", cat:"kinder", name:"Hüpfburg XXL Kombi 6x5m", hersteller:"div.", desc:"Hüpfburg + Rutsche kombiniert", einsatz:"Kinderfeste, Stadtfeste, Firmen", preis_tag:150, preis_we:340, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"ki03", cat:"kinder", name:"Riesenrutsche 8m", hersteller:"div.", desc:"Aufblasbare Riesenrutsche", einsatz:"Stadtfeste, Festivals", preis_tag:200, preis_we:450, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"ki04", cat:"kinder", name:"Kinder-Bällebad aufblasbar", hersteller:"div.", desc:"Pool mit Bällen 3x3m", einsatz:"Kinderfeste, Indoor-Events", preis_tag:60, preis_we:130, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"ki05", cat:"kinder", name:"Aufblasbarer Torwand", hersteller:"div.", desc:"Kicker-Torwand aufblasbar", einsatz:"Firmenevents, Stadtfeste", preis_tag:40, preis_we:88, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"ki06", cat:"kinder", name:"Rodeo-Bulle / Bull-Riding", hersteller:"div.", desc:"Elektronisches Rodeo-Gerät", einsatz:"Firmenfeiern, Feste", preis_tag:150, preis_we:340, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"ki07", cat:"kinder", name:"Kinderkarussell (6 Sitze)", hersteller:"div.", desc:"Klassisches Pferdekarussell", einsatz:"Kinderfeste, Märkte", preis_tag:200, preis_we:450, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"ki08", cat:"kinder", name:"Kettenflieger (6 Sitze)", hersteller:"div.", desc:"Kleines Kettenflugsgerät", einsatz:"Kinderfeste, Stadtfeste", preis_tag:300, preis_we:670, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"ki09", cat:"kinder", name:"Bimmelbahn / Zug", hersteller:"div.", desc:"Elektrische Kindereisenbahn", einsatz:"Stadtfeste, Märkte", preis_tag:200, preis_we:450, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"ki10", cat:"kinder", name:"Bastelstation komplett", hersteller:"div.", desc:"Tische + Material für Basteln", einsatz:"Kindergeburtstage, Feste", preis_tag:50, preis_we:110, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki11", cat:"kinder", name:"Schminkstation (Kinderschminken)", hersteller:"div.", desc:"Mobiler Schminktisch + Farben", einsatz:"Kinderfeste, Stadtfeste", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki12", cat:"kinder", name:"Kletterwand mobil (3m)", hersteller:"div.", desc:"Mobile Kletteranlage mit Seil", einsatz:"Firmenevents, Kinderfeste", preis_tag:150, preis_we:340, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki13", cat:"kinder", name:"Trampolinanlage (3-fach)", hersteller:"div.", desc:"3 verknüpfte Trampoline", einsatz:"Sport-Events, Kinderfeste", preis_tag:120, preis_we:270, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki14", cat:"kinder", name:"Hochstuhl Baby (Gastro)", hersteller:"Gastro/Tripp Trapp", desc:"Kinder-Hochstuhl", einsatz:"Events mit Familien", preis_tag:3, preis_we:7, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"ki15", cat:"kinder", name:"Wickelstation mobil", hersteller:"div.", desc:"Klappbare Wickeleinheit", einsatz:"Familienevents, Festivals", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki16", cat:"kinder", name:"Torwand Metall (Fußball)", hersteller:"Stahl", desc:"Professionelle Torwand", einsatz:"Firmenfeiern, Stadtfeste", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ki17", cat:"kinder", name:"Hau-den-Lukas", hersteller:"div.", desc:"Kraftmesser-Attraktion", einsatz:"Volksfeste, Firmenfeiern", preis_tag:80, preis_we:175, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se01", cat:"sport", name:"Tischkicker Standard", hersteller:"Ullrich/Kicker", desc:"7-Stangen Profikicker", einsatz:"Firmenfeiern, Parties", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se02", cat:"sport", name:"Tischkicker XXL Menschenkicker", hersteller:"div.", desc:"8-12 Personen Menschenkicker", einsatz:"Firmenfeiern, Stadtfeste", preis_tag:200, preis_we:450, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se03", cat:"sport", name:"Tischtennis-Set komplett", hersteller:"Butterfly", desc:"Tisch + Netz + Schläger", einsatz:"Firmenfeiern, Partys", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se04", cat:"sport", name:"Billardtisch 7ft", hersteller:"Brunswick", desc:"Profi Billardtisch", einsatz:"VIP-Events, Firmenfeiern", preis_tag:60, preis_we:130, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se05", cat:"sport", name:"Dart-Station (elektr.)", hersteller:"Unicorn", desc:"Elektronisches Dartboard-Set", einsatz:"Parties, Firmenfeiern", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se06", cat:"sport", name:"Beer-Pong-Tisch LED", hersteller:"div.", desc:"LED-beleuchteter Beer-Pong-Tisch", einsatz:"Parties, Firmenevents", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se07", cat:"sport", name:"Jenga XXL (1m hoch)", hersteller:"div.", desc:"Riesen-Holzstapelspiel", einsatz:"Parties, Familienfeste", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se08", cat:"sport", name:"Schach XXL outdoor", hersteller:"div.", desc:"Riesen-Schachspiel Außen", einsatz:"Stadtfeste, Familienfeste", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se09", cat:"sport", name:"Snookertisch 12ft", hersteller:"Riley", desc:"Profi-Snookertisch", einsatz:"VIP-Events, Kasino-Abende", preis_tag:100, preis_we:220, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se10", cat:"sport", name:"Casinotisch Roulette", hersteller:"div.", desc:"Profi-Roulettetisch mit Dealer", einsatz:"Gala, Kasino-Events", preis_tag:150, preis_we:340, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se11", cat:"sport", name:"Casinotisch Poker", hersteller:"div.", desc:"Professioneller Pokertisch", einsatz:"Kasino-Events, VIP-Abende", preis_tag:80, preis_we:175, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se12", cat:"sport", name:"Casinotisch Blackjack", hersteller:"div.", desc:"Blackjack-Tisch", einsatz:"Kasino-Events", preis_tag:80, preis_we:175, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se13", cat:"sport", name:"Minigolf-Set 9-Loch", hersteller:"div.", desc:"Mobiles Minigolf-Set indoor/outdoor", einsatz:"Firmenfeiern, Stadtfeste", preis_tag:150, preis_we:340, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se14", cat:"sport", name:"Pétanque / Boule-Set (8 Kugeln)", hersteller:"div.", desc:"Boule für 4-8 Spieler", einsatz:"Sommerfeste, Garten-Events", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se15", cat:"sport", name:"Bubble Soccer Set (10 Bubbles)", hersteller:"div.", desc:"Aufblasbare Fußball-Anzüge", einsatz:"Firmenfeiern, Sportevents", preis_tag:150, preis_we:340, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se16", cat:"sport", name:"Tanzfläche (Parkett, 4x4m)", hersteller:"Holz/Vinyl", desc:"Modulare Tanzfläche 4x4m", einsatz:"Hochzeiten, Galas, Parties", preis_tag:100, preis_we:220, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"se17", cat:"sport", name:"Tanzfläche (Parkett, 6x6m)", hersteller:"Holz/Vinyl", desc:"Modulare Tanzfläche 6x6m", einsatz:"Große Hochzeiten, Galas", preis_tag:200, preis_we:450, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"se18", cat:"sport", name:"LED-Tanzfläche (beleuchtet, 4x4m)", hersteller:"div.", desc:"RGB-Leucht-Tanzfläche", einsatz:"Hochzeiten, Clubevents", preis_tag:300, preis_we:670, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se19", cat:"sport", name:"Surfsimulator / Wellenreiter", hersteller:"div.", desc:"Elektrisches Surfbrett-Gerät", einsatz:"Firmenfeiern, Stadtfeste", preis_tag:200, preis_we:450, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"se20", cat:"sport", name:"Torschuss-Geschwindigkeitsmesser", hersteller:"div.", desc:"Radar-Torwand mit Display", einsatz:"Fußball-Events, Stadtfeste", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"se21", cat:"sport", name:"VR-Simulator (360°)", hersteller:"div.", desc:"Virtual-Reality-Erlebnis-Station", einsatz:"Messen, Firmenevents", preis_tag:200, preis_we:450, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"po01", cat:"photobooth", name:"Klassische Fotobox (Open)", hersteller:"div.", desc:"Offene Fotobox mit Drucker", einsatz:"Hochzeiten, Parties, Messen", preis_tag:200, preis_we:450, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po02", cat:"photobooth", name:"Fotobox geschlossen (Kabine)", hersteller:"div.", desc:"Klassische Kabinen-Fotobox", einsatz:"Hochzeiten, Messen", preis_tag:250, preis_we:560, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po03", cat:"photobooth", name:"Magic Mirror Fotobox", hersteller:"div.", desc:"Verspiegelter Touchscreen-Spiegel", einsatz:"Hochzeiten, VIP-Events", preis_tag:300, preis_we:670, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po04", cat:"photobooth", name:"360°-Videokabine / Slow-Mo-Booth", hersteller:"div.", desc:"Umlaufende Video-Arm-Platform", einsatz:"Hochzeiten, Firmenfeiern", preis_tag:300, preis_we:670, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po05", cat:"photobooth", name:"GIF-Booth (Boomerang)", hersteller:"div.", desc:"Animiertes GIF/Boomerang-Set", einsatz:"Parties, Messen", preis_tag:150, preis_we:340, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po06", cat:"photobooth", name:"Greenscreen-Fotobox", hersteller:"div.", desc:"Chromakey Fotobox mit Hintergründen", einsatz:"Messen, Firmenevents, Shows", preis_tag:250, preis_we:560, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po07", cat:"photobooth", name:"AI-Foto-Kiosk (KI-Effekte)", hersteller:"div.", desc:"KI-gestützte Fotostation", einsatz:"Messen, Firmenevents", preis_tag:300, preis_we:670, bezug:"Event-Verleih Berlin", anbieter:"Event-Verleih Berlin" },
+  { id:"po08", cat:"photobooth", name:"Sofortbildkamera Polaroid-Station", hersteller:"Polaroid/Fuji", desc:"Instant-Print-Station", einsatz:"Hochzeiten, Geburtstage", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"po09", cat:"photobooth", name:"Selfie-Wand mit Requisiten", hersteller:"div.", desc:"Fotowand + Requisiten-Set", einsatz:"Alle Events", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"po10", cat:"photobooth", name:"Fotobox-Drucker (DNP/Mitsubishi)", hersteller:"DNP/Mitsubishi", desc:"Dye-Sub-Drucker für Sofortbilder", einsatz:"Zu Fotoboxen", preis_tag:40, preis_we:88, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"po11", cat:"photobooth", name:"Karaoke-Anlage komplett", hersteller:"div.", desc:"TV + Mikros + Software-Anlage", einsatz:"Parties, Geburtstage", preis_tag:60, preis_we:130, bezug:"Müller Musik Berlin", anbieter:"Müller Musik Berlin" },
+  { id:"po12", cat:"photobooth", name:"Karaoke-Mikro kabellos (2er Set)", hersteller:"div.", desc:"Funk-Karaoke-Mikrofone", einsatz:"Karaoke-Events", preis_tag:20, preis_we:44, bezug:"Müller Musik Berlin", anbieter:"Müller Musik Berlin" },
+  { id:"po13", cat:"photobooth", name:"Livezeichner / Karikaturist", hersteller:"Künstler", desc:"Karikaturen live zeichnen", einsatz:"Hochzeiten, Galas, Messen", preis_tag:0, preis_we:0, bezug:"Oppermann Events", anbieter:"Oppermann Events Berlin" },
+  { id:"po14", cat:"photobooth", name:"Feuerkünstler / Fire-Show", hersteller:"Künstler", desc:"Feuershow-Equipment-Set", einsatz:"Outdoor Shows, Galas", preis_tag:0, preis_we:0, bezug:"auf Anfrage", anbieter:"Auf Anfrage" },
+  { id:"hz01", cat:"hochzeit", name:"Traubogen Holz (2x2m)", hersteller:"Holz/Natur", desc:"Rustikaler Traubogen", einsatz:"Freie Trauung, Hochzeit", preis_tag:40, preis_we:88, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz02", cat:"hochzeit", name:"Traubogen Metall weiß (2x2m)", hersteller:"Metall/Weiß", desc:"Weißer eleganter Traubogen", einsatz:"Hochzeiten, Galas", preis_tag:50, preis_we:110, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz03", cat:"hochzeit", name:"Traubogen mit Blumendekor", hersteller:"Holz+Blumen", desc:"Dekorierter Traubogen komplett", einsatz:"Hochzeiten", preis_tag:80, preis_we:175, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz04", cat:"hochzeit", name:"Blumenampeln (Hängedeko, 5er Set)", hersteller:"Blumen/Metall", desc:"Hängende Blumenarrangements", einsatz:"Hochzeiten, Galas", preis_tag:30, preis_we:65, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz05", cat:"hochzeit", name:"Ringkissen (Samt)", hersteller:"Stoff", desc:"Elegantes Ringkissen", einsatz:"Trauung", preis_tag:3, preis_we:7, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz06", cat:"hochzeit", name:"Hochzeitsläufer (weiß, 10m)", hersteller:"Stoff", desc:"Gangläufer für Trauung", einsatz:"Trauung, Kirche, Outdoor", preis_tag:8, preis_we:18, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz07", cat:"hochzeit", name:"Sitzordnungs-Display (Holz)", hersteller:"Holz", desc:"Große Tischplan-Tafel", einsatz:"Hochzeiten, Galas", preis_tag:15, preis_we:33, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz08", cat:"hochzeit", name:"Wunschzettel-Baum (Deko)", hersteller:"Holz", desc:"Ast-Deko zum Wünschen", einsatz:"Hochzeiten, Feiern", preis_tag:15, preis_we:33, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz09", cat:"hochzeit", name:"Gästebuch-Station komplett", hersteller:"Holz/Buch", desc:"Tisch+Buch+Stift-Set", einsatz:"Hochzeiten", preis_tag:10, preis_we:22, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz10", cat:"hochzeit", name:"Briefbox Holz (für Karten)", hersteller:"Holz", desc:"Hochzeits-Briefkasten", einsatz:"Hochzeiten", preis_tag:8, preis_we:18, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz11", cat:"hochzeit", name:"Candy Cart / Süßigkeitenwagen", hersteller:"Holz/Metall", desc:"Dekorativer Candy-Wagen", einsatz:"Hochzeiten, Geburtstage", preis_tag:60, preis_we:130, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz12", cat:"hochzeit", name:"Candy Bar Aufsteller komplett", hersteller:"div.", desc:"Komplettes Candy-Bar-Set", einsatz:"Hochzeiten, Geburtstage", preis_tag:40, preis_we:88, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz13", cat:"hochzeit", name:"Vintage-Süßigkeiten-Apothekersch.", hersteller:"Holz", desc:"Süßigkeiten-Schrank vintage", einsatz:"Hochzeiten, Partys", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hz14", cat:"hochzeit", name:"Popcorn-Wagen vintage", hersteller:"div.", desc:"Klassischer Popcorn-Wagen", einsatz:"Hochzeiten, Märkte", preis_tag:50, preis_we:110, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hz15", cat:"hochzeit", name:"Laterne Set (10 Stk. groß)", hersteller:"Metall/Glas", desc:"Große Deko-Laternen", einsatz:"Hochzeiten, Galas", preis_tag:10, preis_we:22, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz16", cat:"hochzeit", name:"Kerzenständer Kandelaber (120cm)", hersteller:"Metall/Gold", desc:"Hoher Kerzenständer", einsatz:"Galas, Hochzeiten", preis_tag:8, preis_we:18, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz17", cat:"hochzeit", name:"Blumensäule / Pflanzenständer", hersteller:"Metall", desc:"Erhöhte Blumenpräsentation", einsatz:"Hochzeiten, Galas", preis_tag:8, preis_we:18, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hz18", cat:"hochzeit", name:"Ballonbogen-Set (aufblasbar)", hersteller:"Latex", desc:"Bunter Ballonbogen", einsatz:"Geburtstage, Hochzeiten", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hz19", cat:"hochzeit", name:"Lichterketten Set (10m, warmweiß)", hersteller:"LED", desc:"Dekorative Lichterketten", einsatz:"Hochzeiten, Geburtstage", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hz20", cat:"hochzeit", name:"Wunderkerzen-Set (50 Stk.)", hersteller:"Pyro", desc:"Wunderkerzen für Einzug", einsatz:"Hochzeiten, Galas", preis_tag:8, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl01", cat:"dekolicht", name:"Neon-Sign 'Mr & Mrs'", hersteller:"LED-Neon", desc:"Klassisches Hochzeits-Neonsign", einsatz:"Hochzeiten, Fotoecken", preis_tag:40, preis_we:88, bezug:"NeonBär Berlin", anbieter:"NeonBär Berlin" },
+  { id:"dl02", cat:"dekolicht", name:"Neon-Sign 'LOVE' (60cm)", hersteller:"LED-Neon", desc:"Liebes-Schriftzug LED-Neon", einsatz:"Hochzeiten, Parties", preis_tag:30, preis_we:65, bezug:"NeonBär Berlin", anbieter:"NeonBär Berlin" },
+  { id:"dl03", cat:"dekolicht", name:"Neon-Sign individuell (custom)", hersteller:"LED-Neon", desc:"Wunsch-Text Neonschild", einsatz:"Hochzeiten, Firmen, Events", preis_tag:60, preis_we:130, bezug:"NeonBär Berlin", anbieter:"NeonBär Berlin" },
+  { id:"dl04", cat:"dekolicht", name:"LED-Buchstaben groß (je Buchstabe)", hersteller:"LED 60cm", desc:"60cm Leuchtbuchstaben", einsatz:"Hochzeiten, Galas, Messen", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl05", cat:"dekolicht", name:"LED-Ziffern 0-9 (je Ziffer)", hersteller:"LED 60cm", desc:"Leuchtende Zahlen 60cm", einsatz:"Geburtstage, Jubiläen", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl06", cat:"dekolicht", name:"Leuchtschrift 'Happy Birthday'", hersteller:"LED", desc:"Kompletter Schriftzug beleuchtet", einsatz:"Geburtstage", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl07", cat:"dekolicht", name:"Licht-Herz (groß, 1m)", hersteller:"LED", desc:"Leuchtendes Herz 1m", einsatz:"Hochzeiten, Valentinstag", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl08", cat:"dekolicht", name:"LED-Stern (groß, Deko)", hersteller:"LED", desc:"Dekorativer Leucht-Stern", einsatz:"Weihnachten, Events", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl09", cat:"dekolicht", name:"Candelabra / Kerzenleuchter (Groß)", hersteller:"Metall/Gold", desc:"Großer Kerzenleuchter Tisch", einsatz:"Galas, Hochzeiten, Dinner", preis_tag:10, preis_we:22, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"dl10", cat:"dekolicht", name:"Lampions Set (20 Stk., 30cm)", hersteller:"Papier", desc:"Dekorative Lampions", einsatz:"Asiatische Events, Galas", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl11", cat:"dekolicht", name:"Lichtvorhang 3x3m LED", hersteller:"LED", desc:"Lichtervorhang Curtain-Effekt", einsatz:"Parties, Hochzeiten", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl12", cat:"dekolicht", name:"Fairy Lights Glühbirnen-Kette 10m", hersteller:"LED", desc:"Retro-Glühbirnen-Lichterkette", einsatz:"Festivals, Galas, Hochzeiten", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl13", cat:"dekolicht", name:"Feuerkorb / Feuerschale outdoor", hersteller:"Stahl", desc:"Deko-Feuerschale für Außen", einsatz:"Outdoor-Events, Winterfeste", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl14", cat:"dekolicht", name:"Lasershow-Set (grün/rot)", hersteller:"div.", desc:"Einfaches Party-Laser-Set", einsatz:"Clubs, Parties, Indoor", preis_tag:40, preis_we:88, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl15", cat:"dekolicht", name:"Lichterketten-Baldachin (5x5m)", hersteller:"LED", desc:"Über-Kopf-Lichtdach", einsatz:"Hochzeiten outdoor, Terrassen", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"dl16", cat:"dekolicht", name:"LED-Kerzen Set (20 Stk., flackernd)", hersteller:"LED", desc:"Flammenlose LED-Kerzen", einsatz:"Galas, Hochzeiten, Dinner", preis_tag:5, preis_we:11, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"dl17", cat:"dekolicht", name:"Projektionslampe / Gobo-Deko", hersteller:"div.", desc:"Logo/Muster auf Wand projizieren", einsatz:"Messen, Galas, Branding", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"bp01", cat:"blumen", name:"Olivenbaum groß (ca. 2m)", hersteller:"Olea europaea", desc:"Formschöner Olivenbaum", einsatz:"Galas, Hochzeiten, Messen", preis_tag:40, preis_we:88, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp02", cat:"blumen", name:"Palmbaum Phoenix (1,5-2m)", hersteller:"Phoenix canariensis", desc:"Kanarische Dattelpalme", einsatz:"Events, Lounges, VIP-Bereiche", preis_tag:30, preis_we:65, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp03", cat:"blumen", name:"Bambus-Raumteiler (180cm)", hersteller:"Bambus", desc:"Natürlicher Sicht-/Raumteiler", einsatz:"Messen, Lounges, Events", preis_tag:20, preis_we:44, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp04", cat:"blumen", name:"Buchsbaum Kugel (40cm Ø)", hersteller:"Buxus", desc:"Topiariform Buchsbaum", einsatz:"Galas, Hochzeiten, Empfang", preis_tag:10, preis_we:22, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp05", cat:"blumen", name:"Buchsbaum Pyramide (80cm)", hersteller:"Buxus", desc:"Formschnitt-Pyramide", einsatz:"Hochzeiten, Firmen, Events", preis_tag:15, preis_we:33, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp06", cat:"blumen", name:"Orchideen-Arrangement", hersteller:"Phalaenopsis", desc:"Elegante Tischorchidee", einsatz:"Galas, Empfänge, VIP", preis_tag:15, preis_we:33, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp07", cat:"blumen", name:"Bodendecker-Set grün (je m²)", hersteller:"div.", desc:"Moos-/Gras-Bodendeko", einsatz:"Messen, Ausstellungen", preis_tag:8, preis_we:18, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp08", cat:"blumen", name:"Mooswand-Panel (50x50cm)", hersteller:"Moos stabilisiert", desc:"Dekorative Mooswand", einsatz:"Messen, Fotowände, Events", preis_tag:10, preis_we:22, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp09", cat:"blumen", name:"Pflanzenwand begrünt (1m²)", hersteller:"div.", desc:"Vertikaler Garten Mietpanel", einsatz:"Events, Fotowände, Messen", preis_tag:20, preis_we:44, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp10", cat:"blumen", name:"Lavendel-Töpfe (5er Set)", hersteller:"Lavendula", desc:"Deko-Lavendel-Töpfe", einsatz:"Provence-Events, Galas", preis_tag:10, preis_we:22, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp11", cat:"blumen", name:"Lorbeer-Bäumchen (100cm)", hersteller:"Laurus nobilis", desc:"Topiariform Lorbeer", einsatz:"Mediterrane Events, Galas", preis_tag:15, preis_we:33, bezug:"Pflanzenmiet Berlin", anbieter:"Pflanzenmiet Berlin" },
+  { id:"bp12", cat:"blumen", name:"Deko-Gras-Arrangement", hersteller:"Pampas/Gräser", desc:"Pampasgras-Gesteck", einsatz:"Boho-Events, Hochzeiten", preis_tag:8, preis_we:18, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"hs01", cat:"hygiene", name:"WC-Anhänger 4 Kabinen", hersteller:"Sanitärlogistik", desc:"4-Kabinen-Toilettenwagen", einsatz:"Outdoor-Events, Festivals", preis_tag:200, preis_we:450, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs02", cat:"hygiene", name:"WC-Anhänger 8 Kabinen", hersteller:"Sanitärlogistik", desc:"Großer WC-Wagen 8 Kabinen", einsatz:"Stadtfeste, Festivals", preis_tag:350, preis_we:800, bezug:"auf Anfrage", anbieter:"Auf Anfrage Berlin" },
+  { id:"hs03", cat:"hygiene", name:"WC-Container VIP (2 Anlagen)", hersteller:"Sanitärlogistik", desc:"Hochwertiges VIP-Sanitärmodul", einsatz:"VIP-Bereich, Premium", preis_tag:350, preis_we:800, bezug:"auf Anfrage", anbieter:"Auf Anfrage Berlin" },
+  { id:"hs04", cat:"hygiene", name:"Chemie-Toilette (Dixi) einzeln", hersteller:"Portable WC", desc:"Einzelne Bau-WC-Kabine", einsatz:"Outdoor-Events, Baustellen", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs05", cat:"hygiene", name:"Urinal mobil (4-Plätze)", hersteller:"Sanitärlogistik", desc:"Mobiles Männer-Urinal", einsatz:"Festivals, Stadtfeste", preis_tag:50, preis_we:110, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs06", cat:"hygiene", name:"Urinal einzeln (eco)", hersteller:"Ekolet", desc:"Wasserfreies Eco-Urinal", einsatz:"Festivals, Outdoor-Events", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs07", cat:"hygiene", name:"Duschwagen 4 Kabinen", hersteller:"Sanitärlogistik", desc:"Mobile Duschanlage", einsatz:"Festivals, Sport-Events", preis_tag:300, preis_we:670, bezug:"auf Anfrage", anbieter:"Auf Anfrage Berlin" },
+  { id:"hs08", cat:"hygiene", name:"Handwaschstation 4-Plätze", hersteller:"Sanitärlogistik", desc:"Mobiles Handwaschbecken", einsatz:"Outdoor-Events, Catering", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs09", cat:"hygiene", name:"Desinfektionsständer", hersteller:"div.", desc:"Standspender Händedesinfektionsmittel", einsatz:"Alle Events (Hygiene)", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs10", cat:"hygiene", name:"Wickelstation mobil klappbar", hersteller:"div.", desc:"Wandmontierbare Wickeleinheit", einsatz:"Familienfeste, Indoor", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs11", cat:"hygiene", name:"Spülcontainer (mobil)", hersteller:"Sanitärlogistik", desc:"Mobile Spülanlage für Geschirr", einsatz:"Festivals, Catering-Outdoor", preis_tag:300, preis_we:670, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+  { id:"hs12", cat:"hygiene", name:"Abwassertank 1000L (IBC)", hersteller:"Kunststoff", desc:"IBC-Container Abwasser", einsatz:"Outdoor-Events ohne Kanalans.", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"hs13", cat:"hygiene", name:"Frischwassertank 1000L", hersteller:"Kunststoff", desc:"IBC-Tank Frischwasser", einsatz:"Outdoor-Events", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it01", cat:"it", name:"RFID-Zugangskontrolle (Gate-Set)", hersteller:"Skidata/div.", desc:"Drehkreuz + RFID-Scanner", einsatz:"Festivals, Großevents", preis_tag:200, preis_we:450, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it02", cat:"it", name:"Handscanner RFID/Barcode (1 Stk.)", hersteller:"Zebra/Honeywell", desc:"Handscanner für Einlass", einsatz:"Alle Events mit Einlass", preis_tag:20, preis_we:44, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it03", cat:"it", name:"Einlasskontroll-Set (10 Scanner)", hersteller:"div.", desc:"10 Scanner + Software", einsatz:"Mittelgroße Events", preis_tag:150, preis_we:340, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it04", cat:"it", name:"POS Kassensystem Tablet", hersteller:"iPOS/Revel", desc:"Tablet-basierte Kasse mit Display", einsatz:"Bar, Einlass, Merchandise", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it05", cat:"it", name:"Bondrucker Thermodrucker", hersteller:"Epson/Star", desc:"Kassenbondrucker", einsatz:"Bar, Catering, Kasse", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it06", cat:"it", name:"Kartenterminal (EC+Kreditkarte)", hersteller:"SumUp/Ingenico", desc:"Mobiles Bezahlterminal", einsatz:"Bar, Einlass, Shops", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it07", cat:"it", name:"Geldkoffer abschließbar", hersteller:"Metall", desc:"Kassenkoffer für Cash", einsatz:"Einlass, Bar, Events", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it08", cat:"it", name:"Walkie-Talkie Set (10 Stk.)", hersteller:"Motorola", desc:"Profi-Funksprecher Set 10", einsatz:"Große Events, Festivals", preis_tag:50, preis_we:110, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it09", cat:"it", name:"Event-WLAN Router (professionell)", hersteller:"Cisco/Ubiquiti", desc:"Profi-Router für Events", einsatz:"Events mit Internetbedarf", preis_tag:30, preis_we:65, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it10", cat:"it", name:"Repeater/WLAN-Mesh-Node", hersteller:"Cisco", desc:"WLAN-Reichweite erweitern", einsatz:"Große Locations, Hallen", preis_tag:15, preis_we:33, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it11", cat:"it", name:"Mobilfunk-Signalverstärker", hersteller:"div.", desc:"GSM-Booster für Events", einsatz:"Festivals in schlechten Zonen", preis_tag:50, preis_we:110, bezug:"auf Anfrage", anbieter:"Auf Anfrage" },
+  { id:"it12", cat:"it", name:"Live-Streaming-Setup komplett", hersteller:"BlackMagic/div.", desc:"Kamera+Encoder+Mischer-Set", einsatz:"Hybridevents, Konferenzen", preis_tag:200, preis_we:450, bezug:"G+B Berlin", anbieter:"G+B Berlin" },
+  { id:"it13", cat:"it", name:"Countdown-Timer Display groß", hersteller:"div.", desc:"LED-Timer für Events", einsatz:"Reden, Shows, Sport-Events", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"it14", cat:"it", name:"Funk-Ohrhörer Regiekommunikation Set", hersteller:"Clearcom", desc:"Regiespreech-Set 5 Stationen", einsatz:"Bühnenprod., Konferenzen", preis_tag:80, preis_we:175, bezug:"N&M Berlin", anbieter:"N&M Berlin" },
+  { id:"wr01", cat:"werkzeug", name:"Akkuschrauber-Set (2 Stk.)", hersteller:"Makita/Bosch", desc:"Akkuschrauber 18V Set", einsatz:"Auf-/Abbau Equipment", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr02", cat:"werkzeug", name:"Schlagbohrmaschine", hersteller:"Bosch", desc:"Elektrische Schlagbohrmasch.", einsatz:"Montagearbeiten", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr03", cat:"werkzeug", name:"Winkelschleifer (Flex)", hersteller:"Makita", desc:"Winkelschleifer 125mm", einsatz:"Schneid-/Schleifarbeiten", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr04", cat:"werkzeug", name:"Werkzeugkoffer komplett", hersteller:"div.", desc:"Kompletter Werkzeugkoffer", einsatz:"Allgemeine Aufbauarbeiten", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr05", cat:"werkzeug", name:"Leitern Alu 3m", hersteller:"div.", desc:"Aluminium-Stehleiter 3m", einsatz:"Aufbauarbeiten", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr06", cat:"werkzeug", name:"Leitern Alu 6m (Anlegeleiter)", hersteller:"div.", desc:"Anlegeleiter 6m", einsatz:"Aufhängungen, Arbeiten", preis_tag:8, preis_we:18, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr07", cat:"werkzeug", name:"Akkustichsäge", hersteller:"Bosch", desc:"Akku-Stichsäge 18V", einsatz:"Holzarbeiten auf Events", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr08", cat:"werkzeug", name:"Wasserwaage 2m", hersteller:"div.", desc:"Profi-Wasserwaage", einsatz:"Bühnenaufbau, Rigging", preis_tag:2, preis_we:4, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr09", cat:"werkzeug", name:"Schweißgerät MIG/MAG", hersteller:"Lincoln", desc:"Schweißgerät", einsatz:"Metallarbeiten, Sonderaufbau", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr10", cat:"werkzeug", name:"Kehrmaschine Aufsitz", hersteller:"Hako", desc:"Aufsitz-Kehrmaschine", einsatz:"Stadtfeste, Großevents", preis_tag:150, preis_we:340, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr11", cat:"werkzeug", name:"Kehrmaschine Hand (elektrisch)", hersteller:"Hako/Karcher", desc:"Elektro-Handkehrmaschine", einsatz:"Hallen, Events", preis_tag:25, preis_we:55, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr12", cat:"werkzeug", name:"Nass-Trockensauger 30L", hersteller:"Kärcher", desc:"Profi-Industriesauger", einsatz:"Auf-/Abbau, Events", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr13", cat:"werkzeug", name:"Hochdruckreiniger 200 bar", hersteller:"Kärcher", desc:"Profi-Dampfstrahler", einsatz:"Reinigung Equipment", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr14", cat:"werkzeug", name:"Reinigungswagen komplett", hersteller:"div.", desc:"Putzmobil mit Ausrüstung", einsatz:"Events, Toilettenservice", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr15", cat:"werkzeug", name:"Müllsackhalter groß (240L)", hersteller:"div.", desc:"Abfallcontainer auf Rädern", einsatz:"Festivals, Stadtfeste", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"wr16", cat:"werkzeug", name:"Bodenpflegemaschine (Einscheibe)", hersteller:"Kärcher", desc:"Einscheibenbodenpol.", einsatz:"Hallenreinigung", preis_tag:20, preis_we:44, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr01", cat:"verbrauch", name:"Gaffa Tape schwarz 50mm x 50m", hersteller:"tesa/3M", desc:"Gewebe-Klebeband schwarz", einsatz:"Alle Events, Kabel sichern", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr02", cat:"verbrauch", name:"Gaffa Tape weiß 50mm", hersteller:"tesa/3M", desc:"Gewebe-Klebeband weiß", einsatz:"Markierungen, Events", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr03", cat:"verbrauch", name:"Bühnentape/Dance-Tape 50mm", hersteller:"div.", desc:"Tanz-/Bühnenmarkierungsband", einsatz:"Bühnenbau, Theater", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr04", cat:"verbrauch", name:"Kreppband 50mm x 50m", hersteller:"tesa", desc:"Abklebband für Malarbeiten", einsatz:"Messeaufbau, Deko", preis_tag:1, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr05", cat:"verbrauch", name:"Doppelseitiges Klebeband", hersteller:"tesa", desc:"Beidseitig klebendes Band", einsatz:"Dekoinstallation", preis_tag:2, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr06", cat:"verbrauch", name:"Kabelbinder 200mm (100er)", hersteller:"div.", desc:"Kabelbinder-Pack", einsatz:"Alle Kabelarbeiten", preis_tag:2, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr07", cat:"verbrauch", name:"Stretchfolie (Palettenfolie 500m)", hersteller:"div.", desc:"Wickelfolie für Verpackung", einsatz:"Auf-/Abbau, Transport", preis_tag:5, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr08", cat:"verbrauch", name:"Schrumpfschlauch-Set", hersteller:"div.", desc:"Isolier-Schrumpfschlauch", einsatz:"Elektro-Repair", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr09", cat:"verbrauch", name:"Paletten Einweg (10 Stk.)", hersteller:"Holz", desc:"Standard-Einwegpaletten", einsatz:"Equipment-Transport", preis_tag:5, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr10", cat:"verbrauch", name:"Wellpapp-Kartons (10er Set)", hersteller:"div.", desc:"Verpackungskartons", einsatz:"Transport, Lagerung", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr11", cat:"verbrauch", name:"Schaumstoff-Schutzpolster", hersteller:"div.", desc:"Polstermaterial für Transport", einsatz:"Equipment-Schutz", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr12", cat:"verbrauch", name:"Dokumentenmappe wasserdicht", hersteller:"div.", desc:"Wasserdichte Dokumententasche", einsatz:"Eventdokumentation", preis_tag:2, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr13", cat:"verbrauch", name:"Markierungskreide / Sprühkreide", hersteller:"div.", desc:"Absperrmarkierung auf Boden", einsatz:"Outdoor-Events, Aufbau", preis_tag:2, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr14", cat:"verbrauch", name:"Einweghandschuhe (100er Box)", hersteller:"Nitril", desc:"Schutzhandschuhe", einsatz:"Catering, Aufbau", preis_tag:3, preis_we:0, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"vr15", cat:"verbrauch", name:"Sicherheitswesten 10er Set", hersteller:"EN471", desc:"Gelbe Sicherheitswesten", einsatz:"Auf-/Abbau, Security", preis_tag:5, preis_we:11, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga01", cat:"gastro", name:"Smoker BBQ (Texas, 200cm)", hersteller:"div.", desc:"Großer Holz/Kohle-Smoker", einsatz:"BBQ-Events, Stadtfeste", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga02", cat:"gastro", name:"Gasgrill XXL (6 Brenner)", hersteller:"Weber/Napoleon", desc:"Gasgrill für 100+ Portionen", einsatz:"Catering, Sommerfeste", preis_tag:40, preis_we:88, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga03", cat:"gastro", name:"Holzkohlegrill Rost 100cm", hersteller:"div.", desc:"Klassischer Holzkohlegrill groß", einsatz:"Geburtstage, Feste", preis_tag:15, preis_we:33, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga04", cat:"gastro", name:"Paella-Set (90cm Pfanne + Gasherd)", hersteller:"div.", desc:"Paella-Pan 90cm + Gasbrenner", einsatz:"Spanische Events, Feste", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga05", cat:"gastro", name:"Paella-Set XL (150cm + 2 Herde)", hersteller:"div.", desc:"Paella für 100+ Personen", einsatz:"Große Outdoor-Events", preis_tag:60, preis_we:130, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga06", cat:"gastro", name:"Flammlachsbrett-Set (6 Bretter)", hersteller:"Holz/Stahl", desc:"Flammlachs auf Holzbrett", einsatz:"Fisch-Events, Gourmet", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga07", cat:"gastro", name:"Dutch Oven Set (Gusseisen)", hersteller:"Lodge", desc:"Gusseiserner Kochtopf Outdoor", einsatz:"Outdoor-Cooking, BBQ", preis_tag:10, preis_we:22, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga08", cat:"gastro", name:"Pizzaofen mobil (Holz)", hersteller:"Ooni/div.", desc:"Mobiler Holz-Pizzaofen", einsatz:"Pizza-Events, Märkte", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga09", cat:"gastro", name:"Glühweinstand komplett", hersteller:"div.", desc:"Mobiler Glühwein-Ausschank", einsatz:"Weihnachtsmärkte, Winter", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga10", cat:"gastro", name:"Glühweinkessel 50L", hersteller:"Gastro", desc:"Edelstahl-Heißgetränkebehälter", einsatz:"Weihnachtsmärkte, Events", preis_tag:20, preis_we:44, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+  { id:"ga11", cat:"gastro", name:"Marktstand / Verkaufsbude", hersteller:"Holz", desc:"Klassische Markt-Verkaufshütte", einsatz:"Weihnachtsmärkte, Märkte", preis_tag:80, preis_we:175, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga12", cat:"gastro", name:"Eiswagen / Eisstand mobil", hersteller:"div.", desc:"Mobiler Eis-Verkaufswagen", einsatz:"Sommerfeste, Stadtfeste", preis_tag:60, preis_we:130, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga13", cat:"gastro", name:"Crepe-Stand mobil", hersteller:"div.", desc:"Mobiler Crepe-Ausschank", einsatz:"Märkte, Stadtfeste, Feste", preis_tag:40, preis_we:88, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga14", cat:"gastro", name:"Bratwurst-Stand mobil", hersteller:"div.", desc:"Mobiler Grillstand", einsatz:"Stadtfeste, Volksfeste", preis_tag:40, preis_we:88, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga15", cat:"gastro", name:"Mobile Cocktailbar (2m, Holz)", hersteller:"Holz", desc:"Professionelle mobile Bar", einsatz:"Hochzeiten, VIP-Events", preis_tag:80, preis_we:175, bezug:"Five Star Conference", anbieter:"Five Star Conf. Berlin" },
+  { id:"ga16", cat:"gastro", name:"Biertresen / Bierbank-Theke", hersteller:"Holz", desc:"Rustikale Biergartentheke", einsatz:"Volksfeste, BBQ, Feste", preis_tag:30, preis_we:65, bezug:"dry-hire.com", anbieter:"dry-hire.com" },
+  { id:"ga17", cat:"gastro", name:"Slushy-Maschine 2-Kammer", hersteller:"Gastro", desc:"Slush-Eis-Getränkemaschine", einsatz:"Sommerfeste, Kinderevents", preis_tag:25, preis_we:55, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+  { id:"ga18", cat:"gastro", name:"Limonaden-Dispenser (3x5L)", hersteller:"div.", desc:"Großer Getränkespender", einsatz:"Catering, Buffets", preis_tag:15, preis_we:33, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+  { id:"ga19", cat:"gastro", name:"Wein-Ausgabe-Station (Zapf)", hersteller:"div.", desc:"Automatischer Weinspender", einsatz:"Galas, VIP-Empfänge", preis_tag:30, preis_we:65, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+  { id:"ga20", cat:"gastro", name:"Fassbierkühler outdoor 30L", hersteller:"Gastro", desc:"Fass-Bierkühler für outdoor", einsatz:"Stadtfeste, BBQ", preis_tag:20, preis_we:44, bezug:"Profimiet Berlin", anbieter:"Profimiet Berlin" },
+
 ];
 
 // ═══════════════ PRODUCT IMAGES ═══════════════
@@ -1651,7 +1938,8 @@ const NEW_PRODUCTS = new Set([
   'c40','c41','c42','c43','c44','c45',
   'ms01','ms02','ms03','ms04','ms05','ms06','ms07','ms08','ms09','ms10','ms11',
   'ms12','ms13','ms14','ms15','ms16','ms17','ms18','ms19','ms20','ms21','ms22',
-  'ms23','ms24','ms25','ms26','ms27','ms28','ms29','ms30','ms31','ms32',
+  'ms23','ms24','ms25','ms26','ms27','ms28','ms29','ms30','ms31','ms32',,
+  "tr01","tr02","tr03","tr04","tr05","tr06","tr07","tr08","tr09","tr10","tr11","tr12","tr13","ki01","ki02","ki03","ki04","ki05","ki06","ki07","ki08","ki09","ki10","ki11","ki12","ki13","ki14","ki15","ki16","ki17","se01","se02","se03","se04","se05","se06","se07","se08","se09","se10","se11","se12","se13","se14","se15","se16","se17","se18","se19","se20","se21","po01","po02","po03","po04","po05","po06","po07","po08","po09","po10","po11","po12","po13","po14","hz01","hz02","hz03","hz04","hz05","hz06","hz07","hz08","hz09","hz10","hz11","hz12","hz13","hz14","hz15","hz16","hz17","hz18","hz19","hz20","dl01","dl02","dl03","dl04","dl05","dl06","dl07","dl08","dl09","dl10","dl11","dl12","dl13","dl14","dl15","dl16","dl17","bp01","bp02","bp03","bp04","bp05","bp06","bp07","bp08","bp09","bp10","bp11","bp12","hs01","hs02","hs03","hs04","hs05","hs06","hs07","hs08","hs09","hs10","hs11","hs12","hs13","it01","it02","it03","it04","it05","it06","it07","it08","it09","it10","it11","it12","it13","it14","wr01","wr02","wr03","wr04","wr05","wr06","wr07","wr08","wr09","wr10","wr11","wr12","wr13","wr14","wr15","wr16","vr01","vr02","vr03","vr04","vr05","vr06","vr07","vr08","vr09","vr10","vr11","vr12","vr13","vr14","vr15","ga01","ga02","ga03","ga04","ga05","ga06","ga07","ga08","ga09","ga10","ga11","ga12","ga13","ga14","ga15","ga16","ga17","ga18","ga19","ga20"
 ]);
 
 const CAT = {
@@ -1664,6 +1952,19 @@ const CAT = {
   kabel:    { label:"Kabel & Verbindungen",   icon:"🔌", cls:"kabel"    },
   catering: { label:"Catering & Gastronomie", icon:"🍽️", cls:"catering" },
   messe:    { label:"Messe & Logistik",        icon:"🏪", cls:"messe"    },
+  transport:     { label:"Transport & Fahrzeuge", icon:"🚛", cls:"transport" },
+  kinder:     { label:"Kinderprogramm & Attraktionen", icon:"🎪", cls:"kinder" },
+  sport:     { label:"Sport & Entertainment", icon:"🎯", cls:"sport" },
+  photobooth:     { label:"Photobooth & Entertainment", icon:"📸", cls:"photobooth" },
+  hochzeit:     { label:"Hochzeit Spezial", icon:"💒", cls:"hochzeit" },
+  dekolicht:     { label:"Dekoratives Licht & Ambiente", icon:"🕯️", cls:"dekolicht" },
+  blumen:     { label:"Blumen & Pflanzen", icon:"🌿", cls:"blumen" },
+  hygiene:     { label:"Hygiene & Sanitär", icon:"🚿", cls:"hygiene" },
+  it:     { label:"IT & Kommunikation", icon:"📡", cls:"it" },
+  werkzeug:     { label:"Werkzeug & Reinigung", icon:"🔧", cls:"werkzeug" },
+  verbrauch:     { label:"Verbrauchsmaterial", icon:"📦", cls:"verbrauch" },
+  gastro:     { label:"Gastronomie Spezial", icon:"🍽️", cls:"gastro" },
+
 };
 
 // ═══════════════ STATE ═══════════════
@@ -1881,6 +2182,262 @@ function getCatSVG(cat) {
         <animate attributeName="r" values="2;3.5;2" dur="2s" begin="1s" repeatCount="indefinite"/>
       </circle>
     </svg>`,
+    transport: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Truck body -->
+    <rect x="10" y="30" width="38" height="22" rx="2" stroke="${G}" stroke-width="2" fill="none"/>
+    <rect x="48" y="36" width="18" height="16" rx="2" stroke="${G}" stroke-width="2" fill="none"/>
+    <!-- Cab window -->
+    <rect x="50" y="38" width="10" height="8" rx="1" stroke="${G}" stroke-width="1.5" fill="none"/>
+    <!-- Wheels -->
+    <circle cx="22" cy="52" r="6" stroke="${G}" stroke-width="2" fill="none"/>
+    <circle cx="22" cy="52" r="2" fill="${G}">
+      <animateTransform attributeName="transform" type="rotate" from="0 22 52" to="360 22 52" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="56" cy="52" r="6" stroke="${G}" stroke-width="2" fill="none"/>
+    <circle cx="56" cy="52" r="2" fill="${G}">
+      <animateTransform attributeName="transform" type="rotate" from="0 56 52" to="360 56 52" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Motion lines -->
+    <line x1="2" y1="38" x2="10" y2="38" stroke="${G}" stroke-width="1.5" stroke-dasharray="3,3">
+      <animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="2" y1="44" x2="8" y2="44" stroke="${G}" stroke-width="1" stroke-dasharray="2,3">
+      <animate attributeName="opacity" values="0;1;0" dur="0.8s" repeatCount="indefinite"/>
+    </line>
+  </svg>`,
+    kinder: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bouncing ball -->
+    <circle cx="40" cy="45" r="12" stroke="${G}" stroke-width="2" fill="rgba(255,80,180,0.15)">
+      <animate attributeName="cy" values="45;20;45" dur="1.2s" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.3,0,0.7,1;0.3,0,0.7,1" repeatCount="indefinite"/>
+      <animate attributeName="rx" values="12;12;14;12" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="12;12;9;12" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Star trail -->
+    <text x="52" y="30" font-size="8" fill="${G}">★
+      <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.1s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="30;20;10" dur="1.2s" begin="0.1s" repeatCount="indefinite"/>
+    </text>
+    <text x="58" y="38" font-size="6" fill="${G}">✦
+      <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="38;28;18" dur="1.2s" begin="0.3s" repeatCount="indefinite"/>
+    </text>
+    <text x="46" y="26" font-size="5" fill="${G}">★
+      <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="26;16;6" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+    </text>
+    <!-- Ground shadow -->
+    <ellipse cx="40" cy="62" rx="10" ry="3" fill="${G}" opacity="0.2">
+      <animate attributeName="rx" values="10;6;10" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.05;0.3" dur="1.2s" repeatCount="indefinite"/>
+    </ellipse>
+  </svg>`,
+    sport: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Billiard ball -->
+    <circle cx="40" cy="42" r="13" stroke="${G}" stroke-width="2" fill="rgba(80,200,255,0.1)">
+      <animateMotion path="M0,0 Q15,-8 30,0 Q15,8 0,0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="36" y="47" font-size="10" fill="${G}" font-weight="bold">8
+      <animateMotion path="M0,0 Q15,-8 30,0 Q15,8 0,0" dur="2s" repeatCount="indefinite"/>
+    </text>
+    <!-- Motion trail dots -->
+    <circle cx="18" cy="42" r="3" fill="${G}" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="10" cy="42" r="2" fill="${G}" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="4" cy="42" r="1.5" fill="${G}" opacity="0.15">
+      <animate attributeName="opacity" values="0.15;0;0.15" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+    </circle>
+  </svg>`,
+    photobooth: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Camera body -->
+    <rect x="15" y="28" width="50" height="34" rx="5" stroke="${G}" stroke-width="2" fill="none"/>
+    <!-- Lens -->
+    <circle cx="40" cy="45" r="11" stroke="${G}" stroke-width="2" fill="none"/>
+    <circle cx="40" cy="45" r="6" stroke="${G}" stroke-width="1.5" fill="none"/>
+    <circle cx="40" cy="45" r="2" fill="${G}"/>
+    <!-- Viewfinder bump -->
+    <rect x="30" y="22" width="20" height="8" rx="3" stroke="${G}" stroke-width="1.5" fill="none"/>
+    <!-- Flash circle pulsing -->
+    <circle cx="60" cy="35" r="4" stroke="${G}" stroke-width="1.5" fill="none">
+      <animate attributeName="r" values="4;8;4" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="35" r="2" fill="${G}">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </svg>`,
+    hochzeit: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Two interlocking rings -->
+    <circle cx="32" cy="48" r="14" stroke="${G}" stroke-width="2.5" fill="none"/>
+    <circle cx="48" cy="48" r="14" stroke="${G}" stroke-width="2.5" fill="none"/>
+    <!-- Floating hearts -->
+    <text x="26" y="32" font-size="8" fill="${G}">♥
+      <animate attributeName="y" values="32;18;10" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;0" dur="2s" repeatCount="indefinite"/>
+    </text>
+    <text x="42" y="28" font-size="6" fill="${G}">♥
+      <animate attributeName="y" values="28;14;6" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </text>
+    <text x="35" y="36" font-size="10" fill="${G}">♥
+      <animate attributeName="y" values="36;22;12" dur="2s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+    </text>
+  </svg>`,
+    dekolicht: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Candle body -->
+    <rect x="34" y="45" width="12" height="24" rx="2" stroke="${G}" stroke-width="2" fill="rgba(255,220,60,0.1)"/>
+    <!-- Wick -->
+    <line x1="40" y1="45" x2="40" y2="40" stroke="${G}" stroke-width="1.5"/>
+    <!-- Flame flickering -->
+    <ellipse cx="40" cy="36" rx="4" ry="6" fill="${G}" opacity="0.9">
+      <animate attributeName="rx" values="4;3;5;3;4" dur="0.7s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="6;7;5;7;6" dur="0.7s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="36;35;37;35;36" dur="0.7s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Glow rings -->
+    <circle cx="40" cy="36" r="10" stroke="${G}" stroke-width="1" fill="none" opacity="0.4">
+      <animate attributeName="r" values="10;16;10" dur="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0;0.4" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="40" cy="36" r="20" stroke="${G}" stroke-width="0.5" fill="none" opacity="0.15">
+      <animate attributeName="r" values="20;28;20" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.15;0;0.15" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>`,
+    blumen: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Stem growing -->
+    <line x1="40" y1="70" x2="40" y2="42" stroke="${G}" stroke-width="2">
+      <animate attributeName="y2" values="70;42;42" dur="2s" keyTimes="0;0.4;1" repeatCount="indefinite"/>
+    </line>
+    <!-- Leaves -->
+    <ellipse cx="34" cy="58" rx="8" ry="4" stroke="${G}" stroke-width="1.5" fill="rgba(80,200,80,0.15)" transform="rotate(-30 34 58)">
+      <animate attributeName="rx" values="0;8;8" dur="2s" keyTimes="0;0.5;1" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Petals opening -->
+    <circle cx="40" cy="38" r="3" fill="${G}" opacity="0.9">
+      <animate attributeName="r" values="0;3;3" dur="2s" keyTimes="0;0.6;1" repeatCount="indefinite"/>
+    </circle>
+    <ellipse cx="40" cy="28" rx="4" ry="6" stroke="${G}" stroke-width="1.5" fill="none">
+      <animate attributeName="ry" values="0;6;6" dur="2s" keyTimes="0;0.7;1" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="38;28;28" dur="2s" keyTimes="0;0.7;1" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="50" cy="38" rx="4" ry="6" stroke="${G}" stroke-width="1.5" fill="none" transform="rotate(60 50 38)">
+      <animate attributeName="ry" values="0;6;6" dur="2s" keyTimes="0;0.75;1" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="30" cy="38" rx="4" ry="6" stroke="${G}" stroke-width="1.5" fill="none" transform="rotate(-60 30 38)">
+      <animate attributeName="ry" values="0;6;6" dur="2s" keyTimes="0;0.75;1" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="52" cy="30" rx="4" ry="6" stroke="${G}" stroke-width="1.5" fill="none" transform="rotate(30 52 30)">
+      <animate attributeName="ry" values="0;6;6" dur="2s" keyTimes="0;0.8;1" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="28" cy="30" rx="4" ry="6" stroke="${G}" stroke-width="1.5" fill="none" transform="rotate(-30 28 30)">
+      <animate attributeName="ry" values="0;6;6" dur="2s" keyTimes="0;0.8;1" repeatCount="indefinite"/>
+    </ellipse>
+  </svg>`,
+    hygiene: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Water droplet falling -->
+    <g>
+      <ellipse cx="40" cy="25" rx="8" ry="11" stroke="${G}" stroke-width="2" fill="rgba(60,220,220,0.15)">
+        <animate attributeName="cy" values="25;55;55" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;1;0" dur="1.8s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- droplet tip -->
+      <path d="M36 20 Q40 12 44 20" stroke="${G}" stroke-width="1.5" fill="none">
+        <animate attributeName="d" values="M36 15 Q40 7 44 15;M36 45 Q40 37 44 45;M36 45 Q40 37 44 45" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;1;0" dur="1.8s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- Ripple rings on impact -->
+    <ellipse cx="40" cy="62" rx="0" ry="0" stroke="${G}" stroke-width="1.5" fill="none">
+      <animate attributeName="rx" values="0;14;18" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="0;5;7" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.8;0" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="40" cy="62" rx="0" ry="0" stroke="${G}" stroke-width="1" fill="none">
+      <animate attributeName="rx" values="0;8;20" dur="1.8s" begin="1.1s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="0;3;8" dur="1.8s" begin="1.1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.5;0" dur="1.8s" begin="1.1s" repeatCount="indefinite"/>
+    </ellipse>
+  </svg>`,
+    it: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- WiFi arc 1 (innermost) -->
+    <path d="M31 50 Q40 40 49 50" stroke="${G}" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <animate attributeName="opacity" values="0;1;1;1" dur="2s" keyTimes="0;0.3;0.8;1" repeatCount="indefinite"/>
+    </path>
+    <!-- WiFi arc 2 -->
+    <path d="M24 44 Q40 28 56 44" stroke="${G}" stroke-width="2" fill="none" stroke-linecap="round">
+      <animate attributeName="opacity" values="0;0;1;1" dur="2s" keyTimes="0;0.3;0.6;1" repeatCount="indefinite"/>
+    </path>
+    <!-- WiFi arc 3 (outermost) -->
+    <path d="M17 38 Q40 16 63 38" stroke="${G}" stroke-width="1.5" fill="none" stroke-linecap="round">
+      <animate attributeName="opacity" values="0;0;0;1" dur="2s" keyTimes="0;0.3;0.6;1" repeatCount="indefinite"/>
+    </path>
+    <!-- Center dot -->
+    <circle cx="40" cy="56" r="3" fill="${G}">
+      <animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </svg>`,
+    werkzeug: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Wrench shape rotating gently -->
+    <g transform="translate(40,40)">
+      <animateTransform attributeName="transform" type="rotate" values="-20;20;-20" dur="2s" repeatCount="indefinite" additive="sum"/>
+      <!-- Wrench head -->
+      <circle cx="0" cy="-16" r="10" stroke="${G}" stroke-width="2" fill="none"/>
+      <circle cx="0" cy="-16" r="5" stroke="${G}" stroke-width="1.5" fill="none"/>
+      <!-- Wrench handle -->
+      <rect x="-3" y="-8" width="6" height="28" rx="3" stroke="${G}" stroke-width="2" fill="none"/>
+      <!-- Bottom notch -->
+      <path d="M-5 18 L-8 24 L8 24 L5 18" stroke="${G}" stroke-width="1.5" fill="none"/>
+    </g>
+  </svg>`,
+    verbrauch: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Box body -->
+    <rect x="18" y="44" width="44" height="28" rx="3" stroke="${G}" stroke-width="2" fill="rgba(160,160,160,0.1)"/>
+    <!-- Box lid bouncing open -->
+    <path d="M18 44 L40 36 L62 44" stroke="${G}" stroke-width="2" fill="none">
+      <animate attributeName="d" values="M18 44 L40 36 L62 44;M18 44 L40 22 L62 44;M18 44 L40 36 L62 44" dur="2s" keyTimes="0;0.4;1" repeatCount="indefinite"/>
+    </path>
+    <!-- Box flap lines -->
+    <line x1="18" y1="44" x2="40" y2="50" stroke="${G}" stroke-width="1.5" opacity="0.5"/>
+    <line x1="62" y1="44" x2="40" y2="50" stroke="${G}" stroke-width="1.5" opacity="0.5"/>
+    <!-- Stars coming out -->
+    <text x="36" y="35" font-size="8" fill="${G}">✦
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="40;30;20" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+    </text>
+    <text x="44" y="32" font-size="6" fill="${G}">★
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="38;26;16" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </text>
+  </svg>`,
+    gastro: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Fork -->
+    <line x1="28" y1="22" x2="28" y2="62" stroke="${G}" stroke-width="2" stroke-linecap="round"/>
+    <line x1="24" y1="22" x2="24" y2="36" stroke="${G}" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="28" y1="22" x2="28" y2="36" stroke="${G}" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="32" y1="22" x2="32" y2="36" stroke="${G}" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M24 36 Q28 42 32 36" stroke="${G}" stroke-width="1.5" fill="none"/>
+    <!-- Knife -->
+    <line x1="52" y1="22" x2="52" y2="62" stroke="${G}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M52 22 Q60 28 52 42" stroke="${G}" stroke-width="1.5" fill="none"/>
+    <!-- Steam rising -->
+    <path d="M38 28 Q42 22 38 16" stroke="${G}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="d" values="M38 28 Q42 22 38 16;M38 26 Q44 18 38 10;M38 26 Q44 18 38 10" dur="1.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M42 32 Q46 26 42 20" stroke="${G}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="d" values="M42 32 Q46 26 42 20;M42 28 Q48 20 42 12;M42 28 Q48 20 42 12" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M46 30 Q50 24 46 18" stroke="${G}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="d" values="M46 30 Q50 24 46 18;M46 26 Q52 18 46 10;M46 26 Q52 18 46 10" dur="1.8s" begin="1s" repeatCount="indefinite"/>
+    </path>
+  </svg>`,
+
   };
   return svgs[cat] || svgs.strom;
 }
