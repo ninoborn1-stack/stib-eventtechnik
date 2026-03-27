@@ -688,6 +688,63 @@
 .badge-werkzeug  { background: rgba(180,130,80,0.15); color: #b48250; border: 1px solid rgba(180,130,80,0.35); }
 .badge-verbrauch { background: rgba(160,160,160,0.15); color: #a0a0a0; border: 1px solid rgba(160,160,160,0.35); }
 .badge-gastro    { background: rgba(255,120,60,0.15); color: #ff783c; border: 1px solid rgba(255,120,60,0.35); }
+  /* ──────── KACHEL-ZOOM LIGHTBOX ──────── */
+  .card-img.zoomable { cursor: zoom-in; }
+  .card-zoom-backdrop {
+    display: none;
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(4,6,18,0.88);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  .card-zoom-backdrop.open { display: flex; }
+  .card-zoom-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    width: min(520px, 92vw);
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+    animation: zoomIn .22s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes zoomIn {
+    from { transform: scale(0.82); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+  .card-zoom-img-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    padding: 32px 24px 24px;
+  }
+  .card-zoom-img-wrap svg { width: 110px; height: 110px; }
+  .card-zoom-img-wrap img {
+    max-width: 88%;
+    max-height: 220px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 18px rgba(0,0,0,0.6));
+  }
+  .card-zoom-close {
+    position: absolute; top: 12px; right: 14px;
+    background: rgba(255,255,255,0.07); border: none;
+    color: var(--text-muted); width: 30px; height: 30px;
+    border-radius: 50%; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .card-zoom-close:hover { background: rgba(255,255,255,0.15); }
+  .card-zoom-info {
+    padding: 0 22px 22px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  .card-zoom-name { font-size: 1.08rem; font-weight: 700; margin-bottom: 5px; }
+  .card-zoom-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+  .card-zoom-einsatz { font-size: 0.76rem; color: var(--text-muted); margin-top: 6px; }
+
   .img-disclaimer {
     display: flex;
     align-items: center;
@@ -903,6 +960,20 @@
   </span>
 </footer>
 </div><!-- /mainCatalog -->
+
+<!-- ═══════════════════════════ KACHEL-ZOOM ═══════════════════════════ -->
+<div class="card-zoom-backdrop" id="cardZoomBackdrop" onclick="closeCardZoom(event)">
+  <div class="card-zoom-box" id="cardZoomBox">
+    <div class="card-zoom-img-wrap" id="cardZoomImgWrap">
+      <button class="card-zoom-close" onclick="closeCardZoom()">✕</button>
+    </div>
+    <div class="card-zoom-info">
+      <div class="card-zoom-name" id="cardZoomName"></div>
+      <div class="card-zoom-desc" id="cardZoomDesc"></div>
+      <div class="card-zoom-einsatz" id="cardZoomEinsatz"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════ OVERLAY ═══════════════════════════ -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
@@ -2711,7 +2782,7 @@ function renderGrid() {
     const imgUrl = PRODUCT_IMGS[p.id];
     return `
     <div class="card" id="card-${p.id}">
-      <div class="card-img cat-${c.cls}${imgUrl ? ' has-img' : ''}">
+      <div class="card-img cat-${c.cls}${imgUrl ? ' has-img' : ''}${!isAdmin ? ' zoomable' : ''}"${!isAdmin ? ` onclick="openCardZoom('${p.id}')"` : ''}>
         <span class="card-badge badge-${c.cls}">${T[currentLang].catLabels[p.cat]}</span>
         ${imgUrl ? `<img class="prod-img" src="${imgUrl}" alt="${p.name}" loading="lazy" onerror="this.closest('.card-img').classList.remove('has-img');this.remove()">` : ''}
         ${getCatSVG(p.cat)}
@@ -3025,6 +3096,40 @@ function logoutAdmin() {
   updateCartUI();
   showToast('🔒 Admin-Modus deaktiviert', '');
 }
+
+// ═══════════════ KACHEL-ZOOM ═══════════════
+function openCardZoom(id) {
+  if (isAdmin) return;
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  const c = CAT[p.cat];
+  const imgUrl = PRODUCT_IMGS[id];
+  const wrap = document.getElementById('cardZoomImgWrap');
+  // Bild oder SVG setzen
+  const existing = wrap.querySelector('img, svg:not(.close-icon)');
+  if (existing && existing.tagName !== 'BUTTON') existing.remove();
+  // Kategorie-Hintergrundfarbe
+  wrap.className = 'card-zoom-img-wrap cat-' + c.cls;
+  // Badge wiederherstellen falls vorhanden
+  const closeBtn = `<button class="card-zoom-close" onclick="closeCardZoom()">✕</button>`;
+  if (imgUrl) {
+    wrap.innerHTML = closeBtn + `<img src="${imgUrl}" alt="${p.name}" onerror="this.remove()">`;
+  } else {
+    wrap.innerHTML = closeBtn + getCatSVG(p.cat);
+    wrap.querySelector('svg') && (wrap.querySelector('svg').style.cssText = 'width:120px;height:120px');
+  }
+  document.getElementById('cardZoomName').textContent = p.name;
+  document.getElementById('cardZoomDesc').innerHTML = p.desc + (p.hersteller ? ` <em style="color:#6b7a99;font-size:0.75rem;">· ${p.hersteller}</em>` : '');
+  document.getElementById('cardZoomEinsatz').textContent = '📍 ' + p.einsatz;
+  document.getElementById('cardZoomBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCardZoom(e) {
+  if (e && e.target !== document.getElementById('cardZoomBackdrop')) return;
+  document.getElementById('cardZoomBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCardZoom(); });
 
 // ═══════════════ FORM SUBMIT ═══════════════
 async function sendRequest(e) {
