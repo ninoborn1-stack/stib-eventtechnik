@@ -688,6 +688,20 @@
 .badge-werkzeug  { background: rgba(180,130,80,0.15); color: #b48250; border: 1px solid rgba(180,130,80,0.35); }
 .badge-verbrauch { background: rgba(160,160,160,0.15); color: #a0a0a0; border: 1px solid rgba(160,160,160,0.35); }
 .badge-gastro    { background: rgba(255,120,60,0.15); color: #ff783c; border: 1px solid rgba(255,120,60,0.35); }
+  .img-disclaimer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 7px 14px;
+    margin-bottom: 18px;
+    line-height: 1.45;
+  }
+  .img-disclaimer svg { flex-shrink: 0; opacity: 0.55; }
   .neu-marker {
     display: inline-block;
     background: #00e060;
@@ -854,6 +868,18 @@
 
 <!-- ──── MAIN GRID ──── -->
 <div class="main">
+  <div class="img-disclaimer">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.8"/>
+      <line x1="10" y1="9" x2="10" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="10" cy="6.5" r="1" fill="currentColor"/>
+    </svg>
+    <span>
+      <strong>Hinweis:</strong> Die abgebildeten Produktfotos dienen lediglich zur Veranschaulichung.
+      Das tatsächlich gelieferte Equipment kann im Erscheinungsbild (Farbe, Generation, Modellvariante) von der Darstellung abweichen.
+      Maßgeblich sind stets Typ und technische Spezifikation des jeweiligen Artikels.
+    </span>
+  </div>
   <div class="section-header">
     <h2 id="sectionTitle">Alle Artikel</h2>
     <span class="count" id="sectionCount"></span>
@@ -872,6 +898,9 @@
   © 2025 STIB – Techniklösungen in jedem Bereich &nbsp;·&nbsp;
   Alle Preise auf Anfrage &nbsp;·&nbsp;
   <a href="mailto:bornhaeusser.friends@gmail.com">bornhaeusser.friends@gmail.com</a>
+  <br><span style="font-size:0.68rem;opacity:0.5;margin-top:4px;display:inline-block;">
+    Produktabbildungen sind Referenzbilder — das gelieferte Equipment kann im Erscheinungsbild abweichen. Maßgeblich sind Typ und Spezifikation.
+  </span>
 </footer>
 </div><!-- /mainCatalog -->
 
