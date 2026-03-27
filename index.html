@@ -2111,6 +2111,31 @@ const NEW_PRODUCTS = new Set([
   "tr01","tr02","tr03","tr04","tr05","tr06","tr07","tr08","tr09","tr10","tr11","tr12","tr13","ki01","ki02","ki03","ki04","ki05","ki06","ki07","ki08","ki09","ki10","ki11","ki12","ki13","ki14","ki15","ki16","ki17","se01","se02","se03","se04","se05","se06","se07","se08","se09","se10","se11","se12","se13","se14","se15","se16","se17","se18","se19","se20","se21","po01","po02","po03","po04","po05","po06","po07","po08","po09","po10","po11","po12","po13","po14","hz01","hz02","hz03","hz04","hz05","hz06","hz07","hz08","hz09","hz10","hz11","hz12","hz13","hz14","hz15","hz16","hz17","hz18","hz19","hz20","dl01","dl02","dl03","dl04","dl05","dl06","dl07","dl08","dl09","dl10","dl11","dl12","dl13","dl14","dl15","dl16","dl17","bp01","bp02","bp03","bp04","bp05","bp06","bp07","bp08","bp09","bp10","bp11","bp12","hs01","hs02","hs03","hs04","hs05","hs06","hs07","hs08","hs09","hs10","hs11","hs12","hs13","it01","it02","it03","it04","it05","it06","it07","it08","it09","it10","it11","it12","it13","it14","wr01","wr02","wr03","wr04","wr05","wr06","wr07","wr08","wr09","wr10","wr11","wr12","wr13","wr14","wr15","wr16","vr01","vr02","vr03","vr04","vr05","vr06","vr07","vr08","vr09","vr10","vr11","vr12","vr13","vr14","vr15","ga01","ga02","ga03","ga04","ga05","ga06","ga07","ga08","ga09","ga10","ga11","ga12","ga13","ga14","ga15","ga16","ga17","ga18","ga19","ga20"
 ]);
 
+// Produkte die OHNE Admin-Login sichtbar sind (6 Originalkategorien, benni_firma_eventtechnik1212.xlsx)
+const PUBLIC_IDS = new Set([
+  'a01','a02','a03','a04','a05','a06','a07','a08','a09','a10',
+  'a11','a12','a13','a14','a15','a16','a17','a18','a19','a20',
+  'a21','a22','a23','a24','a25',
+  'l01','l02','l03','l04','l05','l06','l07','l08','l09','l10',
+  'l11','l12','l13','l14','l15','l16','l17','l18','l19','l20',
+  'l21','l22','l23','l24',
+  'v01','v02','v03','v04','v05','v06','v07','v08','v09','v10',
+  'v11','v12','v13','v14','v15','v16','v17','v18','v19','v20',
+  'v21','v22',
+  'b01','b02','b03','b04','b05','b06','b07','b08','b09','b10',
+  'b11','b12','b13','b14','b15','b16',
+  'm01','m02','m03','m04','m05','m06','m07','m08','m09','m10',
+  'm11','m12','m13','m14','m15','m16','m17','m18',
+  's01','s02','s03','s04','s05','s06','s07','s08','s09','s10',
+  's11','s12','s13','s14','s15','s16','s17','s18','s19','s20',
+  's21','s22',
+]);
+// Kategorien die komplett Admin-only sind (kein einziges public Produkt)
+const ADMIN_ONLY_CATS = new Set([
+  'kabel','catering','messe','transport','kinder','sport','photobooth',
+  'hochzeit','dekolicht','blumen','hygiene','it','werkzeug','verbrauch','gastro',
+]);
+
 const CAT = {
   audio:  { label:"Ton & Audio",         icon:"🔊", cls:"audio"  },
   licht:  { label:"Licht",               icon:"💡", cls:"licht"  },
@@ -2617,6 +2642,7 @@ function renderGrid() {
   const noRes = document.getElementById('noResults');
   let filtered = PRODUCTS;
 
+  if (!isAdmin) filtered = filtered.filter(p => PUBLIC_IDS.has(p.id));
   if (currentCat !== 'all') filtered = filtered.filter(p => p.cat === currentCat);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
@@ -2936,18 +2962,36 @@ function checkPw() {
     closeAdminModal();
     document.getElementById('adminBtn').classList.add('active');
     document.getElementById('adminLabel').textContent = 'Admin aktiv';
+    updateAdminVisibility();
     renderGrid();
     updateCartUI();
-    showToast('✅ Admin-Modus aktiviert — Preise & Anbieter sichtbar', 'success');
+    showToast('✅ Admin-Modus aktiviert — alle 568 Produkte & Preise sichtbar', 'success');
   } else {
     document.getElementById('pwError').style.display = 'block';
     document.getElementById('pwInput').select();
+  }
+}
+function updateAdminVisibility() {
+  // Sidebar: Admin-Only Kategorien ein-/ausblenden
+  document.querySelectorAll('.filter-btn[data-cat]').forEach(btn => {
+    const cat = btn.dataset.cat;
+    if (ADMIN_ONLY_CATS.has(cat)) {
+      btn.style.display = isAdmin ? '' : 'none';
+    }
+  });
+  // Wenn aktive Kategorie admin-only und kein Admin → zurück zu Alle
+  if (!isAdmin && ADMIN_ONLY_CATS.has(currentCat)) {
+    currentCat = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    const allBtn = document.querySelector('[data-cat="all"]');
+    if (allBtn) allBtn.classList.add('active');
   }
 }
 function logoutAdmin() {
   isAdmin = false;
   document.getElementById('adminBtn').classList.remove('active');
   document.getElementById('adminLabel').textContent = 'Admin';
+  updateAdminVisibility();
   renderGrid();
   updateCartUI();
   showToast('🔒 Admin-Modus deaktiviert', '');
@@ -3053,6 +3097,7 @@ document.addEventListener('keydown', e => {
 });
 
 // ═══════════════ INIT ═══════════════
+updateAdminVisibility();
 renderGrid();
 updateCartUI();
 </script>
