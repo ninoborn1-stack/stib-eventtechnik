@@ -172,44 +172,67 @@
     height: 1px; background: var(--border); margin: 1.2rem 0;
   }
 
-  /* ──────── FILTER BAR ──────── */
-  .filter-section {
-    position: sticky; top: 68px; z-index: 90;
-    background: rgba(7,5,15,0.97);
-    backdrop-filter: blur(12px);
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .filter-wrap {
-    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-    max-width: 1400px; margin: 0 auto;
-  }
-  .filter-btn {
+  /* ──────── NAV SEARCH ──────── */
+  .nav-search {
     background: var(--bg-mid); border: 1px solid var(--border);
-    color: var(--text-muted); padding: 7px 16px; border-radius: 20px;
-    cursor: pointer; font-size: 0.82rem; font-weight: 500;
-    transition: all 0.2s; white-space: nowrap;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: white; }
-  .filter-btn.active {
-    background: var(--accent); border-color: var(--accent);
-    color: #04140a; font-weight: 700;
-    box-shadow: 0 0 14px var(--accent-glow);
-  }
-  .search-wrap { margin-left: auto; }
-  .search-input {
-    background: var(--bg-mid); border: 1px solid var(--border);
-    color: var(--text); padding: 7px 14px; border-radius: 20px;
-    font-size: 0.82rem; outline: none; width: 200px;
+    color: var(--text); padding: 7px 14px 7px 32px; border-radius: 20px;
+    font-size: 0.82rem; outline: none; width: 180px;
     transition: all 0.2s;
   }
-  .search-input:focus { border-color: var(--accent); width: 240px; }
-  .search-input::placeholder { color: var(--text-muted); }
+  .nav-search:focus { border-color: var(--accent); width: 220px; }
+  .nav-search::placeholder { color: var(--text-muted); }
+  .nav-search-wrap {
+    position: relative; display: flex; align-items: center;
+  }
+  .nav-search-wrap::before {
+    content: '🔍'; position: absolute; left: 9px;
+    font-size: 0.75rem; pointer-events: none;
+  }
+
+  /* ──────── SIDEBAR + CONTENT LAYOUT ──────── */
+  .page-body {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .sidebar {
+    width: 230px; min-width: 230px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px solid var(--border);
+    padding: 1.2rem 0.75rem;
+    display: flex; flex-direction: column; gap: 3px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .sidebar-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted);
+    padding: 10px 10px 4px; opacity: 0.5;
+  }
+  .filter-btn {
+    background: transparent; border: 1px solid transparent;
+    color: var(--text-muted); padding: 8px 10px; border-radius: 8px;
+    cursor: pointer; font-size: 0.82rem; font-weight: 500;
+    transition: all 0.18s; white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
+    width: 100%; text-align: left;
+  }
+  .filter-btn:hover { background: var(--bg-mid); border-color: var(--border); color: white; }
+  .filter-btn.active {
+    background: rgba(0,224,96,0.12); border-color: rgba(0,224,96,0.35);
+    color: var(--accent); font-weight: 700;
+    box-shadow: inset 0 0 8px rgba(0,224,96,0.06);
+  }
 
   /* ──────── PRODUCT GRID ──────── */
   .main {
-    max-width: 1400px; margin: 0 auto;
+    flex: 1; min-width: 0;
     padding: 2rem;
   }
   .section-header {
@@ -615,14 +638,36 @@
   .card:hover .card-img .prod-img { transform: scale(1.07); }
 
   /* ──────── RESPONSIVE ──────── */
+  @media(max-width:768px) {
+    .page-body { flex-direction: column; }
+    .sidebar {
+      width: 100%; min-width: unset; height: auto;
+      position: sticky; top: 68px; z-index: 80;
+      flex-direction: row; flex-wrap: nowrap;
+      overflow-x: auto; overflow-y: hidden;
+      border-right: none; border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem; gap: 6px;
+      background: rgba(7,5,15,0.97); backdrop-filter: blur(12px);
+    }
+    .sidebar-label { display: none; }
+    .filter-btn {
+      width: auto; border-radius: 20px; border: 1px solid var(--border);
+      padding: 6px 13px; white-space: nowrap;
+      background: var(--bg-mid);
+    }
+    .filter-btn.active {
+      background: var(--accent); border-color: var(--accent);
+      color: #04140a;
+    }
+  }
   @media(max-width:600px) {
     header { padding: 0 1rem; }
     .logo-text span { display: none; }
     .lang-toggle { padding: 7px 9px; }
     .lang-toggle .lang-label { display: none; }
+    .nav-search { width: 110px; }
+    .nav-search:focus { width: 140px; }
     .hero { padding: 2rem 1rem 1.5rem; }
-    .filter-section { padding: 0.75rem 1rem; }
-    .search-wrap { display: none; }
     .main { padding: 1rem; }
     .grid { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
@@ -660,6 +705,9 @@
     </div>
   </a>
   <div class="header-right">
+    <div class="nav-search-wrap">
+      <input class="nav-search" id="searchInput" type="text" placeholder="Suchen..." oninput="filterSearch(this.value)">
+    </div>
     <button class="btn-admin" id="adminBtn" onclick="openAdminModal()">
       <span>🔐</span> <span id="adminLabel">Admin</span>
     </button>
@@ -688,37 +736,37 @@
 </div>
 
 <!-- ═══════════════════════════ FILTER ═══════════════════════════ -->
-<div class="filter-section">
-  <div class="filter-wrap">
-    <button class="filter-btn active" data-cat="all" onclick="filterCat('all', this)">Alle</button>
-    <button class="filter-btn" data-cat="audio"  onclick="filterCat('audio',  this)">Ton & Audio</button>
-    <button class="filter-btn" data-cat="licht"  onclick="filterCat('licht',  this)">Licht</button>
-    <button class="filter-btn" data-cat="video"  onclick="filterCat('video',  this)">Video & LED</button>
-    <button class="filter-btn" data-cat="buehne" onclick="filterCat('buehne', this)">Bühne & Rigging</button>
-    <button class="filter-btn" data-cat="moebel" onclick="filterCat('moebel', this)">Möbel & Ausstattung</button>
-    <button class="filter-btn" data-cat="strom"  onclick="filterCat('strom',  this)">Strom & FX</button>
-    <button class="filter-btn" data-cat="kabel"    onclick="filterCat('kabel',    this)">🔌 Kabel</button>
-    <button class="filter-btn" data-cat="catering" onclick="filterCat('catering', this)">🍽️ Catering</button>
-    <button class="filter-btn" data-cat="messe"    onclick="filterCat('messe',    this)">🏪 Messe & Logistik</button>
-    <button class="filter-btn" data-cat="transport" onclick="filterCat('transport', this)">🚛 Transport & Fahrzeuge</button>
-    <button class="filter-btn" data-cat="kinder" onclick="filterCat('kinder', this)">🎪 Kinderprogramm & Attraktionen</button>
-    <button class="filter-btn" data-cat="sport" onclick="filterCat('sport', this)">🎯 Sport & Entertainment</button>
-    <button class="filter-btn" data-cat="photobooth" onclick="filterCat('photobooth', this)">📸 Photobooth & Entertainment</button>
-    <button class="filter-btn" data-cat="hochzeit" onclick="filterCat('hochzeit', this)">💒 Hochzeit Spezial</button>
-    <button class="filter-btn" data-cat="dekolicht" onclick="filterCat('dekolicht', this)">🕯️ Dekoratives Licht & Ambiente</button>
-    <button class="filter-btn" data-cat="blumen" onclick="filterCat('blumen', this)">🌿 Blumen & Pflanzen</button>
-    <button class="filter-btn" data-cat="hygiene" onclick="filterCat('hygiene', this)">🚿 Hygiene & Sanitär</button>
-    <button class="filter-btn" data-cat="it" onclick="filterCat('it', this)">📡 IT & Kommunikation</button>
-    <button class="filter-btn" data-cat="werkzeug" onclick="filterCat('werkzeug', this)">🔧 Werkzeug & Reinigung</button>
-    <button class="filter-btn" data-cat="verbrauch" onclick="filterCat('verbrauch', this)">📦 Verbrauchsmaterial</button>
-    <button class="filter-btn" data-cat="gastro" onclick="filterCat('gastro', this)">🍽️ Gastronomie Spezial</button>
-    <div class="search-wrap">
-      <input class="search-input" type="text" placeholder="🔍 Suchen..." id="searchInput" oninput="filterSearch(this.value)">
-    </div>
-  </div>
-</div>
+<!-- ═══════════════════════════ PAGE BODY ═══════════════════════════ -->
+<div class="page-body">
 
-<!-- ═══════════════════════════ MAIN GRID ═══════════════════════════ -->
+<!-- ──── SIDEBAR ──── -->
+<aside class="sidebar">
+  <div class="sidebar-label">Kategorien</div>
+  <button class="filter-btn active" data-cat="all"        onclick="filterCat('all',        this)">Alle</button>
+  <button class="filter-btn" data-cat="blumen"     onclick="filterCat('blumen',     this)">🌿 Blumen & Pflanzen</button>
+  <button class="filter-btn" data-cat="buehne"     onclick="filterCat('buehne',     this)">Bühne & Rigging</button>
+  <button class="filter-btn" data-cat="catering"   onclick="filterCat('catering',   this)">🍽️ Catering</button>
+  <button class="filter-btn" data-cat="dekolicht"  onclick="filterCat('dekolicht',  this)">🕯️ Dekoratives Licht</button>
+  <button class="filter-btn" data-cat="gastro"     onclick="filterCat('gastro',     this)">🍽️ Gastronomie Spezial</button>
+  <button class="filter-btn" data-cat="hochzeit"   onclick="filterCat('hochzeit',   this)">💒 Hochzeit Spezial</button>
+  <button class="filter-btn" data-cat="hygiene"    onclick="filterCat('hygiene',    this)">🚿 Hygiene & Sanitär</button>
+  <button class="filter-btn" data-cat="it"         onclick="filterCat('it',         this)">📡 IT & Kommunikation</button>
+  <button class="filter-btn" data-cat="kabel"      onclick="filterCat('kabel',      this)">🔌 Kabel</button>
+  <button class="filter-btn" data-cat="kinder"     onclick="filterCat('kinder',     this)">🎪 Kinderprogramm</button>
+  <button class="filter-btn" data-cat="licht"      onclick="filterCat('licht',      this)">Licht</button>
+  <button class="filter-btn" data-cat="messe"      onclick="filterCat('messe',      this)">🏪 Messe & Logistik</button>
+  <button class="filter-btn" data-cat="moebel"     onclick="filterCat('moebel',     this)">Möbel & Ausstattung</button>
+  <button class="filter-btn" data-cat="photobooth" onclick="filterCat('photobooth', this)">📸 Photobooth</button>
+  <button class="filter-btn" data-cat="sport"      onclick="filterCat('sport',      this)">🎯 Sport & Entertainment</button>
+  <button class="filter-btn" data-cat="strom"      onclick="filterCat('strom',      this)">Strom & FX</button>
+  <button class="filter-btn" data-cat="audio"      onclick="filterCat('audio',      this)">Ton & Audio</button>
+  <button class="filter-btn" data-cat="transport"  onclick="filterCat('transport',  this)">🚛 Transport & Fahrzeuge</button>
+  <button class="filter-btn" data-cat="verbrauch"  onclick="filterCat('verbrauch',  this)">📦 Verbrauchsmaterial</button>
+  <button class="filter-btn" data-cat="video"      onclick="filterCat('video',      this)">Video & LED</button>
+  <button class="filter-btn" data-cat="werkzeug"   onclick="filterCat('werkzeug',   this)">🔧 Werkzeug & Reinigung</button>
+</aside>
+
+<!-- ──── MAIN GRID ──── -->
 <div class="main">
   <div class="section-header">
     <h2 id="sectionTitle">Alle Artikel</h2>
@@ -730,6 +778,8 @@
     <p>Keine Artikel gefunden.</p>
   </div>
 </div>
+
+</div><!-- /page-body -->
 
 <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
 <footer>
@@ -1097,7 +1147,7 @@ function applyLang() {
   document.querySelector('[data-cat="werkzeug"]').textContent   = t["filter-werkzeug"];
   document.querySelector('[data-cat="verbrauch"]').textContent  = t["filter-verbrauch"];
   document.querySelector('[data-cat="gastro"]').textContent     = t["filter-gastro"];
-  document.querySelector('.search-input').placeholder = t.searchPh;
+  document.getElementById('searchInput').placeholder = currentLang === 'de' ? 'Suchen...' : 'Search...';
 
   // No results
   document.querySelector('.no-results p').textContent = t.noResults;
