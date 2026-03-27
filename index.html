@@ -454,13 +454,65 @@
     font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
   }
 
-  /* ──────── REQUEST FORM ──────── */
-  .cart-form {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid var(--border);
-    flex-shrink: 0;
+  /* ──────── CART CHECKOUT BUTTON ──────── */
+  .btn-checkout {
+    display: block; width: calc(100% - 3rem); margin: 0.75rem 1.5rem 1.25rem;
+    background: var(--accent); color: #04140a;
+    border: none; padding: 13px 16px; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 800; cursor: pointer;
+    transition: all 0.2s; text-align: center; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .cart-form h4 {
+  .btn-checkout:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  .btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; transform: none; filter: none; }
+
+  /* ──────── CHECKOUT PAGE ──────── */
+  .checkout-page {
+    position: fixed; inset: 0; z-index: 310;
+    background: var(--bg);
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .checkout-page.open { transform: translateX(0); }
+  .checkout-hdr {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(7,5,15,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 2rem; height: 68px;
+  }
+  .checkout-hdr h2 { font-size: 1.05rem; font-weight: 700; flex: 1; }
+  .btn-back {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); padding: 8px 15px; border-radius: 8px;
+    cursor: pointer; font-size: 0.82rem; font-weight: 600;
+    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+  }
+  .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+  .checkout-body {
+    max-width: 1100px; margin: 0 auto;
+    padding: 2rem; display: grid;
+    grid-template-columns: 1fr 1.3fr; gap: 2.5rem;
+  }
+  .checkout-col-title {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    margin-bottom: 1rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .checkout-items-list { display: flex; flex-direction: column; gap: 10px; }
+  .checkout-total {
+    margin-top: 1rem; padding: 0.85rem 1rem;
+    background: rgba(0,224,96,0.06); border: 1px solid rgba(0,224,96,0.18);
+    border-radius: 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .checkout-total span:first-child { font-size: 0.82rem; color: var(--text-muted); }
+  .checkout-total .co-total-val { font-size: 1.05rem; font-weight: 800; color: #4ade80; }
+  /* ──────── REQUEST FORM (on checkout page) ──────── */
+  .req-form h4 {
     font-size: 0.8rem; color: var(--text-muted);
     text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
   }
@@ -639,6 +691,8 @@
 
   /* ──────── RESPONSIVE ──────── */
   @media(max-width:768px) {
+    .checkout-body { grid-template-columns: 1fr; padding: 1rem; }
+    .checkout-hdr { padding: 0.75rem 1rem; }
     .page-body { flex-direction: column; }
     .sidebar {
       width: 100%; min-width: unset; height: auto;
@@ -825,24 +879,47 @@
     <div class="anbieter-list" id="anbieterList">—</div>
   </div>
 
-  <!-- FORM -->
-  <div class="cart-form">
-    <h4>📋 Anfrage senden</h4>
-    <form id="requestForm" onsubmit="sendRequest(event)">
-      <div class="form-grid">
-        <input class="form-input" type="text"  name="name"      placeholder="Name *"      required>
-        <input class="form-input" type="text"  name="firma"     placeholder="Firma">
-        <input class="form-input" type="email" name="email"     placeholder="E-Mail *"    required>
-        <input class="form-input" type="tel"   name="telefon"   placeholder="Telefon">
-        <input class="form-input" type="date"  name="datum"     placeholder="Eventdatum">
-        <input class="form-input" type="text"  name="ort"       placeholder="Veranstaltungsort">
-        <textarea class="form-input full" name="nachricht" placeholder="Nachricht / Besondere Anforderungen..." rows="3"></textarea>
-        <input type="hidden" name="warenkorb" id="cartPayload">
+  <!-- CHECKOUT CTA -->
+  <button class="btn-checkout" id="btnCheckout" onclick="openCheckout()" disabled>
+    🛒 Zur Anfrage →
+  </button>
+</div>
+
+<!-- ═══════════════════════════ CHECKOUT PAGE ═══════════════════════════ -->
+<div class="checkout-page" id="checkoutPage">
+  <div class="checkout-hdr">
+    <button class="btn-back" onclick="closeCheckout()">← Zurück zum Katalog</button>
+    <h2>📋 Anfrage stellen</h2>
+  </div>
+  <div class="checkout-body">
+    <!-- LEFT: Cart Summary -->
+    <div class="checkout-cart-col">
+      <div class="checkout-col-title">🛒 Deine Auswahl</div>
+      <div class="checkout-items-list" id="checkoutItemsList"></div>
+      <div class="checkout-total" id="checkoutTotal" style="display:none;">
+        <span>Geschätzte Kosten (Tagespreis von)</span>
+        <span class="co-total-val" id="checkoutTotalVal">0 €</span>
       </div>
-      <button class="btn-send" type="submit" id="sendBtn">
-        <span>📩</span> Anfrage senden
-      </button>
-    </form>
+    </div>
+    <!-- RIGHT: Request Form -->
+    <div class="checkout-form-col">
+      <div class="checkout-col-title">📋 Anfrage senden</div>
+      <form class="req-form" id="requestForm" onsubmit="sendRequest(event)">
+        <div class="form-grid">
+          <input class="form-input" type="text"  name="name"      placeholder="Name *"      required>
+          <input class="form-input" type="text"  name="firma"     placeholder="Firma">
+          <input class="form-input" type="email" name="email"     placeholder="E-Mail *"    required>
+          <input class="form-input" type="tel"   name="telefon"   placeholder="Telefon">
+          <input class="form-input" type="date"  name="datum"     placeholder="Eventdatum">
+          <input class="form-input" type="text"  name="ort"       placeholder="Veranstaltungsort">
+          <textarea class="form-input full" name="nachricht" placeholder="Nachricht / Besondere Anforderungen..." rows="4"></textarea>
+          <input type="hidden" name="warenkorb" id="cartPayload">
+        </div>
+        <button class="btn-send" type="submit" id="sendBtn">
+          <span>📩</span> Anfrage senden
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -2637,13 +2714,16 @@ function updateCartUI() {
   const ci = document.getElementById('cartItems');
   const kiBanner = document.getElementById('kiBanner');
 
+  const btnCO = document.getElementById('btnCheckout');
   if (!items.length) {
     ci.innerHTML = `<div class="cart-empty"><span class="empty-icon">🎪</span>${T[currentLang].cartEmptyLine1}<br>${T[currentLang].cartEmptyLine2}</div>`;
     kiBanner.style.display = 'none';
     document.getElementById('cartTotal').classList.remove('visible');
     document.getElementById('cartAnbieter').classList.remove('visible');
+    if (btnCO) btnCO.disabled = true;
     return;
   }
+  if (btnCO) btnCO.disabled = false;
 
   kiBanner.style.display = 'block';
 
@@ -2727,6 +2807,47 @@ function toggleCart() {
   open ? closeCart() : openCart();
 }
 
+// ═══════════════ CHECKOUT PAGE ═══════════════
+function openCheckout() {
+  closeCart();
+  // Render checkout items
+  const items = Object.entries(cart).filter(([,q]) => q > 0);
+  const list = document.getElementById('checkoutItemsList');
+  list.innerHTML = items.map(([id, qty]) => {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p) return '';
+    const c = CAT[p.cat];
+    return `
+    <div class="cart-item">
+      <div class="ci-icon cat-${c.cls}" style="padding:6px">${getCatSVG(p.cat)}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-sub">${p.hersteller} · ${qty}×</div>
+      </div>
+    </div>`;
+  }).join('');
+  // Total (admin only)
+  const tot = document.getElementById('checkoutTotal');
+  if (isAdmin) {
+    tot.style.display = 'flex';
+    document.getElementById('checkoutTotalVal').textContent = T[currentLang].totalVal;
+  } else {
+    tot.style.display = 'none';
+  }
+  // Sync payload
+  const payload = items.map(([id,qty]) => {
+    const p = PRODUCTS.find(x=>x.id===id);
+    return `${qty}× ${p.name} (${p.hersteller})`;
+  }).join('\n');
+  document.getElementById('cartPayload').value = payload;
+  document.getElementById('checkoutPage').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkoutPage').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // ═══════════════ ADMIN MODAL ═══════════════
 function openAdminModal() {
   if (isAdmin) {
@@ -2800,7 +2921,7 @@ async function sendRequest(e) {
       cart = {};
       renderGrid();
       updateCartUI();
-      closeCart();
+      closeCheckout();
     } else {
       throw new Error('Fehler');
     }
