@@ -571,6 +571,21 @@
   .badge-kabel    { background: rgba(0,224,96,0.13);  color: #00e060; }
   .badge-catering { background: rgba(255,160,50,0.15); color: #ffa032; }
   .badge-messe    { background: rgba(100,160,255,0.15); color: #64a0ff; }
+  .neu-marker {
+    display: inline-block;
+    background: #00e060;
+    color: #0a0f1e;
+    font-size: 0.52rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    position: relative;
+    top: -1px;
+  }
 
   /* card-img SVG container */
   .card-img svg { width: 72px; height: 72px; filter: drop-shadow(0 0 12px rgba(0,184,90,0.35)); }
@@ -1615,6 +1630,30 @@ const PRODUCT_IMGS = {
 };
 
 // ═══════════════ CATEGORY CONFIG ═══════════════
+// IDs aller in v3 neu hinzugefügten Produkte
+const NEW_PRODUCTS = new Set([
+  'a26','a27','a28','a29','a30','a31','a32','a33','a34','a35','a36','a37','a38',
+  'a39','a40','a41','a42','a43','a44','a45','a46','a47','a48','a49','a50','a51',
+  'a52','a53','a54','a55','a56','a57','a58',
+  'l25','l26','l27','l28','l29','l30','l31','l32','l33','l34','l35','l36','l37',
+  'l38','l39','l40','l41','l42','l43','l44','l45','l46','l47','l48',
+  'v23','v24','v25','v26','v27','v28','v29','v30','v31','v32','v33','v34','v35',
+  'b17','b18','b19','b20','b21','b22','b23','b24','b25','b26','b27','b28','b29',
+  'b30','b31','b32','b33','b34','b35','b36','b37','b38',
+  'm19','m20','m21','m22','m23','m24','m25','m26','m27','m28','m29','m30','m31',
+  'm32','m33','m34','m35','m36','m37','m38','m39','m40','m41','m42','m43','m44',
+  'm45','m46',
+  's23','s24','s25','s26','s27','s28','s29','s30','s31','s32','s33','s34','s35',
+  's36','s37','s38','s39','s40','s41','s42','s43','s44','s45','s46','s47',
+  'c01','c02','c03','c04','c05','c06','c07','c08','c09','c10','c11','c12','c13',
+  'c14','c15','c16','c17','c18','c19','c20','c21','c22','c23','c24','c25','c26',
+  'c27','c28','c29','c30','c31','c32','c33','c34','c35','c36','c37','c38','c39',
+  'c40','c41','c42','c43','c44','c45',
+  'ms01','ms02','ms03','ms04','ms05','ms06','ms07','ms08','ms09','ms10','ms11',
+  'ms12','ms13','ms14','ms15','ms16','ms17','ms18','ms19','ms20','ms21','ms22',
+  'ms23','ms24','ms25','ms26','ms27','ms28','ms29','ms30','ms31','ms32',
+]);
+
 const CAT = {
   audio:  { label:"Ton & Audio",         icon:"🔊", cls:"audio"  },
   licht:  { label:"Licht",               icon:"💡", cls:"licht"  },
@@ -1863,6 +1902,14 @@ function renderGrid() {
     );
   }
 
+  // Sortierung: nach Kategorie-Reihenfolge, dann alphabetisch nach Name
+  const CAT_ORDER = Object.keys(CAT);
+  filtered = [...filtered].sort((a, b) => {
+    const catDiff = CAT_ORDER.indexOf(a.cat) - CAT_ORDER.indexOf(b.cat);
+    if (catDiff !== 0) return catDiff;
+    return a.name.localeCompare(b.name, 'de');
+  });
+
   const t = T[currentLang];
   document.getElementById('sectionCount').textContent = filtered.length + ' ' + t.artikelCount;
   const cat = CAT[currentCat];
@@ -1889,7 +1936,7 @@ function renderGrid() {
         ${getCatSVG(p.cat)}
       </div>
       <div class="card-body">
-        <div class="card-name">${p.name}</div>
+        <div class="card-name">${p.name}${NEW_PRODUCTS.has(p.id) ? '<span class="neu-marker">NEU</span>' : ''}</div>
         <div class="card-desc">${p.desc}<br><em style="color:#6b7a99;font-size:0.7rem;">${p.hersteller}</em></div>
         <div class="card-einsatz">📍 ${p.einsatz}</div>
         <div class="card-prices ${isAdmin?'visible':''}">
