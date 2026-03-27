@@ -466,21 +466,15 @@
   .btn-checkout:hover { filter: brightness(1.12); transform: translateY(-1px); }
   .btn-checkout:disabled { opacity: 0.35; cursor: not-allowed; transform: none; filter: none; }
 
-  /* ──────── CHECKOUT PAGE ──────── */
-  .checkout-page {
-    position: fixed; inset: 0; z-index: 310;
-    background: var(--bg);
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  }
-  .checkout-page.open { transform: translateX(0); }
+  /* ──────── CHECKOUT PAGE (vollständige neue Seite) ──────── */
+  .checkout-page { display: none; background: var(--bg); min-height: 100vh; }
+  .checkout-page.open { display: block; }
   .checkout-hdr {
-    position: sticky; top: 0; z-index: 10;
+    position: sticky; top: 0; z-index: 90;
     background: rgba(7,5,15,0.97); backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 2rem; height: 68px;
+    padding: 0 2rem; height: 68px;
   }
   .checkout-hdr h2 { font-size: 1.05rem; font-weight: 700; flex: 1; }
   .btn-back {
@@ -492,30 +486,66 @@
   }
   .btn-back:hover { border-color: var(--accent); color: var(--accent); }
   .checkout-body {
-    max-width: 1100px; margin: 0 auto;
-    padding: 2rem; display: grid;
-    grid-template-columns: 1fr 1.3fr; gap: 2.5rem;
+    max-width: 1200px; margin: 0 auto;
+    padding: 2rem 2rem 4rem; display: grid;
+    grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: start;
   }
   .checkout-col-title {
-    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--text-muted);
-    margin-bottom: 1rem; padding-bottom: 0.75rem;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted);
+    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
   }
   .checkout-items-list { display: flex; flex-direction: column; gap: 10px; }
-  .checkout-total {
-    margin-top: 1rem; padding: 0.85rem 1rem;
-    background: rgba(0,224,96,0.06); border: 1px solid rgba(0,224,96,0.18);
-    border-radius: 10px;
+  .co-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.9rem 1rem;
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .co-item:hover { border-color: rgba(0,224,96,0.25); }
+  .co-item-icon {
+    width: 44px; height: 44px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .co-item-info { flex: 1; min-width: 0; }
+  .co-item-name { font-size: 0.9rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .co-item-sub  { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+  .co-qty {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.06); border-radius: 8px; padding: 4px;
+  }
+  .co-qty-btn {
+    background: none; border: none; color: var(--text);
+    width: 26px; height: 26px; border-radius: 6px; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .co-qty-btn:hover { background: var(--accent); color: #04140a; }
+  .co-qty-val { min-width: 22px; text-align: center; font-size: 0.85rem; font-weight: 700; }
+  .co-remove {
+    background: none; border: none; color: var(--text-muted);
+    cursor: pointer; padding: 6px; border-radius: 6px;
+    font-size: 0.85rem; transition: color 0.15s;
+  }
+  .co-remove:hover { color: #f87171; }
+  .checkout-summary {
+    margin-top: 1.5rem; padding: 1rem 1.25rem;
+    background: rgba(0,224,96,0.06); border: 1px solid rgba(0,224,96,0.2);
+    border-radius: 12px;
+  }
+  .checkout-summary-row {
     display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;
   }
-  .checkout-total span:first-child { font-size: 0.82rem; color: var(--text-muted); }
-  .checkout-total .co-total-val { font-size: 1.05rem; font-weight: 800; color: #4ade80; }
-  /* ──────── REQUEST FORM (on checkout page) ──────── */
-  .req-form h4 {
-    font-size: 0.8rem; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+  .checkout-summary-row .co-total-val { font-size: 1.1rem; font-weight: 800; color: #4ade80; }
+  .co-empty-hint {
+    text-align: center; padding: 2.5rem 1rem;
+    color: var(--text-muted); font-size: 0.88rem;
   }
+  /* Form on checkout */
+  .checkout-form-col { position: sticky; top: 88px; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .form-grid .full { grid-column: 1 / -1; }
   .form-input {
@@ -691,8 +721,9 @@
 
   /* ──────── RESPONSIVE ──────── */
   @media(max-width:768px) {
-    .checkout-body { grid-template-columns: 1fr; padding: 1rem; }
-    .checkout-hdr { padding: 0.75rem 1rem; }
+    .checkout-body { grid-template-columns: 1fr; padding: 1rem 1rem 3rem; gap: 2rem; }
+    .checkout-hdr { padding: 0 1rem; }
+    .checkout-form-col { position: static; }
     .page-body { flex-direction: column; }
     .sidebar {
       width: 100%; min-width: unset; height: auto;
@@ -774,6 +805,7 @@
 </header>
 
 <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<div id="mainCatalog">
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-text">
@@ -841,6 +873,7 @@
   Alle Preise auf Anfrage &nbsp;·&nbsp;
   <a href="mailto:bornhaeusser.friends@gmail.com">bornhaeusser.friends@gmail.com</a>
 </footer>
+</div><!-- /mainCatalog -->
 
 <!-- ═══════════════════════════ OVERLAY ═══════════════════════════ -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
@@ -892,19 +925,27 @@
     <h2>📋 Anfrage stellen</h2>
   </div>
   <div class="checkout-body">
-    <!-- LEFT: Cart Summary -->
-    <div class="checkout-cart-col">
+
+    <!-- LEFT: Editable Cart -->
+    <div>
       <div class="checkout-col-title">🛒 Deine Auswahl</div>
       <div class="checkout-items-list" id="checkoutItemsList"></div>
-      <div class="checkout-total" id="checkoutTotal" style="display:none;">
-        <span>Geschätzte Kosten (Tagespreis von)</span>
-        <span class="co-total-val" id="checkoutTotalVal">0 €</span>
+      <div class="checkout-summary" id="checkoutSummary" style="display:none;">
+        <div class="checkout-summary-row">
+          <span>Artikel gesamt</span>
+          <span id="coItemCount">0</span>
+        </div>
+        <div class="checkout-summary-row">
+          <span>Geschätzte Kosten (Tagespreis von)</span>
+          <span class="co-total-val" id="checkoutTotalVal">–</span>
+        </div>
       </div>
     </div>
+
     <!-- RIGHT: Request Form -->
     <div class="checkout-form-col">
-      <div class="checkout-col-title">📋 Anfrage senden</div>
-      <form class="req-form" id="requestForm" onsubmit="sendRequest(event)">
+      <div class="checkout-col-title">📩 Anfrage senden</div>
+      <form id="requestForm" onsubmit="sendRequest(event)">
         <div class="form-grid">
           <input class="form-input" type="text"  name="name"      placeholder="Name *"      required>
           <input class="form-input" type="text"  name="firma"     placeholder="Firma">
@@ -920,6 +961,7 @@
         </button>
       </form>
     </div>
+
   </div>
 </div>
 
@@ -2808,44 +2850,69 @@ function toggleCart() {
 }
 
 // ═══════════════ CHECKOUT PAGE ═══════════════
-function openCheckout() {
-  closeCart();
-  // Render checkout items
+function renderCheckoutItems() {
   const items = Object.entries(cart).filter(([,q]) => q > 0);
   const list = document.getElementById('checkoutItemsList');
+  if (!items.length) {
+    list.innerHTML = `<div class="co-empty-hint">🛒 Dein Warenkorb ist leer.<br>Gehe zurück zum Katalog und füge Artikel hinzu.</div>`;
+    document.getElementById('checkoutSummary').style.display = 'none';
+    document.getElementById('sendBtn').disabled = true;
+    return;
+  }
+  document.getElementById('sendBtn').disabled = false;
   list.innerHTML = items.map(([id, qty]) => {
     const p = PRODUCTS.find(x => x.id === id);
     if (!p) return '';
     const c = CAT[p.cat];
     return `
-    <div class="cart-item">
-      <div class="ci-icon cat-${c.cls}" style="padding:6px">${getCatSVG(p.cat)}</div>
-      <div class="ci-info">
-        <div class="ci-name">${p.name}</div>
-        <div class="ci-sub">${p.hersteller} · ${qty}×</div>
+    <div class="co-item" id="co-${id}">
+      <div class="co-item-icon cat-${c.cls}">${getCatSVG(p.cat)}</div>
+      <div class="co-item-info">
+        <div class="co-item-name">${p.name}</div>
+        <div class="co-item-sub">${p.hersteller}${isAdmin && p.preis_tag ? ' · ab ' + p.preis_tag + ' €/Tag' : ''}</div>
       </div>
+      <div class="co-qty">
+        <button class="co-qty-btn" onclick="coAdjust('${id}',-1)">−</button>
+        <span class="co-qty-val">${qty}</span>
+        <button class="co-qty-btn" onclick="coAdjust('${id}',1)">+</button>
+      </div>
+      <button class="co-remove" onclick="coRemove('${id}')" title="Entfernen">✕</button>
     </div>`;
   }).join('');
-  // Total (admin only)
-  const tot = document.getElementById('checkoutTotal');
-  if (isAdmin) {
-    tot.style.display = 'flex';
-    document.getElementById('checkoutTotalVal').textContent = T[currentLang].totalVal;
-  } else {
-    tot.style.display = 'none';
-  }
-  // Sync payload
+  // Summary
+  const total = items.length;
+  document.getElementById('coItemCount').textContent = total + ' Artikel';
+  document.getElementById('checkoutTotalVal').textContent = isAdmin ? T[currentLang].totalVal : '– auf Anfrage –';
+  document.getElementById('checkoutSummary').style.display = 'block';
+  // Payload for form
   const payload = items.map(([id,qty]) => {
     const p = PRODUCTS.find(x=>x.id===id);
     return `${qty}× ${p.name} (${p.hersteller})`;
   }).join('\n');
   document.getElementById('cartPayload').value = payload;
+}
+function coAdjust(id, delta) {
+  cart[id] = Math.max(0, (cart[id] || 0) + delta);
+  if (cart[id] === 0) delete cart[id];
+  updateCartUI();
+  renderCheckoutItems();
+}
+function coRemove(id) {
+  delete cart[id];
+  updateCartUI();
+  renderCheckoutItems();
+}
+function openCheckout() {
+  closeCart();
+  renderCheckoutItems();
   document.getElementById('checkoutPage').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.getElementById('mainCatalog').style.display = 'none';
+  window.scrollTo(0, 0);
 }
 function closeCheckout() {
   document.getElementById('checkoutPage').classList.remove('open');
-  document.body.style.overflow = '';
+  document.getElementById('mainCatalog').style.display = '';
+  window.scrollTo(0, 0);
 }
 
 // ═══════════════ ADMIN MODAL ═══════════════
