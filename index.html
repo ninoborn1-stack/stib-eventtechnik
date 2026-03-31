@@ -638,6 +638,44 @@
     margin-top: 3rem;
   }
   footer a { color: var(--accent); text-decoration: none; }
+  #footer-legal { margin-top: 0.8rem; display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+  #footer-legal button {
+    background: none; border: none; color: var(--accent); font-size: 0.78rem;
+    cursor: pointer; padding: 0; text-decoration: none; font-family: inherit;
+  }
+  #footer-legal button:hover { text-decoration: underline; }
+
+  /* ──────── LEGAL MODAL ──────── */
+  .legal-modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.82);
+    z-index: 600; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    backdrop-filter: blur(10px);
+  }
+  .legal-modal-bg.open { opacity: 1; pointer-events: all; }
+  .legal-modal {
+    background: var(--bg-mid); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2rem 2.2rem; width: min(680px, 94vw);
+    max-height: 86vh; overflow-y: auto;
+    transform: scale(0.95) translateY(16px);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .legal-modal-bg.open .legal-modal { transform: scale(1) translateY(0); }
+  .legal-modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.4rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+  }
+  .legal-modal-head h3 { font-size: 1.15rem; font-weight: 800; }
+  .legal-modal-close {
+    background: none; border: none; color: var(--text-muted); font-size: 1.2rem;
+    cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;
+  }
+  .legal-modal-close:hover { color: var(--text); }
+  .legal-modal h4 { font-size: 0.92rem; font-weight: 700; margin: 1.3rem 0 0.4rem; color: var(--text); }
+  .legal-modal p, .legal-modal li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.3rem; }
+  .legal-modal ul { padding-left: 1.2rem; margin-bottom: 0.4rem; }
+  .legal-modal a { color: var(--accent); }
 
   /* ──────── LANGUAGE TOGGLE ──────── */
   .lang-toggle {
@@ -817,16 +855,29 @@
     }
   }
   @media(max-width:600px) {
-    header { padding: 0 1rem; }
+    html, body { overflow-x: hidden; }
+    header { padding: 0 1rem; height: auto; min-height: 56px; flex-wrap: nowrap; }
+    .logo { flex-shrink: 0; }
     .logo-text span { display: none; }
-    .lang-toggle { padding: 7px 9px; }
+    .header-right { gap: 6px; flex-shrink: 1; min-width: 0; }
+    .lang-toggle { padding: 6px 8px; }
     .lang-toggle .lang-label { display: none; }
-    .nav-search { width: 110px; }
-    .nav-search:focus { width: 140px; }
+    .nav-search-wrap { flex-shrink: 1; min-width: 0; }
+    .nav-search { width: 80px; font-size: 0.78rem; padding: 6px 8px 6px 26px; }
+    .nav-search:focus { width: 110px; }
+    .cart-btn { padding: 7px 9px; font-size: 0.85rem; }
+    .cart-text { display: none; }
+    .btn-admin { padding: 7px 9px; }
+    #adminLabel { display: none; }
     .hero { padding: 2rem 1rem 1.5rem; }
     .main { padding: 1rem; }
     .grid { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
+  }
+  @media(max-width:380px) {
+    .logo-text { display: none; }
+    .nav-search { width: 60px; }
+    .nav-search:focus { width: 90px; }
   }
 </style>
 </head>
@@ -866,7 +917,7 @@
     </div>
     <button class="lang-toggle" id="langToggle" onclick="toggleLang()">🌐 <span class="lang-label">EN</span></button>
     <button class="cart-btn" onclick="toggleCart()">
-      🛒 Warenkorb
+      🛒 <span class="cart-text">Warenkorb</span>
       <span class="cart-count" id="cartCount">0</span>
     </button>
     <button class="btn-admin" id="adminBtn" onclick="openAdminModal()">
@@ -958,6 +1009,11 @@
   <br><span style="font-size:0.68rem;opacity:0.5;margin-top:4px;display:inline-block;">
     Produktabbildungen sind Referenzbilder — das gelieferte Equipment kann im Erscheinungsbild abweichen. Maßgeblich sind Typ und Spezifikation.
   </span>
+  <div id="footer-legal">
+    <button onclick="openLegal('impressum')">Impressum</button>
+    <button onclick="openLegal('agb')">AGB</button>
+    <button onclick="openLegal('datenschutz')">Datenschutzerklärung</button>
+  </div>
 </footer>
 </div><!-- /mainCatalog -->
 
@@ -1062,6 +1118,17 @@
       </form>
     </div>
 
+  </div>
+</div>
+
+<!-- ═══════════════════════════ LEGAL MODALS ═══════════════════════════ -->
+<div class="legal-modal-bg" id="legalModalBg">
+  <div class="legal-modal" id="legalModalBox">
+    <div class="legal-modal-head">
+      <h3 id="legalModalTitle"></h3>
+      <button class="legal-modal-close" onclick="closeLegal()">✕</button>
+    </div>
+    <div id="legalModalContent"></div>
   </div>
 </div>
 
@@ -1421,7 +1488,9 @@ function applyLang() {
   // Footer
   const footer = document.querySelector('footer');
   const footerLink = footer.querySelector('a');
+  const legalDiv = document.getElementById('footer-legal');
   footer.innerHTML = t.footer + ' ' + footerLink.outerHTML;
+  footer.appendChild(legalDiv);
 
   // Re-render grid & cart to update dynamic strings
   renderGrid();
@@ -3221,12 +3290,114 @@ async function sendDirectRequest(e) {
   }
 }
 
+// ═══════════════ LEGAL MODALS ═══════════════
+const LEGAL_CONTENT = {
+  impressum: {
+    title: 'Impressum',
+    html: `
+      <h4>Angaben gemäß § 5 TMG</h4>
+      <p>Nino Bornhäußer<br>Am Schlachtensee 122A<br>14129 Berlin</p>
+      <h4>Kontakt</h4>
+      <p>E-Mail: <a href="mailto:nino-alexander@bornhauesser-friends.de">nino-alexander@bornhauesser-friends.de</a></p>
+      <h4>Hinweis zur Online-Streitbeilegung</h4>
+      <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr</a>. Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+      <h4>Haftung für Inhalte</h4>
+      <p>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
+      <h4>Urheberrecht</h4>
+      <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors.</p>
+    `
+  },
+  agb: {
+    title: 'Allgemeine Geschäftsbedingungen (AGB)',
+    html: `
+      <h4>§ 1 Geltungsbereich</h4>
+      <p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Mietverträge zwischen Nino Bornhäußer (nachfolgend „Vermieter") und dem Mieter über die Vermietung von Veranstaltungstechnik. Abweichende Bedingungen des Mieters werden nicht anerkannt, sofern der Vermieter nicht ausdrücklich schriftlich zustimmt.</p>
+      <h4>§ 2 Vertragsschluss</h4>
+      <p>Anfragen über das Kontaktformular stellen ein unverbindliches Angebot des Mieters dar. Der Vertrag kommt erst durch eine schriftliche Auftragsbestätigung des Vermieters per E-Mail zustande. Ein Anspruch auf Annahme der Anfrage besteht nicht.</p>
+      <h4>§ 3 Preise und Zahlung</h4>
+      <p>Alle genannten Preise sind Nettopreise. Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung). Die Zahlung ist vor oder bei Übergabe der Mietgegenstände fällig, sofern nicht anders vereinbart. Akzeptierte Zahlungsmittel werden individuell im Auftragsbestätigungsschreiben mitgeteilt.</p>
+      <h4>§ 4 Mietgegenstand und Verfügbarkeit</h4>
+      <p>Der Vermieter stellt die vereinbarten Geräte und Materialien für den vereinbarten Zeitraum bereit. Sollte ein Mietgegenstand trotz Bestätigung nicht verfügbar sein, wird der Vermieter den Mieter unverzüglich informieren und ein gleichwertiges Ersatzgerät anbieten oder die bereits geleisteten Zahlungen vollständig erstatten.</p>
+      <h4>§ 5 Übergabe und Rückgabe</h4>
+      <p>Übergabe und Rückgabe erfolgen nach individueller Vereinbarung. Der Mieter hat die Mietgegenstände in ordnungsgemäßem und gereinigtem Zustand zurückzugeben. Die Rückgabe muss zum vereinbarten Termin erfolgen; eine Verlängerung der Mietzeit bedarf der vorherigen schriftlichen Zustimmung des Vermieters und wird entsprechend berechnet.</p>
+      <h4>§ 6 Sorgfaltspflicht und Schadenshaftung des Mieters</h4>
+      <p>Der Mieter ist verpflichtet, die Mietgegenstände sorgsam zu behandeln und nur bestimmungsgemäß zu verwenden. Der Mieter haftet für alle während der Mietzeit entstandenen Schäden, die durch unsachgemäßen Gebrauch, Verlust oder Diebstahl verursacht werden, in voller Höhe des Wiederbeschaffungswertes. Normale Gebrauchsspuren bleiben unberücksichtigt.</p>
+      <h4>§ 7 Haftungsbeschränkung des Vermieters</h4>
+      <p>Der Vermieter haftet nicht für Schäden, die durch unsachgemäße Bedienung der Mietgegenstände durch den Mieter entstehen. Die Haftung für mittelbare Schäden, entgangenen Gewinn oder Folgeschäden ist – soweit gesetzlich zulässig – ausgeschlossen. Die Haftung bei Vorsatz und grober Fahrlässigkeit sowie für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit bleibt unberührt.</p>
+      <h4>§ 8 Stornierung</h4>
+      <p>Stornierungen müssen schriftlich per E-Mail erfolgen. Bei Stornierung bis 14 Tage vor dem vereinbarten Mietbeginn entstehen keine Kosten. Bei Stornierung innerhalb von 14 Tagen bis 7 Tagen vor Mietbeginn werden 50 % des vereinbarten Mietpreises fällig. Bei Stornierung weniger als 7 Tage vor Mietbeginn wird der volle Mietpreis berechnet.</p>
+      <h4>§ 9 Anzuwendendes Recht und Gerichtsstand</h4>
+      <p>Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand für alle Streitigkeiten aus oder im Zusammenhang mit diesem Vertrag ist Berlin, soweit gesetzlich zulässig.</p>
+      <h4>§ 10 Salvatorische Klausel</h4>
+      <p>Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt. Die unwirksame Bestimmung wird durch eine wirksame ersetzt, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
+    `
+  },
+  datenschutz: {
+    title: 'Datenschutzerklärung',
+    html: `
+      <h4>1. Verantwortlicher</h4>
+      <p>Nino Bornhäußer<br>Am Schlachtensee 122A, 14129 Berlin<br>E-Mail: <a href="mailto:nino-alexander@bornhauesser-friends.de">nino-alexander@bornhauesser-friends.de</a></p>
+      <h4>2. Erhobene Daten und Zweck</h4>
+      <p>Wenn du unser Anfrage-Formular nutzt, erheben wir folgende personenbezogene Daten:</p>
+      <ul>
+        <li>Name (Pflichtfeld)</li>
+        <li>Firma / Organisation (freiwillig)</li>
+        <li>E-Mail-Adresse (Pflichtfeld)</li>
+        <li>Telefonnummer (freiwillig)</li>
+        <li>Eventdaten (Datum, Ort, Veranstaltungsart, Nachricht)</li>
+        <li>Ausgewählte Mietartikel (Warenkorb)</li>
+      </ul>
+      <p>Diese Daten werden ausschließlich zur Bearbeitung deiner Anfrage und zur Kontaktaufnahme verwendet.</p>
+      <h4>3. Rechtsgrundlage</h4>
+      <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung von Kundenanfragen).</p>
+      <h4>4. Weitergabe an Dritte – Formspree</h4>
+      <p>Zur technischen Übermittlung der Formulardaten nutzen wir den Dienst <strong>Formspree Inc.</strong> (USA). Formspree verarbeitet die von dir eingegebenen Daten als Auftragsverarbeiter gemäß Art. 28 DSGVO. Die Übermittlung in die USA erfolgt auf Grundlage von Standardvertragsklauseln gemäß Art. 46 DSGVO. Weitere Informationen findest du in der Datenschutzerklärung von Formspree unter <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">formspree.io/legal/privacy-policy</a>.</p>
+      <h4>5. Speicherdauer</h4>
+      <p>Deine Daten werden nur so lange gespeichert, wie es zur Bearbeitung deiner Anfrage notwendig ist, in der Regel nicht länger als 6 Monate nach Abschluss der Kommunikation, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+      <h4>6. Cookies und Tracking</h4>
+      <p>Diese Website verwendet keine Cookies und setzt keine Tracking- oder Analyse-Tools ein. Es werden keine Nutzungsprofile erstellt.</p>
+      <h4>7. Deine Rechte</h4>
+      <p>Du hast gegenüber uns folgende Rechte hinsichtlich deiner personenbezogenen Daten:</p>
+      <ul>
+        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
+        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
+        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
+        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Recht auf Widerspruch (Art. 21 DSGVO)</li>
+      </ul>
+      <p>Zur Ausübung deiner Rechte wende dich per E-Mail an: <a href="mailto:nino-alexander@bornhauesser-friends.de">nino-alexander@bornhauesser-friends.de</a></p>
+      <h4>8. Beschwerderecht</h4>
+      <p>Du hast das Recht, dich bei einer Datenschutz-Aufsichtsbehörde über die Verarbeitung deiner personenbezogenen Daten zu beschweren. Die zuständige Behörde in Berlin ist:<br>
+      Berliner Beauftragte für Datenschutz und Informationsfreiheit<br>
+      Alt-Moabit 59–61, 10555 Berlin<br>
+      <a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">www.datenschutz-berlin.de</a></p>
+    `
+  }
+};
+
+function openLegal(type) {
+  const c = LEGAL_CONTENT[type];
+  document.getElementById('legalModalTitle').textContent = c.title;
+  document.getElementById('legalModalContent').innerHTML = c.html;
+  document.getElementById('legalModalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLegal() {
+  document.getElementById('legalModalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('legalModalBg').addEventListener('click', e => {
+  if (e.target === document.getElementById('legalModalBg')) closeLegal();
+});
+
 // ═══════════════ KEYBOARD ═══════════════
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeCart();
     closeAdminModal();
     closeDirectModal();
+    closeLegal();
   }
 });
 

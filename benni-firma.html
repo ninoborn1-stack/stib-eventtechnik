@@ -554,14 +554,30 @@
 
   /* ──────── RESPONSIVE ──────── */
   @media(max-width:600px) {
-    header { padding: 0 1rem; }
+    header { padding: 0 1rem; height: auto; min-height: 56px; flex-wrap: nowrap; }
+    .logo { flex-shrink: 0; }
     .logo-text span { display: none; }
+    .header-right { gap: 6px; flex-shrink: 1; min-width: 0; }
+    .lang-toggle { padding: 6px 8px; }
+    .lang-toggle .lang-label { display: none; }
+    .nav-search-wrap { flex-shrink: 1; min-width: 0; }
+    .nav-search { width: 80px; font-size: 0.78rem; padding: 6px 8px 6px 26px; }
+    .nav-search:focus { width: 110px; }
+    .cart-btn { padding: 7px 9px; font-size: 0.85rem; }
+    .cart-text { display: none; }
+    .btn-admin { padding: 7px 9px; }
+    #adminLabel { display: none; }
     .hero { padding: 2rem 1rem 1.5rem; }
     .filter-section { padding: 0.75rem 1rem; }
     .search-wrap { display: none; }
     .main { padding: 1rem; }
     .grid { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
+  }
+  @media(max-width:380px) {
+    .logo-text { display: none; }
+    .nav-search { width: 60px; }
+    .nav-search:focus { width: 90px; }
   }
 </style>
 </head>
@@ -588,7 +604,7 @@
       <span>🔐</span> <span id="adminLabel">Admin</span>
     </button>
     <button class="cart-btn" onclick="toggleCart()">
-      🛒 Warenkorb
+      🛒 <span class="cart-text">Warenkorb</span>
       <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
